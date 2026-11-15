@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dot &amp; Jar</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="theme-color" content="#1F1A3D"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Dot & Jar"><meta name="description" content="ADHD-friendly budget app: one number a day, a jar of sweets until payday. No bank login, no subscription.">
+<meta name="theme-color" content="#1F1A3D"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Dot & Jar"><meta name="description" content="ADHD-friendly budget app: one number a day, a jar of sweets until payday. No bank login, no subscription."><script async src="https://www.googletagmanager.com/gtag/js?id=G-QJ1VYS1XVV"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-QJ1VYS1XVV");</script>
 <style>@font-face {
   font-family: 'Atkinson Hyperlegible';
   font-style: normal;
@@ -294,6 +294,8 @@ function debtPlan(debts,extra,method){const d=debts.filter(x=>+x.bal>0).map(x=>(
 // ---------- state ----------
 const DEMO=!!window.DJ_DEMO,DEMO_MAX=25,KEY=DEMO?'dotjar.demo':'dotjar.v1';
 const TODAY=()=>ds(new Date());
+// example spends have ts 1-3, so they never count toward the demo limit
+const demoUsed=()=>S.ledger.filter(e=>e.t==='spend'&&e.ts>9).length;
 const uid=()=>Math.random().toString(36).slice(2,9);
 const CURRENCIES=['USD','EUR','GBP','CAD','AUD','NZD','CHF','SEK','NOK','DKK','PLN','INR','JPY','ZAR','MXN','BRL'];
 const CATS=[['Food out','rasp'],['Groceries','mint'],['Transport','blue'],['Fun','lemon'],['Home','mint'],['Kids','lemon'],['Health','rasp'],['Other','blue']];
@@ -380,7 +382,7 @@ function renderTabs(){const t=[['today','Today','home'],['bills','Bills','bills'
 function topBar(title,gear){return '<div class="top">'+(title?'<h1 class="screen-title">'+title+'</h1>':'<div class="mark">'+markSVG()+'<span>Dot <span class="amp">&amp;</span> Jar</span></div>')+
  (gear?'<button class="iconbtn" type="button" data-act="settings" aria-label="Settings">'+ic('gear')+'</button>':'')+(title?'':'<button class="iconbtn" type="button" data-act="focus" aria-pressed="'+(S.prefs.focus?'true':'false')+'" aria-label="Focus mode: show only the jar and the number">'+ic('eye')+'</button>')+'</div>'}
 function notices(c){let h='';const t=TODAY();
-  if(DEMO){const used=S.ledger.filter(e=>e.t==='spend').length;h+='<div class="note"><p><b>Free demo.</b> '+Math.max(0,DEMO_MAX-used)+' of '+DEMO_MAX+' spends left to try. <a class="link" href="'+(window.DJ_BUY||'../')+'">Get the full app</a></p></div>'}
+  if(DEMO){const used=demoUsed();h+='<div class="note"><p><b>Free demo.</b> '+Math.max(0,DEMO_MAX-used)+' of '+DEMO_MAX+' spends left to try. <a class="link" href="'+(window.DJ_BUY||'../')+'">Get the full app</a></p></div>'}
   if(S.example)h+='<div class="note"><p><b>Example numbers.</b> Nothing here is real. <button class="link" type="button" data-act="setup">Start with my numbers</button></p></div>';
   const away=prevOpen?diffDays(prevOpen,t):0;
   if(!S.example&&away>=5&&!ui.awayDone)h+='<div class="note"><p><b>Welcome back, '+esc(S.name||'friend')+'.</b> You were away '+away+' days. Nothing to catch up on except one number: what is in your account right now?</p><div class="row"><button class="btn ink" type="button" data-act="balance">Update my balance</button><button class="link" type="button" data-act="awayok">Skip</button></div></div>';
@@ -537,7 +539,7 @@ function sheetHead(t,sub){return '<div class="row between"><h2>'+t+'</h2><button
 function wireClose(L){L.querySelectorAll('[data-close]').forEach(b=>b.onclick=close)}
 
 function addSpend(){const c=calc(S,TODAY());let cat='Other';
-  if(DEMO&&S.ledger.filter(e=>e.t==='spend').length>=DEMO_MAX){sheet(sheetHead('That was the last demo spend','You have tried '+DEMO_MAX+' spends. Everything you typed stays here to look at.')+'<p>The full Dot &amp; Jar has no limits, installs on your phone and works offline. Save a backup in Settings first and the full app opens it, so nothing is lost.</p><a class="btn ink big wide" href="'+(window.DJ_BUY||'../')+'">Get the full app</a>',L=>wireClose(L));return}
+  if(DEMO&&demoUsed()>=DEMO_MAX){sheet(sheetHead('That was the last demo spend','You have tried '+DEMO_MAX+' spends. Everything you typed stays here to look at.')+'<p>The full Dot &amp; Jar has no limits, installs on your phone and works offline. Save a backup in Settings first and the full app opens it, so nothing is lost.</p><a class="btn ink big wide" href="'+(window.DJ_BUY||'../')+'">Get the full app</a>',L=>wireClose(L));return}
   sheet(sheetHead('Add a spend')+
    '<div class="field"><label for="amt">How much?</label><input class="amount num" type="text" id="amt" placeholder="12 coffee" autocomplete="off" autofocus></div>'+
    '<div class="chips" aria-label="Quick amounts">'+[5,10,20,50].map(v=>'<button type="button" class="chip" data-q="'+v+'">'+money(v,false)+'</button>').join('')+'</div>'+
