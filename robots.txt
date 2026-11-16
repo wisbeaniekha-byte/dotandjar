@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://wisbeaniekha-byte.github.io/dotandjar/sitemap.xml
