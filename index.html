@@ -147,6 +147,8 @@
 .result__total { font: var(--display-weight) var(--t-h2)/1 var(--font-display); letter-spacing: var(--display-tracking); font-variant-numeric: tabular-nums; }
 .result__vs { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: var(--s-2) var(--s-4); padding-top: var(--s-5); border-top: 1px solid rgb(27 31 42 / .14); align-items: baseline; }
 .result__vs span:nth-child(even) { font: var(--display-weight) 24px/1.2 var(--font-display); font-variant-numeric: tabular-nums; text-align: right; }
+/* a narrow card: label over price, so the label never squeezes to one word a line */
+@media (max-width: 1100px) { .result__vs { grid-template-columns: minmax(0,1fr); } .result__vs span:nth-child(even) { text-align: left; } }
 @media (max-width: 1023px) { .result { padding: var(--s-6); gap: var(--s-4); } .calc { gap: var(--s-5); } }
 @media (max-width: 639px) { .result { padding: var(--s-5); } }
 

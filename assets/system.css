@@ -228,7 +228,8 @@ main > :is(section, .section) > :is(.wrap, .container):not(.grid) { display: fle
 /* a .wrap that is the section's grid too (class="wrap grid"): its rows start at the top */
 main > :is(section, .section) > :is(.wrap, .container).grid { align-content: start; }
 /* .fill: the block that takes what the screen leaves under the heading (a photograph, a frame) */
-main > :is(section, .section) > .wrap > .fill { flex: 1 1 0; min-height: 0; }
+/* never less than its content: a fill squeezed to 0 basis laid a tall frame over the next section */
+main > :is(section, .section) > .wrap > .fill { flex: 1 0 auto; min-height: 0; }
 /* two screens as two groups: row 1 the h2 and the first group, row 2 the rest (no second h2), starting
    --padt under the second screen's top, so the second shot looks like any other section */
 main > :is(section, .section).g2, footer.closing.g2 { --h: 2; }
@@ -243,8 +244,10 @@ main > :is(section, .section).g2 > :is(.wrap, .container) > :is(.group, .fill) {
   main > :is(section, .section).g2 > .wrap > .grid:last-child,
   main > :is(section, .section).g2 > .wrap > .group > .grid:last-child { align-self: stretch; flex: 1 1 auto; min-height: 0; }
 }
-.group > .fill { flex: 1 1 0; min-height: 0; }
-@media (min-width: 640px) and (max-width: 1279px) {
+.group > .fill { flex: 1 0 auto; min-height: 0; }
+/* from 640 up (desktop too): a short laptop screen (1536x738) cannot hold every section in one
+   screen, so a section grows past its screens instead of laying its last rows over the next one */
+@media (min-width: 640px) {
   main > :is(section, .section):not(.hero, .section--hero), footer.closing {
     height: auto; min-height: calc(var(--h, 1) * 100vh); min-height: calc(var(--h, 1) * 100svh);
   }
@@ -300,11 +303,10 @@ main > :is(.hero, .section--hero) {
 :is(.hero, .section--hero) > .wrap > .hero-text { min-height: 0; }
 /* a phone: the hero is at least the first screen and grows when a short phone (320x640) cannot hold its
    words, buttons and picture, so nothing of it lies over the next section or under the header */
-@media (max-width: 639px) {
-  main > :is(.hero, .section--hero) { height: auto; min-height: 100vh; min-height: 100svh; }
-  main > :is(.hero, .section--hero):has(> :is(.wrap, .container)) { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr; grid-auto-rows: auto; }
-  main > :is(.hero, .section--hero) > :is(.wrap, .container) { height: auto; }
-}
+/* every width: a short laptop screen cannot hold the hero's words and window either */
+main > :is(.hero, .section--hero) { height: auto; min-height: 100vh; min-height: 100svh; }
+main > :is(.hero, .section--hero):has(> :is(.wrap, .container)) { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr; grid-auto-rows: auto; }
+main > :is(.hero, .section--hero) > :is(.wrap, .container) { height: auto; }
 :is(.hero, .section--hero) > .wrap > .hero-strip { grid-row: 2; max-height: 96px; }
 @media (max-width: 639px) { :is(.hero, .section--hero) > .wrap > .hero-strip { display: none; } }
 .section--hero .section-head { max-width: 860px; }
