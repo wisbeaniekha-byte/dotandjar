@@ -403,11 +403,23 @@ function notices(c){let h='';const t=TODAY();
   if(DEMO){const left=Math.max(0,DEMO_MAX-demoUsed());if(left<=5)h+='<div class="note"><p><b>'+left+' demo '+(left===1?'spend':'spends')+' left.</b> <a class="link" href="'+(window.DJ_BUY||'../')+'">Get the full app</a></p></div>'}
   if(S.example)h+=DEMO?'<div class="note"><p><b>Try it:</b> tap <b>Add spend</b> and watch the jar change. These are example numbers. <button class="link" type="button" data-act="setup">Use my own numbers</button></p></div>'
     :'<div class="note"><p><b>Example numbers.</b> Nothing here is real. <button class="link" type="button" data-act="setup">Start with my numbers</button></p></div>';
+  const ih=installHint();if(ih)h+=ih;
   const away=prevOpen?diffDays(prevOpen,t):0;
   if(!S.example&&away>=5&&!ui.awayDone)h+='<div class="note"><p><b>Welcome back, '+esc(S.name||'friend')+'.</b> You were away '+away+' days. Nothing to catch up on except one number: what is in your account right now?</p><div class="row"><button class="btn ink" type="button" data-act="balance">Update my balance</button><button class="link" type="button" data-act="awayok">Skip</button></div></div>';
   for(const p of S.pays)for(const d of payOcc(p,addDays(t,-10)>S.start?addDays(t,-10):S.start,addDays(t,1))){const k=p.id+'|'+d;if(S.payOk[k])continue;
     h+='<div class="note"><p><b>Payday '+nice(d)+'.</b> Did '+money(+p.amt)+' from '+esc(p.name)+' arrive?</p><div class="row"><button class="btn ink" type="button" data-pay="'+k+'">Yes, add it</button><button class="btn" type="button" data-payamt="'+k+'">Different amount</button><button class="link" type="button" data-payno="'+k+'">Not yet</button></div></div>'}
   return h+lateNote(c)}
+// Paid app only: how to keep it on the phone. Shown until installed or dismissed.
+// Inside Instagram/Facebook/TikTok's browser "Add to Home Screen" doesn't exist and data stays in that browser, so say that first.
+let installEvt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e;if(tab==='today')render()});
+function installHint(){if(DEMO||S.installHidden)return '';
+  const standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;if(standalone)return '';
+  const ua=navigator.userAgent,inApp=/FBAN|FBAV|Instagram|TikTok|musical_ly|Bytedance|Snapchat|Line\//i.test(ua),ios=/iPhone|iPad|iPod/i.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1),android=/Android/i.test(ua);
+  if(!inApp&&!ios&&!android)return '';
+  const body=inApp?'<b>Open this in '+(ios?'Safari':'Chrome')+' first.</b> You are inside another app\'s browser, where Dot &amp; Jar can\'t be saved and your numbers would stay in that app. Tap <b>⋯</b> or <b>⋮</b> at the top, then <b>Open in '+(ios?'Safari':'browser')+'</b>.'
+    :ios?'<b>Keep Dot &amp; Jar one tap away.</b> Tap the <b>Share</b> button (square with an arrow), then <b>Add to Home Screen</b>. It then opens like an app, offline too.'
+    :'<b>Keep Dot &amp; Jar one tap away.</b> Tap <b>⋮</b> at the top right, then <b>Install app</b> or <b>Add to Home screen</b>. It then opens like an app, offline too.';
+  return '<div class="note"><p>'+body+'</p><div class="row">'+(installEvt&&!inApp?'<button class="btn ink" type="button" data-act="install">Install now</button>':'')+'<button class="link" type="button" data-act="installhide">'+(inApp?'Hide':'Done, hide this')+'</button></div></div>'}
 // "Start here" checklist: shown under the jar, so a new user sees their own number first
 function starter(){let h='';
   if(!S.example&&!S.startDone){const steps=[['Add when your pay comes in',S.pays.length>0,'addpay'],['Add your bills',S.bills.length>0,'addbill'],['Log your first spend',S.ledger.some(e=>e.t==='spend'),'add'],['Save a backup',!!S.backedUp,'backup']];
@@ -673,6 +685,8 @@ function bind(c,root){const A=root||document.getElementById('app');
     if(a==='setup')setupWizard(); if(a==='balance')setBalance(); if(a==='awayok'){ui.awayDone=true;render()}
     if(a==='settings')settingsSheet(); if(a==='oops')oopsSheet(); if(a==='addcap')capForm(); if(a==='adddebt')debtForm(); if(a==='csv')exportCSV();
     if(a==='startdone'){S.startDone=true;save();render()}
+    if(a==='installhide'){S.installHidden=true;save();render()}
+    if(a==='install'&&installEvt){installEvt.prompt();installEvt.userChoice.then(()=>{installEvt=null;render()}).catch(()=>{})}
     if(a==='dumpadd'){const i=document.getElementById('dumpIn');const v=i&&i.value.trim();if(v){S.dump.push({id:uid(),text:v,ts:Date.now()});save();render();const n=document.getElementById('dumpIn');n&&n.focus()}}
     if(a==='addbill')itemForm('bill'); if(a==='addpay')itemForm('pay'); if(a==='addpause')addPause(); if(a==='addgoal')goalForm();
     if(a==='backup'){try{const b=new Blob([JSON.stringify(S,null,1)],{type:'application/json'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;S.backedUp=true;save();l.download='dot-and-jar-backup-'+TODAY()+'.json';document.body.appendChild(l);l.click();l.remove();toast('Backup saved to your downloads.')}catch(e){toast('Could not save here. Try in Chrome or Safari.')}}
