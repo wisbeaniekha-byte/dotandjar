@@ -76,7 +76,7 @@
 html,body{min-height:100%}
 body{margin:0;color:var(--ink);font-family:var(--body);line-height:1.5;
   background-color:var(--ground);background-image:radial-gradient(var(--grid) 1.2px,transparent 1.3px);background-size:16px 16px;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px calc(100px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px calc(168px + env(safe-area-inset-bottom,0px));
   caret-color:var(--rasp);scrollbar-color:var(--line) transparent}
 ::selection{background:var(--lemon);color:#1F1A3D}
 .app{max-width:520px;margin:0 auto;display:grid;gap:16px}
@@ -111,6 +111,8 @@ button{cursor:pointer}
 .tag .val{font-family:var(--display);font-weight:800;font-size:2.35rem;line-height:1;letter-spacing:-.02em;margin-top:2px;white-space:nowrap}
 .tag .val.long{font-size:1.75rem}
 .tag .sub{font-size:.85rem;margin-top:6px;color:var(--tag-ink-2)}
+/* short screens (phone in landscape, or an in-app browser with bars): a smaller jar keeps Add spend on the first screen */
+@media (max-height:620px){.app{gap:12px}.stage{min-height:196px;width:min(100%,330px)}.jar{width:168px}.tag{top:30px}}
 .how-link{display:block;background:none;border:0;padding:8px 0 0;text-align:left;color:var(--tag-ink)!important;color:var(--ink);font-weight:700;font-size:.9rem;text-decoration:underline;text-decoration-color:var(--rasp);text-decoration-thickness:2px;text-underline-offset:4px;min-height:44px}
 
 .status{display:flex;gap:10px;align-items:center;justify-content:center;font-weight:700;padding:10px 16px;border-radius:99px;justify-self:center;text-align:center}
@@ -132,7 +134,7 @@ button{cursor:pointer}
 
 .panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;display:grid;gap:12px}
 .note{border-radius:18px;padding:12px 16px;display:grid;gap:6px;background:var(--paper-2);border:1.5px dashed var(--ink-2)}
-.note a.btn,.sheet a.btn{text-decoration:none}
+a.btn{text-decoration:none;color:inherit}a.btn.ink{color:var(--on-primary)}
 .note.warm{background:var(--warm-bg);border-color:var(--warm)}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .between{justify-content:space-between}
@@ -156,7 +158,7 @@ button{cursor:pointer}
 .tagchip{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap;background:var(--warm-bg);color:var(--warm)}
 .empty{text-align:center;padding:12px;color:var(--ink-2)}
 
-.hero-num{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1;letter-spacing:-.02em}
+.hero-num{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1.15;letter-spacing:-.02em}
 .kept{color:var(--good)}
 
 /* tabs */
@@ -174,6 +176,9 @@ nav.tabs button[aria-current="page"]{color:var(--ink);background:var(--grid)}
 .scrim{position:fixed;inset:0;background:rgba(20,17,42,.5);z-index:40;display:flex;align-items:flex-end;justify-content:center;animation:fade .2s ease-out}
 .sheet{background:var(--paper);width:100%;max-width:520px;max-height:92vh;overflow:auto;border-radius:28px 28px 0 0;
   padding:12px max(20px,env(safe-area-inset-right,0px)) calc(22px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));display:grid;gap:16px;animation:rise .28s cubic-bezier(.16,1,.3,1)}
+/* the sheet's Save / Next row stays in view while the form scrolls on a short screen */
+.sheet>.btn.big.wide:last-child,.sheet>.row:last-child{position:sticky;bottom:0;z-index:1;box-shadow:0 0 0 12px var(--paper)}
+.sheet>.row:last-child{background:var(--paper)}
 .grab{width:44px;height:5px;border-radius:9px;background:var(--line);justify-self:center}
 @keyframes rise{from{transform:translateY(40px)}to{transform:none}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -197,8 +202,9 @@ input:focus,select:focus{border-color:var(--ink);outline:none}
 .bar{height:14px;border-radius:99px;background:var(--paper-2);border:1px solid var(--line);overflow:hidden}
 .bar i{display:block;height:100%;background:var(--mint)}
 .steps{display:flex;gap:6px}.steps i{flex:1;height:6px;border-radius:99px;background:var(--line)}.steps i.on{background:var(--rasp)}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(168px + env(safe-area-inset-bottom,0px));z-index:50;background:var(--ink);color:var(--on-ink);
-  padding:12px 18px;border-radius:16px;display:flex;gap:14px;align-items:center;max-width:calc(100% - 32px);font-weight:700;box-shadow:var(--lift);animation:rise .25s cubic-bezier(.16,1,.3,1)}
+/* toast at the top, so it never covers the jar's number or the Add spend button */
+.toast{position:fixed;left:50%;transform:translateX(-50%);top:calc(10px + env(safe-area-inset-top,0px));z-index:50;background:var(--ink);color:var(--on-ink);width:max-content;
+  padding:12px 18px;border-radius:16px;display:flex;gap:14px;align-items:center;max-width:calc(100% - 32px);font-weight:700;box-shadow:var(--lift);animation:fade .2s ease-out}
 .toast button{background:none;border:0;color:var(--on-ink);text-decoration:underline;font-weight:700;min-height:40px}
 .calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
 .calhead{font-size:.75rem;font-weight:700;color:var(--ink-2);text-align:center}
@@ -380,22 +386,33 @@ function markSVG(){return '<svg viewBox="0 0 26 26" aria-hidden="true"><rect x="
 function render(){applyPrefs();const c=calc(S,TODAY());const app=document.getElementById('app');
   app.innerHTML=({today:viewToday,bills:viewBills,pause:viewPause,plan:viewPlan})[tab](c);
   if(ui.prevFrac!=null){const g=app.querySelector('.today-sweet');if(g){const to=g.style.transform;g.style.transition='none';g.style.transform='scale('+ui.prevFrac+')';g.getBoundingClientRect();g.style.transition='';requestAnimationFrame(()=>g.style.transform=to)}ui.prevFrac=null}
-  renderTabs();const fab=document.getElementById('fab');fab.innerHTML=ic('plus')+'Add spend';fab.hidden=(tab==='plan'||tab==='today');bind(c)}
+  renderTabs();const fab=document.getElementById('fab');fab.innerHTML=ic('plus')+'Add spend';fab.hidden=(tab==='plan'||tab==='today');
+  // Today: the floating Add spend shows only while the big one is off screen (short phones, or scrolled down)
+  if(fabIO){fabIO.disconnect();const big=tab==='today'&&app.querySelector('.btn.big[data-act="add"]');if(big)fabIO.observe(big)}
+  bind(c)}
+const fabIO='IntersectionObserver' in window?new IntersectionObserver(es=>{if(tab==='today')document.getElementById('fab').hidden=es[es.length-1].isIntersecting},{rootMargin:'0px 0px -96px 0px'}):null;
 function renderTabs(){const t=[['today','Today','home'],['bills','Bills','bills'],['pause','Pause','pause'],['plan','Plan','more']];
   document.getElementById('tabs').innerHTML=t.map(([k,l,i])=>'<button type="button" data-tab="'+k+'"'+(tab===k?' aria-current="page"':'')+'>'+ic(i)+l+'</button>').join('');
   document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;window.scrollTo(0,0);render()})}
 function topBar(title,gear){return '<div class="top">'+(title?'<h1 class="screen-title">'+title+'</h1>':'<div class="mark">'+markSVG()+'<span>Dot <span class="amp">&amp;</span> Jar</span></div>')+
  (gear?'<button class="iconbtn" type="button" data-act="settings" aria-label="Settings">'+ic('gear')+'</button>':'')+(title?'':'<button class="iconbtn" type="button" data-act="focus" aria-pressed="'+(S.prefs.focus?'true':'false')+'" aria-label="Focus mode: show only the jar and the number">'+ic('eye')+'</button>')+'</div>'}
 function notices(c){let h='';const t=TODAY();
-  if(DEMO){const used=demoUsed();h+='<div class="note"><div class="row between" style="gap:10px;flex-wrap:nowrap"><p style="flex:1"><b>Free demo.</b> '+Math.max(0,DEMO_MAX-used)+' of '+DEMO_MAX+' spends left.</p><a class="btn ink" style="min-height:44px;padding:6px 14px;white-space:nowrap" href="'+(window.DJ_BUY||'../')+'">Full app $6.99</a></div></div>'}
-  if(S.example)h+='<div class="note"><p><b>Example numbers.</b> Nothing here is real. <button class="link" type="button" data-act="setup">Start with my numbers</button></p></div>';
+  // demo: the first screen shows the app, not a price; the spend counter only appears near the end
+  if(DEMO){const left=Math.max(0,DEMO_MAX-demoUsed());if(left<=5)h+='<div class="note"><p><b>'+left+' demo '+(left===1?'spend':'spends')+' left.</b> <a class="link" href="'+(window.DJ_BUY||'../')+'">Get the full app</a></p></div>'}
+  if(S.example)h+=DEMO?'<div class="note"><p><b>Try it:</b> tap <b>Add spend</b> and watch the jar change. These are example numbers. <button class="link" type="button" data-act="setup">Use my own numbers</button></p></div>'
+    :'<div class="note"><p><b>Example numbers.</b> Nothing here is real. <button class="link" type="button" data-act="setup">Start with my numbers</button></p></div>';
   const away=prevOpen?diffDays(prevOpen,t):0;
   if(!S.example&&away>=5&&!ui.awayDone)h+='<div class="note"><p><b>Welcome back, '+esc(S.name||'friend')+'.</b> You were away '+away+' days. Nothing to catch up on except one number: what is in your account right now?</p><div class="row"><button class="btn ink" type="button" data-act="balance">Update my balance</button><button class="link" type="button" data-act="awayok">Skip</button></div></div>';
   for(const p of S.pays)for(const d of payOcc(p,addDays(t,-10)>S.start?addDays(t,-10):S.start,addDays(t,1))){const k=p.id+'|'+d;if(S.payOk[k])continue;
     h+='<div class="note"><p><b>Payday '+nice(d)+'.</b> Did '+money(+p.amt)+' from '+esc(p.name)+' arrive?</p><div class="row"><button class="btn ink" type="button" data-pay="'+k+'">Yes, add it</button><button class="btn" type="button" data-payamt="'+k+'">Different amount</button><button class="link" type="button" data-payno="'+k+'">Not yet</button></div></div>'}
+  return h+lateNote(c)}
+// "Start here" checklist: shown under the jar, so a new user sees their own number first
+function starter(){let h='';
   if(!S.example&&!S.startDone){const steps=[['Add when your pay comes in',S.pays.length>0,'addpay'],['Add your bills',S.bills.length>0,'addbill'],['Log your first spend',S.ledger.some(e=>e.t==='spend'),'add'],['Save a backup',!!S.backedUp,'backup']];
     const done=steps.filter(x=>x[1]).length;
     if(done===steps.length){S.startDone=true;save()}else h+='<section class="panel"><div class="row between"><h3>Start here</h3><span class="small muted num">'+done+' of '+steps.length+'</span></div><div class="list">'+steps.map(([l,ok,act])=>'<div class="item"><span class="check" aria-hidden="true" style="'+(ok?'background:var(--mint);border-color:var(--mint)':'')+'">'+(ok?ic('check'):'')+'</span><div class="main"><div class="t" style="'+(ok?'text-decoration:line-through;color:var(--ink-2)':'')+'">'+l+'</div></div>'+(ok?'':'<button class="btn" type="button" data-act="'+act+'">Do it</button>')+'</div>').join('')+'</div><button class="link" type="button" data-act="startdone">Hide this list</button></section>'}
+  return h}
+function lateNote(c){let h='';const t=TODAY();
   const late=c.due.filter(x=>x.date<t);
   if(late.length)h+='<div class="note warm"><p><b>Did '+(late.length===1?esc(late[0].bill.name)+' go out?':late.length+' bills go out?')+'</b> Tick them in Bills so the jar stays right.</p><button class="btn" type="button" data-tabgo="bills">Open Bills</button></div>';
   return h}
@@ -416,7 +433,7 @@ function viewToday(c){const short=c.status==='short',todayFrac=c.perDay>0?Math.m
      '<div><span>Spent today'+(c.spentToday>c.spentTodayFree?' (outside caps)':'')+'</span><span>'+money(c.spentTodayFree)+'</span></div>'+
      '<div><span>'+money(c.perDay)+' a day for '+c.daysLeft+' day'+(c.daysLeft>1?'s':'')+', minus today</span><span>'+money(c.leftToday)+'</span></div></section>':'';
   const add='<button class="btn ink big wide" type="button" data-act="add">'+ic('plus')+'Add spend</button>';
-  if(S.prefs.focus)return topBar()+notices(c)+stage+statusLine(c)+add+'<button class="link" type="button" data-act="focus" style="justify-self:center">Show everything again</button>';
+  if(S.prefs.focus)return topBar()+notices(c)+stage+add+statusLine(c)+'<button class="link" type="button" data-act="focus" style="justify-self:center">Show everything again</button>';
   const facts='<p class="facts"><span><b class="num">'+c.daysLeft+'</b> '+(c.daysLeft===1?'day':'days')+' to payday'+(c.np?' ('+esc(pd(c.np.date).toLocaleDateString(undefined,{weekday:'long'}))+')':'')+'</span><span><b class="num">'+money(c.available,false)+'</b> in the jar</span>'+(c.np?'':'<button class="link" type="button" data-act="addpay">Add payday</button>')+'</p>';
   const t=TODAY(),up=c.due.slice(0,3);
   const next='<section class="panel"><div class="row between"><h3>Before payday</h3><button class="link" type="button" data-tabgo="bills">All bills</button></div>'+
@@ -426,7 +443,9 @@ function viewToday(c){const short=c.status==='short',todayFrac=c.perDay>0?Math.m
     (recent.length?'<div class="list">'+recent.map(e=>'<div class="item"><span class="sweet" style="background:var(--'+catColor(e.cat)+')"></span><div class="main"><div class="t">'+esc(e.note||e.cat)+'</div><div class="s">'+esc(e.cat)+' · '+nice(e.date)+'</div></div><span class="amt num">'+money(e.amt)+'</span><button class="iconbtn" type="button" data-del="'+e.id+'" aria-label="Delete '+esc(e.note||e.cat)+'">'+ic('trash')+'</button></div>').join('')+'</div>'
     :'<p class="empty">Nothing logged yet. Tap Add spend after you buy something. It takes three seconds.</p>')+'</section>';
   const rough='<p class="about">Hard day? <button class="link" type="button" data-act="focus">Show just the jar</button> · <button class="link" type="button" data-act="oops">Something went wrong?</button></p>';
-  return topBar()+notices(c)+stage+how+statusLine(c)+facts+add+next+list+rough}
+  const buy=DEMO?'<section class="panel"><h3>Like the jar?</h3><p class="muted">The full app has no limits, installs on your phone and works offline. Pay once, no subscription.</p><a class="btn ink big wide" href="'+(window.DJ_BUY||'../')+'">Get the full app for $6.99</a><p class="small muted">Founder price for the first 25 people, then $10.99. 14-day refund.</p></section>':'';
+  // Add spend sits right under the jar so it is on the first screen of a small phone
+  return topBar()+notices(c)+stage+how+add+statusLine(c)+facts+starter()+next+list+buy+rough}
 function viewBills(c){const t=TODAY(),from=S.start>addDays(t,-14)?S.start:addDays(t,-14),payEnd=c.np?c.np.date:addDays(t,7);
   // Before payday: every due date until payday (a weekly bill can come more than once). After payday: only the next date of bills not already listed.
   const before=[],shown=new Set();
@@ -535,7 +554,9 @@ function debtForm(it){const x=it||{id:uid(),name:'',bal:'',min:'',rate:'',due:''
    if(it)L.querySelector('#ddel').onclick=()=>{const snap=snapshot();S.debts=S.debts.filter(d=>d!==it);S.bills=S.bills.filter(b=>b.debtId!==it.id);save();close();render();toast('Debt deleted.',()=>restore(snap))}})}
 function exportCSV(){const rows=[['date','type','amount','category','note']].concat(S.ledger.filter(e=>e.t!=='set').map(e=>[e.date,e.t,e.amt,e.cat||'',(e.note||'').replace(/"/g,'""')]));
   const csv=rows.map(r=>r.map(v=>'"'+v+'"').join(',')).join('\n');try{const b=new Blob([csv],{type:'text/csv'}),u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='dot-and-jar-'+TODAY()+'.csv';document.body.appendChild(l);l.click();l.remove();toast('Spreadsheet saved to your downloads.')}catch(e){toast('Could not save here. Try in Chrome or Safari.')}}
-function sheet(html,onMount){lastFocus=document.activeElement;const L=document.getElementById('layer');L.innerHTML='<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true"><div class="grab" aria-hidden="true"></div>'+html+'</div></div>';
+function sheet(html,onMount){const L=document.getElementById('layer'),again=!!L.querySelector('.scrim');if(!again)lastFocus=document.activeElement;const tb=document.getElementById('toastbox');if(tb)tb.innerHTML='';
+  // a sheet redrawn in place (next step, a chip tap) does not replay the opening animation
+  L.innerHTML='<div class="scrim" id="scrim"'+(again?' style="animation:none"':'')+'><div class="sheet" role="dialog" aria-modal="true"'+(again?' style="animation:none"':'')+'><div class="grab" aria-hidden="true"></div>'+html+'</div></div>';
   document.getElementById('scrim').onclick=e=>{if(e.target.id==='scrim')close()};document.getElementById('scrim').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.hasAttribute('data-close'))return;if(b.dataset.busy){e.stopImmediatePropagation();e.preventDefault();return}b.dataset.busy='1';setTimeout(()=>{delete b.dataset.busy},700)},true);document.addEventListener('keydown',escClose);onMount&&onMount(L);
   const f=L.querySelector('[autofocus]')||L.querySelector('input,select,button');f&&f.focus()}
 function escClose(e){if(e.key==='Escape')close()}
@@ -614,29 +635,28 @@ function addPause(){const c=calc(S,TODAY());let hours=48;
 
 function setupWizard(){let step=1;const d={name:'',currency:S.example?'USD':S.currency,bal:'',payAmt:'',payFreq:'biweekly',payDate:addDays(TODAY(),7),bills:[]};
   const quick=['Rent','Phone','Internet','Electric','Car','Insurance','Streaming','Gym'];
-  const draw=()=>{const steps='<div class="steps" aria-label="Step '+step+' of 4">'+[1,2,3,4].map(i=>'<i class="'+(i<=step?'on':'')+'"></i>').join('')+'</div>';let body='';
-    if(step===1)body='<h2>Hi. What should we call you?</h2><div class="field"><label for="wn">Your name</label><input type="text" id="wn" value="'+esc(d.name)+'" autofocus></div><div class="field"><label for="wc">Your currency</label><select id="wc">'+CURRENCIES.map(x=>'<option'+(x===d.currency?' selected':'')+'>'+x+'</option>').join('')+'</select></div>';
-    if(step===2)body='<h2>What is in your account right now?</h2><p class="muted">Open your banking app and copy the number. Rough is fine.</p><div class="field"><label for="wb">Balance</label><input class="amount num" type="text" inputmode="decimal" id="wb" value="'+d.bal+'" autofocus></div>';
-    if(step===3)body='<h2>When does money come in next?</h2><div class="field"><label for="wpa">Amount</label><input type="text" inputmode="decimal" id="wpa" class="num" value="'+d.payAmt+'" autofocus></div><div class="field"><label for="wpf">How often</label><select id="wpf">'+FREQS.filter(f=>['weekly','biweekly','semimonthly','monthly'].includes(f[0])).map(([v,l])=>'<option value="'+v+'"'+(d.payFreq===v?' selected':'')+'>'+l+'</option>').join('')+'</select></div><div class="field"><label for="wpd">Next payday</label><input type="date" id="wpd" value="'+d.payDate+'"></div><p class="small muted">More than one income? Add the others later in More.</p>';
-    if(step===4)body='<h2>Bills before your next payday</h2><p class="muted">Tap the ones you have and type the amount. Add the rest any time.</p>'+
+  // 3 short steps: balance, payday, bills. Name lives in Settings; it is not needed to fill the jar.
+  const draw=()=>{const steps='<div class="steps" aria-label="Step '+step+' of 3">'+[1,2,3].map(i=>'<i class="'+(i<=step?'on':'')+'"></i>').join('')+'</div>';let body='';
+    if(step===1)body='<h2>What is in your account right now?</h2><p class="muted">Rough is fine. You can change it any time.</p><div class="field"><label for="wb">Balance</label><input class="amount num" type="text" inputmode="decimal" id="wb" value="'+d.bal+'" autofocus></div><div class="field"><label for="wc">Currency</label><select id="wc">'+CURRENCIES.map(x=>'<option'+(x===d.currency?' selected':'')+'>'+x+'</option>').join('')+'</select></div>';
+    if(step===2)body='<h2>When does money come in next?</h2><div class="field"><label for="wpa">Amount <span class="muted small">(optional)</span></label><input type="text" inputmode="decimal" id="wpa" class="num" value="'+d.payAmt+'" autofocus></div><div class="field"><label for="wpf">How often</label><select id="wpf">'+FREQS.filter(f=>['weekly','biweekly','semimonthly','monthly'].includes(f[0])).map(([v,l])=>'<option value="'+v+'"'+(d.payFreq===v?' selected':'')+'>'+l+'</option>').join('')+'</select></div><div class="field"><label for="wpd">Next payday</label><input type="date" id="wpd" value="'+d.payDate+'"></div><p class="small muted">More than one income? Add the others later in Plan.</p>';
+    if(step===3)body='<h2>Bills before your next payday</h2><p class="muted">Tap the ones you have and type the amount. Add the rest any time.</p>'+
       '<div class="chips">'+quick.map(q=>'<button type="button" class="chip" data-qb="'+q+'" aria-pressed="'+d.bills.some(b=>b.name===q)+'">'+q+'</button>').join('')+'</div>'+
-      d.bills.map((b,i)=>'<div class="row"><span style="flex:1;font-weight:700">'+esc(b.name)+'</span><input type="text" inputmode="decimal" class="num" data-ba="'+i+'" value="'+b.amt+'" placeholder="Amount" style="max-width:130px" aria-label="'+esc(b.name)+' amount"><input type="date" data-bd="'+i+'" value="'+b.date+'" style="max-width:170px" aria-label="'+esc(b.name)+' due date"></div>').join('');
-    sheet(steps+body+'<p class="small" id="werr" role="alert"></p><div class="row">'+(step>1?'<button class="btn" type="button" id="wback">Back</button>':'<button class="btn" type="button" data-close>Not now</button>')+'<button class="btn ink" type="button" id="wnext" style="flex:1">'+(step<4?'Next':'Fill my jar')+'</button></div>',L=>{wireClose(L);
+      d.bills.map((b,i)=>'<div class="field"><span class="lab">'+esc(b.name)+'</span><div class="row" style="flex-wrap:nowrap"><input type="text" inputmode="decimal" class="num" data-ba="'+i+'" value="'+b.amt+'" placeholder="Amount" style="flex:1;min-width:0" aria-label="'+esc(b.name)+' amount"><input type="date" data-bd="'+i+'" value="'+b.date+'" style="flex:1.4;min-width:0" aria-label="'+esc(b.name)+' due date"></div></div>').join('');
+    sheet(steps+body+'<p class="small" id="werr" role="alert"></p><div class="row">'+(step>1?'<button class="btn" type="button" id="wback">Back</button>':'<button class="btn" type="button" data-close>Not now</button>')+'<button class="btn ink" type="button" id="wnext" style="flex:1">'+(step<3?'Next':'Fill my jar')+'</button></div>',L=>{wireClose(L);
       const err=t=>L.querySelector('#werr').textContent=t,grab=()=>{
-        if(step===1){d.name=L.querySelector('#wn').value.trim();d.currency=L.querySelector('#wc').value}
-        if(step===2)d.bal=L.querySelector('#wb').value;
-        if(step===3){d.payAmt=L.querySelector('#wpa').value;d.payFreq=L.querySelector('#wpf').value;d.payDate=L.querySelector('#wpd').value}
-        if(step===4){L.querySelectorAll('[data-ba]').forEach(i=>d.bills[+i.dataset.ba].amt=i.value);L.querySelectorAll('[data-bd]').forEach(i=>d.bills[+i.dataset.bd].date=i.value)}};
+        if(step===1){d.bal=L.querySelector('#wb').value;d.currency=L.querySelector('#wc').value}
+        if(step===2){d.payAmt=L.querySelector('#wpa').value;d.payFreq=L.querySelector('#wpf').value;d.payDate=L.querySelector('#wpd').value}
+        if(step===3){L.querySelectorAll('[data-ba]').forEach(i=>d.bills[+i.dataset.ba].amt=i.value);L.querySelectorAll('[data-bd]').forEach(i=>d.bills[+i.dataset.bd].date=i.value)}};
       L.querySelectorAll('[data-qb]').forEach(b=>b.onclick=()=>{grab();const q=b.dataset.qb,i=d.bills.findIndex(x=>x.name===q);if(i>=0)d.bills.splice(i,1);else d.bills.push({name:q,amt:'',date:addDays(TODAY(),3)});draw()});
       const back=L.querySelector('#wback');if(back)back.onclick=()=>{grab();step--;draw()};
       L.querySelector('#wnext').onclick=()=>{grab();
-        if(step===2&&!isFinite(num(d.bal)))return err('Type your balance, like 640.');
-        if(step===3&&d.payAmt&&!(num(d.payAmt)>0))return err('Type the amount, or leave it empty to skip.');
-        if(step<4){step++;return draw()}
+        if(step===1&&!isFinite(num(d.bal)))return err('Type your balance, like 640.');
+        if(step===2&&d.payAmt&&!(num(d.payAmt)>0))return err('Type the amount, or leave it empty to skip.');
+        if(step<3){step++;return draw()}
         const prefs=S.prefs;S=emptyState(d.name,d.currency);S.prefs=prefs;S.ledger.push({id:uid(),t:'set',amt:num(d.bal),date:TODAY(),ts:Date.now()});
         if(num(d.payAmt)>0)S.pays.push({id:uid(),name:'Pay',amt:num(d.payAmt),freq:d.payFreq,anchor:d.payDate||addDays(TODAY(),7)});
         for(const b of d.bills)if(num(b.amt)>0)S.bills.push({id:uid(),name:b.name,amt:num(b.amt),freq:'monthly',anchor:b.date||addDays(TODAY(),3)});
-        save();close();tab='today';render();toast('Your jar is filled. This is your real number now.')}})};draw()}
+        save();close();tab='today';render();window.scrollTo(0,0);toast('Your jar is filled. This is your real number now.')}})};draw()}
 
 function goalForm(){sheet(sheetHead('Add a savings goal')+'<div class="field"><label for="gn">What for?</label><input type="text" id="gn" placeholder="Holiday, emergency fund" autofocus></div><div class="field"><label for="gt">Target</label><input type="text" inputmode="decimal" id="gt" class="num"></div><p class="small" id="gerr" role="alert"></p><button class="btn ink big wide" type="button" id="gs">Save</button>',L=>{wireClose(L);
   L.querySelector('#gs').onclick=()=>{const name=L.querySelector('#gn').value.trim(),t=num(L.querySelector('#gt').value);if(!name||!(t>0)){L.querySelector('#gerr').textContent='Add a name and a target amount.';return}S.goals.push({id:uid(),name,target:t,saved:0});save();close();render()}})}
