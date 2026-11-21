@@ -106,7 +106,7 @@ button{cursor:pointer}
 .jar3d{position:relative;height:340px;width:100%;display:grid;justify-items:center;align-items:start}
 .jar3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;touch-action:pan-y;cursor:grab}
 .jar3d .jar{display:block;width:190px;height:auto;margin-top:12px}
-.jar3d.gl .jar{display:none}
+.jar3d.gl>svg{display:none}
 .tag{position:absolute;left:0;bottom:10px;max-width:64%;background:var(--tag-paper);color:var(--tag-ink);border:1px solid var(--tag-edge);border-radius:22px;padding:14px 16px 10px;box-shadow:var(--lift);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);z-index:2}
 .tag .lbl{font-weight:700;font-size:.85rem;color:var(--tag-ink-2)}
 .tag .val{font-family:var(--display);font-weight:700;font-size:2.7rem;line-height:1;letter-spacing:-.055em;margin-top:4px;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -116,7 +116,7 @@ button{cursor:pointer}
 .eye[aria-pressed="true"]{background:var(--lemon)!important;color:#1A1003!important;border-color:var(--lemon)!important}
 .unitchip{position:absolute;left:0;top:14px;z-index:2;font-size:.78rem;font-weight:700;color:var(--ink-2);padding:6px 10px;border-radius:99px;background:var(--tag-paper);border:1px solid var(--tag-edge)}
 /* short screens (phone in landscape, or an in-app browser with bars): a smaller jar keeps Add spend on the first screen */
-@media (max-height:700px){.stage,.jar3d{min-height:270px;height:270px}.tag .val{font-size:2.2rem}}
+@media (max-height:700px){.stage,.stage .jar3d{min-height:270px;height:270px}.tag .val{font-size:2.2rem}}
 .how-link{display:block;background:none;border:0;padding:8px 0 0;text-align:left;color:var(--tag-ink)!important;color:var(--ink);font-weight:700;font-size:.9rem;text-decoration:underline;text-decoration-color:var(--rasp);text-decoration-thickness:2px;text-underline-offset:4px;min-height:44px}
 
 .status{display:flex;gap:10px;align-items:center;justify-content:center;font-weight:700;padding:10px 16px;border-radius:99px;justify-self:center;text-align:center}
@@ -195,7 +195,9 @@ input:focus,select:focus{border-color:var(--ink);outline:none}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{min-height:46px;padding:8px 16px;border-radius:99px;border:2px solid var(--line);background:var(--paper);font-weight:700;display:inline-flex;align-items:center;gap:8px}
 .chip[aria-pressed="true"]{border-color:var(--ink);background:var(--paper-2)}
-.preview{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;border-radius:20px;padding:12px 14px;background:var(--paper-2)}
+.jar3d.mini3d{width:118px;height:150px;min-height:0;margin:0}
+.mini3d>svg{width:96px;margin-top:4px}
+.preview{display:grid;grid-template-columns:118px 1fr;gap:14px;align-items:center;border-radius:20px;padding:12px 14px;background:var(--paper-2)}
 .preview svg{width:96px;height:auto}
 .preview b{font-family:var(--display);font-size:1.3rem;font-weight:800;line-height:1.15}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
@@ -581,7 +583,7 @@ function sheet(html,onMount){const L=document.getElementById('layer'),again=!!L.
   document.getElementById('scrim').onclick=e=>{if(e.target.id==='scrim')close()};document.getElementById('scrim').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.hasAttribute('data-close'))return;if(b.dataset.busy){e.stopImmediatePropagation();e.preventDefault();return}b.dataset.busy='1';setTimeout(()=>{delete b.dataset.busy},700)},true);document.addEventListener('keydown',escClose);onMount&&onMount(L);
   const f=L.querySelector('[autofocus]')||L.querySelector('input,select,button');f&&f.focus()}
 function escClose(e){if(e.key==='Escape')close()}
-function close(){document.getElementById('layer').innerHTML='';document.removeEventListener('keydown',escClose);if(lastFocus&&lastFocus.focus&&document.contains(lastFocus))lastFocus.focus()}
+function close(){document.getElementById('layer').innerHTML='';if(tab==='today'&&window.DJJAR)syncJar(calc(S,TODAY()));document.removeEventListener('keydown',escClose);if(lastFocus&&lastFocus.focus&&document.contains(lastFocus))lastFocus.focus()}
 function sheetHead(t,sub){return '<div class="row between"><h2>'+t+'</h2><button class="iconbtn" type="button" data-close aria-label="Close">'+ic('x')+'</button></div>'+(sub?'<p class="muted">'+sub+'</p>':'')}
 function wireClose(L){L.querySelectorAll('[data-close]').forEach(b=>b.onclick=close)}
 
@@ -595,7 +597,7 @@ function addSpend(){const c=calc(S,TODAY());let cat='Other';
    '<div class="field"><label for="note">Note <span class="muted small">(optional)</span></label><input type="text" id="note" placeholder="Coffee with Jo"></div>'+
    '<button class="btn ink big wide" type="button" id="saveSpend">Save</button>',L=>{wireClose(L);
    const a=L.querySelector('#amt'),pv=L.querySelector('#pv');
-   pv.innerHTML=jarSVG({n:c.daysLeft,todayFrac:c.perDay>0?Math.max(0,c.leftToday)/c.perDay:0,cls:'mini',id:'mini',label:'Your jar after this spend'})+'<div id="pvt"></div>';
+   pv.innerHTML='<div class="jar3d mini3d" id="jarpv">'+jarSVG({n:c.daysLeft,todayFrac:c.perDay>0?Math.max(0,c.leftToday)/c.perDay:0,cls:'mini',id:'mini',label:'Your jar after this spend'})+'</div><div id="pvt"></div>';
    const pvt=pv.querySelector('#pvt'),sw=[...pv.querySelectorAll('.sw')];
    const KW=[[/coffee|cafe|lunch|dinner|pizza|takeaway|restaurant|bar|burger/i,'Food out'],[/grocer|supermarket|food shop|aldi|lidl|tesco|walmart|costco|market/i,'Groceries'],[/bus|train|uber|taxi|gas|petrol|fuel|parking|metro/i,'Transport'],[/movie|game|cinema|concert|book|gift|clothes|shopping/i,'Fun'],[/pharm|doctor|meds|dentist|gym/i,'Health'],[/kid|school|nappies|diapers|toy/i,'Kids'],[/rent|cleaning|hardware|ikea|furniture/i,'Home']];
    const pick=k=>{cat=k;L.querySelectorAll('[data-cat]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.cat===k))};
@@ -603,6 +605,7 @@ function addSpend(){const c=calc(S,TODAY());let cat='Other';
    const upd=()=>{const w=words();if(w){const n=L.querySelector('#note');if(!n.dataset.touched)n.value=w;const hit=KW.find(([r])=>r.test(w));if(hit&&cat==='Other')pick(hit[1])}
      const x=num(a.value),ok=x>0,p=ok?previewSpend(c,x,cat):null,free=ok?x-p.inCap:0;
      const used=ok&&c.perDay>0?(c.perDay-c.leftToday+free)/c.perDay:(c.perDay>0?(c.perDay-c.leftToday)/c.perDay:0),gone=Math.min(c.daysLeft,Math.floor(used)),frac=Math.max(0,1-(used-gone));
+     const after=ok?p.leftToday:c.leftToday;window.DJ_JAR_STATE={el:L.querySelector('#jarpv'),count:c.status==='short'?0:Math.min(160,Math.round(Math.max(0,after)/jarUnit(c))),motion:!!S.prefs.motion};if(window.DJJAR)window.DJJAR.sync();
      sw.forEach(g=>{const k=+g.dataset.k;g.classList.toggle('gone',k<gone);g.style.transform=k===gone?'scale('+Math.max(.2,frac).toFixed(3)+')':''});
      pvt.innerHTML=ok?(p.inCap>0?'<span class="small"><b>'+money(p.inCap)+'</b> from your '+esc(cat)+' cap</span><br>':'')+'<span class="small muted">After this</span><br><b class="num">'+(p.leftToday>=0?money(p.leftToday)+' left today':money(-p.leftToday)+' over today')+'</b>'+(p.tomorrow!==null?'<br><span class="small">Then '+money(Math.max(0,p.tomorrow))+' a day until payday</span>':'')
        :'<span class="muted">Type an amount and watch the jar.</span>'};

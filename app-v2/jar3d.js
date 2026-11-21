@@ -93,10 +93,12 @@ class Jar {
     if (!w || !h) return;
     this.renderer.setSize(w, h, false);
     const a = w / h; this.camera.aspect = a;
-    // the number card sits bottom-left, so the jar stands right of centre
-    const dist = 9.6 * Math.max(1, 1.1 / a);
-    this.group.position.x = this.glow.position.x = this.shadow.position.x = 0.75;
-    this.camera.position.set(0, 2.2, dist); this.camera.lookAt(0, 1.55, 0);
+    // on Today the number card sits bottom-left, so the jar stands right of centre;
+    // in the Add spend sheet it is small and centred
+    const mini = this.el.classList.contains('mini3d');
+    const dist = mini ? 8.4 * Math.max(1, 0.8 / a) : 9.6 * Math.max(1, 1.1 / a);
+    this.group.position.x = this.glow.position.x = this.shadow.position.x = mini ? 0 : 0.75;
+    this.camera.position.set(0, 2.2, dist); this.camera.lookAt(0, mini ? 1.7 : 1.55, 0);
     this.camera.updateProjectionMatrix(); this.kick();
   }
   input() {
