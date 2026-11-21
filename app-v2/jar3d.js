@@ -29,6 +29,7 @@ class Jar {
     rd.toneMapping = THREE.ACESFilmicToneMapping;
     this.canvas = rd.domElement;
     this.canvas.setAttribute('aria-hidden', 'true');
+    this.canvas.style.opacity = '0'; this.canvas.style.transition = 'opacity .35s ease';
     const scene = this.scene = new THREE.Scene();
     scene.environment = new THREE.PMREMGenerator(rd).fromScene(new RoomEnvironment(), 0.04).texture;
     this.camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
@@ -56,7 +57,8 @@ class Jar {
     this.shadow.rotation.x = -Math.PI / 2; this.shadow.position.y = -0.02; this.shadow.scale.set(1, 0.85, 1); scene.add(this.shadow);
     this.inner = new THREE.PointLight(0xffa040, 0, 7, 1.2); this.inner.position.set(0, 0.7, 0); g.add(this.inner);
 
-    this.dotMat = new THREE.MeshPhysicalMaterial({ roughness: 0.18, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.1, emissive: 0xff7a00 });
+    // standard (not physical) dots: one shader fewer to compile at start, same look at this size
+    this.dotMat = new THREE.MeshStandardMaterial({ roughness: 0.22, metalness: 0.05, emissive: 0xff7a00 });
     const mesh = this.mesh = new THREE.InstancedMesh(new THREE.SphereGeometry(R, 22, 16), this.dotMat, MAX);
     mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
     const col = new THREE.Color();
@@ -66,8 +68,10 @@ class Jar {
     this.st = new Uint8Array(MAX); this.wait = new Float32Array(MAX); this.s = new Float32Array(MAX); // st: 0 empty, 1 in jar, 2 leaving, 3 queued
     this.m = new THREE.Matrix4(); this.q = new THREE.Quaternion(); this.gv = new THREE.Vector3();
     this.spin = 0; this.spinV = 0; this.tilt = { x: 0, z: 0, tx: 0, tz: 0 };
-    this.first = true; this.el = null; this.dark = null;
+    this.first = true; this.el = null; this.dark = null; this.frames = 0; this.slow = 0;
     this.ro = new ResizeObserver(() => this.resize());
+    this.onScreen = true; this.awakeUntil = 0;
+    this.io = new IntersectionObserver(es => { this.onScreen = es[es.length - 1].isIntersecting; this.kick(); });
     this.input();
   }
   theme() {
@@ -81,11 +85,11 @@ class Jar {
   }
   attach(el) {
     if (this.el === el) return;
-    if (this.el) this.ro.unobserve(this.el);
+    if (this.el) { this.ro.unobserve(this.el); this.io.unobserve(this.el); }
     this.el = el;
     if (!el) return;
     el.prepend(this.canvas); el.classList.add('gl');
-    this.ro.observe(el); this.resize();
+    this.ro.observe(el); this.io.observe(el); this.onScreen = true; this.resize();
   }
   resize() {
     if (!this.el) return;
@@ -113,6 +117,7 @@ class Jar {
       const nx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
       const ny = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
       if (this.motion) { this.tilt.tz = -nx * 0.16; this.tilt.tx = ny * 0.08; }
+      this.awakeUntil = performance.now() + 6000;
       if (x0 !== null) { const dx = e.clientX - x0; x0 = e.clientX; this.spinV = dx * 0.5; this.spin += dx * 0.01; }
       this.kick();
     }, { passive: true });
@@ -120,6 +125,7 @@ class Jar {
   alive() { let n = 0; for (let i = 0; i < MAX; i++) if (this.st[i] === 1 || this.st[i] === 3) n++; return n; }
   setCount(n, instant) {
     n = Math.max(0, Math.min(MAX, n | 0));
+    this.want = n;
     let have = this.alive();
     const { p, v, st, wait } = this;
     if (n > have) {
@@ -187,7 +193,7 @@ class Jar {
           v[o + 1] -= 16 * dt;
           p[o] += v[o] * dt; p[o + 1] += v[o + 1] * dt; p[o + 2] += v[o + 2] * dt;
           this.s[i] = Math.max(0, this.s[i] - dt * 1.2);
-          if (this.s[i] <= 0) st[i] = 0;
+          if (this.s[i] <= 0) { st[i] = 0; if (this.want > this.alive()) { st[i] = 3; wait[i] = 0.02; } }
         }
       }
     }
@@ -210,6 +216,14 @@ class Jar {
       }
     }
   }
+  resting() {
+    for (let i = 0; i < MAX; i++) {
+      const s = this.st[i];
+      if (s === 2 || s === 3) return false;
+      if (s === 1) { const o = i * 3; if (Math.abs(this.v[o]) + Math.abs(this.v[o + 1]) + Math.abs(this.v[o + 2]) > 0.08) return false; }
+    }
+    return true;
+  }
   moving() {
     for (let i = 0; i < MAX; i++) {
       if (this.st[i] === 2 || this.st[i] === 3) return true;
@@ -229,25 +243,39 @@ class Jar {
     this.inner.intensity = (this.dark ? 3 : 1) + n * (this.dark ? 0.09 : 0.02);
     this.glow.material.opacity = 0.45 + Math.min(1, n / 120) * 0.55;
     this.group.rotation.set(this.tilt.x, this.spin, this.tilt.z);
-    this.lid.position.y = 3.15 + (this.motion ? Math.sin(t / 900) * 0.04 : 0);
+    this.lid.position.y = 3.15 + (this.motion && t < this.awakeUntil ? Math.sin(t / 900) * 0.04 : 0);
     this.renderer.render(this.scene, this.camera);
+    if (this.canvas.style.opacity !== '1') this.canvas.style.opacity = '1';
   }
-  kick() { if (!this.raf && this.el && !document.hidden) { this.last = performance.now(); this.raf = requestAnimationFrame(this.loop); } }
+  kick() { if (!this.raf && this.el && this.onScreen && !document.hidden) { this.last = performance.now(); this.raf = requestAnimationFrame(this.loop); } }
   loop(t) {
     this.raf = 0;
     if (!this.el) return;
-    const dt = Math.min((t - this.last) / 1000, 1 / 30); this.last = t;
+    // safety net for weak phones: if the jar's own frames run slow, hand back to the drawn jar so the app never lags
+    const raw = t - this.last;
+    if (this.frames < 70) { this.frames++; if (this.frames > 4 && raw > 50) this.slow++; if (this.slow > 18) return this.off(); }
+    const dt = Math.min(raw / 1000, 1 / 30); this.last = t;
     this.tilt.x += (this.tilt.tx - this.tilt.x) * Math.min(1, dt * 5);
     this.tilt.z += (this.tilt.tz - this.tilt.z) * Math.min(1, dt * 5);
-    this.step(dt / 2); this.step(dt / 2);
-    // drag spins it; it springs back so it always faces you, with a slow sway while motion is on
+    // physics only runs while dots fall, fly or the jar tilts; resting dots cost nothing
+    if (!this.resting() || Math.abs(this.tilt.x - this.tilt.tx) > 0.002 || Math.abs(this.tilt.z - this.tilt.tz) > 0.002) { this.step(dt / 2); this.step(dt / 2); }
+    // drag spins it; it springs back so it always faces you. It sways for a few seconds after opening or a touch,
+    // then rests completely, so an open app does not keep the phone's graphics busy.
     this.spinV *= 0.9;
-    const rest = this.motion ? Math.sin(t / 2600) * 0.3 : 0;
+    const awake = this.motion && t < this.awakeUntil;
+    const rest = awake ? Math.sin(t / 2600) * 0.3 : 0;
     this.spin += this.spinV * dt + (rest - this.spin) * Math.min(1, dt * 1.6);
     this.draw(t);
-    if (this.motion || this.moving()) this.kick();
+    if (awake || this.moving()) this.kick();
+  }
+  off() {
+    this.dead = true; cancelAnimationFrame(this.raf); this.raf = 0;
+    if (this.el) { this.el.classList.remove('gl'); this.ro.unobserve(this.el); this.io.unobserve(this.el); }
+    this.canvas.remove(); this.el = null; window.DJJAR = null;
+    try { this.renderer.dispose(); this.renderer.forceContextLoss(); } catch (_) {}
   }
   sync() {
+    if (this.dead) return;
     const st = window.DJ_JAR_STATE || {};
     this.motion = !!st.motion && !reducedOS.matches;
     this.theme();
@@ -255,15 +283,20 @@ class Jar {
     if (!this.el) return;
     this.setCount(st.count || 0, this.first && !this.motion);
     this.first = false;
+    this.awakeUntil = performance.now() + 6000;
     this.kick();
   }
 }
 
 let jar = null;
-try { jar = new Jar(); } catch (e) { console.warn('3D jar off, drawn jar stays:', e); }
-if (jar) {
+async function start() {
+  if (navigator.deviceMemory && navigator.deviceMemory < 2) return; // very low-memory phones keep the drawn jar
+  try { jar = new Jar(); } catch (e) { console.warn('3D jar off, drawn jar stays:', e); return; }
+  jar.theme();
+  try { if (jar.renderer.compileAsync) await jar.renderer.compileAsync(jar.scene, jar.camera); } catch (_) { /* compiles on first frame instead */ }
   window.DJJAR = jar;
   document.addEventListener('visibilitychange', () => jar.kick());
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { jar.theme(); jar.kick(); });
   jar.sync();
 }
+(window.requestIdleCallback || (f => setTimeout(f, 250)))(start, { timeout: 1200 });

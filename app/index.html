@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dot &amp; Jar</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="theme-color" content="#1F1A3D"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Dot & Jar"><meta name="description" content="ADHD-friendly budget app: one number a day, a jar of sweets until payday. No bank login, no subscription."><script>/* GA loads only on the live site, so local tests do not count as visits; ?internal=1 marks a browser as ours (no GA, pixel or Clarity). */window.DJ_LIVE=location.hostname.endsWith("github.io")&&(function(){try{var s=location.search;if(/[?&]internal=1/.test(s))localStorage.setItem("dj_internal","1");if(/[?&]internal=0/.test(s))localStorage.removeItem("dj_internal");return !localStorage.getItem("dj_internal")}catch(e){return true}})();/* Clicks to Gumroad count as begin_checkout. */window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}if(window.DJ_LIVE){var g=document.createElement("script");g.async=true;g.src="https://www.googletagmanager.com/gtag/js?id=G-QJ1VYS1XVV";document.head.appendChild(g)}gtag("js",new Date());gtag("config","G-QJ1VYS1XVV");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*=\"gumroad.com\"]");if(a){gtag("event","begin_checkout",{link_url:a.href});if(window.fbq)fbq("track","InitiateCheckout")}});if(window.DJ_LIVE){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1207028208319370");fbq("track","PageView")}</script>
+<meta name="theme-color" content="#06070D"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Dot & Jar"><meta name="description" content="ADHD-friendly budget app: one number a day, a jar of sweets until payday. No bank login, no subscription."><script>/* GA loads only on the live site, so local tests do not count as visits; ?internal=1 marks a browser as ours (no GA, pixel or Clarity). */window.DJ_LIVE=location.hostname.endsWith("github.io")&&(function(){try{var s=location.search;if(/[?&]internal=1/.test(s))localStorage.setItem("dj_internal","1");if(/[?&]internal=0/.test(s))localStorage.removeItem("dj_internal");return !localStorage.getItem("dj_internal")}catch(e){return true}})();/* Clicks to Gumroad count as begin_checkout. */window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}if(window.DJ_LIVE){var g=document.createElement("script");g.async=true;g.src="https://www.googletagmanager.com/gtag/js?id=G-QJ1VYS1XVV";document.head.appendChild(g)}gtag("js",new Date());gtag("config","G-QJ1VYS1XVV");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*=\"gumroad.com\"]");if(a){gtag("event","begin_checkout",{link_url:a.href});if(window.fbq)fbq("track","InitiateCheckout")}});if(window.DJ_LIVE){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1207028208319370");fbq("track","PageView")}</script>
 <style>@font-face {
   font-family: 'Atkinson Hyperlegible';
   font-style: normal;
@@ -46,28 +46,28 @@
 <style>
 /* Layout: one calm column. The glass jar is the fixed landmark at the top of Today; sheets rise from the bottom for input. */
 :root{
-  --ground:#F1FAF7; --grid:#D3EAE2; --paper:#FFFFFF; --paper-2:#F6FBF9; --ink:#1F1A3D; --ink-2:#4F4A6B; --line:#D5E5DF;
-  --glass:rgba(255,255,255,.3); --glass-hi:rgba(255,255,255,.95); --rim:rgba(31,26,61,.18);
-  --rasp:#E8436F; --lemon:#F2BE2E; --mint:#24B38E; --blue:#5A6CFF;
-  --good:#16775B; --good-bg:#DDF3EA; --warm:#8A5300; --warm-bg:#FCEBC8; --short:#B02A47; --short-bg:#FBE1E7;
-  --on-ink:#FFFFFF; --primary:#1F1A3D; --on-primary:#FFFFFF; --tag-paper:#FFFFFF; --tag-ink:#1F1A3D; --tag-ink-2:#4F4A6B; --tag-edge:#1F1A3D;
-  --display:"Baloo 2", "Atkinson Hyperlegible", system-ui, sans-serif;
+  --ground:#ECEEF3; --grid:transparent; --paper:#FFFFFF; --paper-2:#F5F6F9; --ink:#0A0C14; --ink-2:#5B6072; --line:#DADDE6;
+  --glass:rgba(255,255,255,.5); --glass-hi:#FFFFFF; --rim:rgba(10,12,20,.15); --glow:rgba(255,178,63,.20); --bar:rgba(255,255,255,.8);
+  --rasp:#E5701A; --lemon:#FFB23F; --mint:#1FA37E; --blue:#4B63F0;
+  --good:#12765A; --good-bg:#DDF3EA; --warm:#8A5300; --warm-bg:#FCEBC8; --short:#A8452A; --short-bg:#FBE6DC;
+  --on-ink:#FFFFFF; --primary:#FFB23F; --on-primary:#1A1003; --tag-paper:rgba(255,255,255,.72); --tag-ink:#0A0C14; --tag-ink-2:#5B6072; --tag-edge:rgba(10,12,20,.08);
+  --display:-apple-system, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
   --body:"Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --lift:0 2px 4px rgba(31,26,61,.06), 0 10px 24px rgba(31,26,61,.08);
+  --lift:0 2px 4px rgba(10,12,20,.06), 0 18px 40px -18px rgba(10,12,20,.25);
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --ground:#14112A; --grid:#221E40; --paper:#1D1938; --paper-2:#252046; --ink:#EEEAFB; --ink-2:#B6B0D3; --line:#332D58;
-  --glass:rgba(255,255,255,.06); --glass-hi:rgba(255,255,255,.18);
-  --rasp:#FF6A90; --lemon:#FFD25C; --mint:#4FD3AC; --blue:#8B98FF;
-  --good:#7FE0BE; --good-bg:#14352B; --warm:#FFC56B; --warm-bg:#3A2B12; --short:#FF97AE; --short-bg:#3D1A26;
-  --on-ink:#14112A; --primary:#4B3F96; --on-primary:#FFFFFF; --tag-paper:#F1EEFA; --tag-ink:#1F1A3D; --tag-ink-2:#4F4A6B; --tag-edge:rgba(255,246,230,.55); --rim:rgba(255,255,255,.25); --lift:0 2px 4px rgba(0,0,0,.3), 0 10px 24px rgba(0,0,0,.25); color-scheme:dark}}
+  --ground:#06070D; --paper:#11131F; --paper-2:#181B2A; --ink:#F4F5FA; --ink-2:#A3A8BC; --line:#252A3D;
+  --glass:rgba(255,255,255,.05); --glass-hi:rgba(255,255,255,.16); --rim:rgba(255,255,255,.22); --glow:rgba(255,140,30,.16); --bar:rgba(10,12,22,.72);
+  --rasp:#FF8A1F; --lemon:#FFB23F; --mint:#3FD0A6; --blue:#8FA2FF;
+  --good:#7FE0BE; --good-bg:#10302A; --warm:#FFC56B; --warm-bg:#33260F; --short:#FFA48A; --short-bg:#3A1D16;
+  --on-ink:#06070D; --tag-paper:rgba(255,255,255,.06); --tag-ink:#F4F5FA; --tag-ink-2:#A3A8BC; --tag-edge:rgba(255,255,255,.12); --lift:0 2px 4px rgba(0,0,0,.3), 0 18px 40px -18px rgba(0,0,0,.6); color-scheme:dark}}
 :root[data-theme="dark"]{
-  --ground:#14112A; --grid:#221E40; --paper:#1D1938; --paper-2:#252046; --ink:#EEEAFB; --ink-2:#B6B0D3; --line:#332D58;
-  --glass:rgba(255,255,255,.06); --glass-hi:rgba(255,255,255,.18);
-  --rasp:#FF6A90; --lemon:#FFD25C; --mint:#4FD3AC; --blue:#8B98FF;
-  --good:#7FE0BE; --good-bg:#14352B; --warm:#FFC56B; --warm-bg:#3A2B12; --short:#FF97AE; --short-bg:#3D1A26;
-  --on-ink:#14112A; --primary:#4B3F96; --on-primary:#FFFFFF; --tag-paper:#F1EEFA; --tag-ink:#1F1A3D; --tag-ink-2:#4F4A6B; --tag-edge:rgba(255,246,230,.55); --rim:rgba(255,255,255,.25); --lift:0 2px 4px rgba(0,0,0,.3), 0 10px 24px rgba(0,0,0,.25); color-scheme:dark}
-:root[data-calm="1"]{--rasp:#C98597; --lemon:#D6B86E; --mint:#79AE9C; --blue:#8D94C9}
+  --ground:#06070D; --paper:#11131F; --paper-2:#181B2A; --ink:#F4F5FA; --ink-2:#A3A8BC; --line:#252A3D;
+  --glass:rgba(255,255,255,.05); --glass-hi:rgba(255,255,255,.16); --rim:rgba(255,255,255,.22); --glow:rgba(255,140,30,.16); --bar:rgba(10,12,22,.72);
+  --rasp:#FF8A1F; --lemon:#FFB23F; --mint:#3FD0A6; --blue:#8FA2FF;
+  --good:#7FE0BE; --good-bg:#10302A; --warm:#FFC56B; --warm-bg:#33260F; --short:#FFA48A; --short-bg:#3A1D16;
+  --on-ink:#06070D; --tag-paper:rgba(255,255,255,.06); --tag-ink:#F4F5FA; --tag-ink-2:#A3A8BC; --tag-edge:rgba(255,255,255,.12); --lift:0 2px 4px rgba(0,0,0,.3), 0 18px 40px -18px rgba(0,0,0,.6); color-scheme:dark}
+:root[data-calm="1"]{--rasp:#C9926A; --lemon:#D6B86E; --mint:#79AE9C; --blue:#8D94C9}
 :root[data-size="m"]{font-size:18px} :root[data-size="l"]{font-size:20px}
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 :root[data-motion="0"] *{transition:none!important;animation:none!important}
@@ -75,12 +75,12 @@
 *{box-sizing:border-box}
 html,body{min-height:100%}
 body{margin:0;color:var(--ink);font-family:var(--body);line-height:1.5;
-  background-color:var(--ground);background-image:radial-gradient(var(--grid) 1.2px,transparent 1.3px);background-size:16px 16px;
+  background-color:var(--ground);background-image:radial-gradient(130% 55% at 50% 0%,var(--glow),transparent 62%);background-attachment:fixed;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px calc(168px + env(safe-area-inset-bottom,0px));
   caret-color:var(--rasp);scrollbar-color:var(--line) transparent}
 ::selection{background:var(--lemon);color:#1F1A3D}
 .app{max-width:520px;margin:0 auto;display:grid;gap:16px}
-h1,h2,h3{margin:0;font-family:var(--display);font-weight:700;line-height:1.2;text-wrap:balance}
+h1,h2,h3{margin:0;font-family:var(--display);font-weight:700;line-height:1.15;letter-spacing:-.03em;text-wrap:balance}
 h2{font-size:1.5rem} h3{font-size:1.15rem}
 p{margin:0}
 .num{font-variant-numeric:tabular-nums}
@@ -93,7 +93,7 @@ button{cursor:pointer}
 
 /* top bar */
 .top{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px}
-.mark{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:1.35rem;letter-spacing:-.01em}
+.mark{display:flex;align-items:center;gap:8px;font-family:var(--display);font-weight:700;font-size:1.25rem;letter-spacing:-.03em}
 .mark svg{width:26px;height:26px}
 .mark .amp{color:var(--rasp)}
 .screen-title{font-family:var(--display);font-weight:800;font-size:1.6rem}
@@ -101,18 +101,22 @@ button{cursor:pointer}
 .iconbtn svg{width:22px;height:22px}
 .iconbtn[aria-pressed="true"]{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
 
-/* the jar stage */
-.stage{position:relative;width:min(100%,352px);min-height:236px;margin:4px auto 0}
-.jar{display:block;width:204px;height:auto}
-.tag{position:absolute;right:0;top:46px;width:min(11.5rem,54%);background:var(--tag-paper);color:var(--tag-ink);border:2px solid var(--tag-edge);border-radius:8px 18px 18px 18px;padding:26px 14px 12px 16px;box-shadow:var(--lift);transform:rotate(3deg);transform-origin:12px 12px}
-.tag:before{content:"";position:absolute;left:10px;top:9px;width:9px;height:9px;border-radius:50%;border:2px solid var(--tag-ink);background:var(--ground)}
-.tag:after{content:"";position:absolute;left:12px;top:-34px;width:2px;height:44px;background:var(--ink);transform:rotate(-38deg);transform-origin:bottom}
-.tag .lbl{font-weight:700;font-size:.9rem;color:var(--tag-ink-2)}
-.tag .val{font-family:var(--display);font-weight:800;font-size:2.35rem;line-height:1;letter-spacing:-.02em;margin-top:2px;white-space:nowrap}
-.tag .val.long{font-size:1.75rem}
+/* the jar stage: a live 3D glass jar (falls back to the drawn jar), the number on a glass card, the privacy eye */
+.stage{position:relative;width:100%;min-height:340px;margin:0 auto}
+.jar3d{position:relative;height:340px;width:100%;display:grid;justify-items:center;align-items:start}
+.jar3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;touch-action:pan-y;cursor:grab}
+.jar3d .jar{display:block;width:190px;height:auto;margin-top:12px}
+.jar3d.gl>svg{display:none}
+.tag{position:absolute;left:0;bottom:10px;max-width:64%;background:var(--tag-paper);color:var(--tag-ink);border:1px solid var(--tag-edge);border-radius:22px;padding:14px 16px 10px;box-shadow:var(--lift);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);z-index:2}
+.tag .lbl{font-weight:700;font-size:.85rem;color:var(--tag-ink-2)}
+.tag .val{font-family:var(--display);font-weight:700;font-size:2.7rem;line-height:1;letter-spacing:-.055em;margin-top:4px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tag .val.long{font-size:2rem}
 .tag .sub{font-size:.85rem;margin-top:6px;color:var(--tag-ink-2)}
+.eye{position:absolute;right:0;top:6px;z-index:3;border-radius:50%!important;background:var(--tag-paper)!important;border:1px solid var(--tag-edge)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.eye[aria-pressed="true"]{background:var(--lemon)!important;color:#1A1003!important;border-color:var(--lemon)!important}
+.unitchip{position:absolute;left:0;top:14px;z-index:2;font-size:.78rem;font-weight:700;color:var(--ink-2);padding:6px 10px;border-radius:99px;background:var(--tag-paper);border:1px solid var(--tag-edge)}
 /* short screens (phone in landscape, or an in-app browser with bars): a smaller jar keeps Add spend on the first screen */
-@media (max-height:620px){.app{gap:12px}.stage{min-height:196px;width:min(100%,330px)}.jar{width:168px}.tag{top:30px}}
+@media (max-height:700px){.stage,.stage .jar3d{min-height:270px;height:270px}.tag .val{font-size:2.2rem}}
 .how-link{display:block;background:none;border:0;padding:8px 0 0;text-align:left;color:var(--tag-ink)!important;color:var(--ink);font-weight:700;font-size:.9rem;text-decoration:underline;text-decoration-color:var(--rasp);text-decoration-thickness:2px;text-underline-offset:4px;min-height:44px}
 
 .status{display:flex;gap:10px;align-items:center;justify-content:center;font-weight:700;padding:10px 16px;border-radius:99px;justify-self:center;text-align:center}
@@ -124,15 +128,15 @@ button{cursor:pointer}
 .facts b{color:var(--ink);font-family:var(--display);font-weight:800}
 .btn{min-height:52px;padding:10px 20px;border-radius:16px;border:1.5px solid var(--line);background:var(--paper);font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .12s ease-out, background-color .2s}
 .btn svg{width:20px;height:20px}
-.btn.ink{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
-.btn.big{min-height:64px;font-family:var(--display);font-size:1.3rem;font-weight:800;border-radius:20px}
+.btn.ink{background:linear-gradient(180deg,#FFC766,var(--lemon) 55%,var(--rasp));color:var(--on-primary);border:0;box-shadow:inset 0 0 0 1px rgba(255,210,140,.55),0 12px 34px -12px rgba(255,140,30,.75)}
+.btn.big{min-height:64px;font-family:var(--display);font-size:1.25rem;font-weight:700;letter-spacing:-.02em;border-radius:999px}
 .btn.wide{width:100%}
 .btn.danger{color:var(--short);border-color:var(--short)}
 .btn:active{transform:scale(.97)}
 .btn:disabled{opacity:.45;cursor:not-allowed}
 .link{background:none;border:0;padding:8px 0;color:var(--ink);font-weight:700;text-decoration:underline;text-decoration-color:var(--rasp);text-decoration-thickness:2px;text-underline-offset:4px;min-height:44px}
 
-.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;display:grid;gap:12px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:18px;display:grid;gap:12px;box-shadow:var(--lift)}
 .note{border-radius:18px;padding:12px 16px;display:grid;gap:6px;background:var(--paper-2);border:1.5px dashed var(--ink-2)}
 a.btn{text-decoration:none;color:inherit}a.btn.ink{color:var(--on-primary)}
 .note.warm{background:var(--warm-bg);border-color:var(--warm)}
@@ -150,7 +154,7 @@ a.btn{text-decoration:none;color:inherit}a.btn.ink{color:var(--on-primary)}
 .item .main{flex:1;min-width:0}
 .item .t{font-weight:700;overflow-wrap:anywhere}
 .item .s{font-size:.85rem;color:var(--ink-2)}
-.item .amt{font-family:var(--display);font-weight:800;font-size:1.1rem;white-space:nowrap}
+.item .amt{font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:-.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
 .sweet{width:14px;height:14px;border-radius:50%;flex:none;box-shadow:inset -2px -2px 0 rgba(0,0,0,.14)}
 .check{width:48px;height:48px;border-radius:50%;border:2px solid var(--ink-2);background:var(--paper);display:grid;place-items:center;flex:none;color:var(--on-ink)}
 .check[aria-pressed="true"]{background:var(--mint);border-color:var(--mint)}
@@ -158,17 +162,17 @@ a.btn{text-decoration:none;color:inherit}a.btn.ink{color:var(--on-primary)}
 .tagchip{font-size:.75rem;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap;background:var(--warm-bg);color:var(--warm)}
 .empty{text-align:center;padding:12px;color:var(--ink-2)}
 
-.hero-num{font-family:var(--display);font-weight:800;font-size:2.6rem;line-height:1.15;letter-spacing:-.02em}
+.hero-num{font-family:var(--display);font-weight:700;font-size:2.6rem;line-height:1.15;letter-spacing:-.02em}
 .kept{color:var(--good)}
 
 /* tabs */
-nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--line);
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--bar);border-top:1px solid var(--line);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4);
   padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
 nav.tabs .in{max-width:520px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 nav.tabs button{min-height:58px;border:0;background:none;border-radius:16px;display:grid;justify-items:center;align-content:center;gap:2px;font-size:.8rem;font-weight:700;color:var(--ink-2);position:relative}
 nav.tabs button svg{width:24px;height:24px}
-nav.tabs button[aria-current="page"]{color:var(--ink);background:var(--grid)}
-.fab{position:fixed;background:var(--primary)!important;color:var(--on-primary)!important;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:21;min-height:60px;padding:0 22px;border-radius:20px;border:0;background:var(--ink);color:var(--on-ink);font-family:var(--display);font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:8px;box-shadow:var(--lift)}
+nav.tabs button[aria-current="page"]{color:var(--ink);background:var(--paper-2);box-shadow:inset 0 -2px 0 var(--lemon)}
+.fab{position:fixed;background:linear-gradient(180deg,#FFC766,var(--lemon) 55%,var(--rasp))!important;color:var(--on-primary)!important;box-shadow:0 12px 34px -10px rgba(255,140,30,.8);right:max(16px,env(safe-area-inset-right,0px));bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:21;min-height:60px;padding:0 22px;border-radius:20px;border:0;background:var(--ink);color:var(--on-ink);font-family:var(--display);font-weight:800;font-size:1.15rem;display:flex;align-items:center;gap:8px;box-shadow:var(--lift)}
 .fab svg{width:22px;height:22px}
 @media (min-width:600px){.fab{right:calc(50% - 260px)}}
 
@@ -187,11 +191,13 @@ nav.tabs button[aria-current="page"]{color:var(--ink);background:var(--grid)}
 .field label,.field .lab{font-weight:700}
 input[type=text],input[type=date],input[type=number],select{min-height:54px;width:100%;padding:10px 14px;border-radius:16px;border:2px solid var(--line);background:var(--paper-2)}
 input:focus,select:focus{border-color:var(--ink);outline:none}
-.amount{font-family:var(--display);font-size:2.4rem;font-weight:800;text-align:center;min-height:76px}
+.amount{font-family:var(--display);font-size:2.4rem;font-weight:700;letter-spacing:-.04em;text-align:center;min-height:76px}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 .chip{min-height:46px;padding:8px 16px;border-radius:99px;border:2px solid var(--line);background:var(--paper);font-weight:700;display:inline-flex;align-items:center;gap:8px}
 .chip[aria-pressed="true"]{border-color:var(--ink);background:var(--paper-2)}
-.preview{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;border-radius:20px;padding:12px 14px;background:var(--paper-2)}
+.jar3d.mini3d{width:118px;height:150px;min-height:0;margin:0}
+.mini3d>svg{width:96px;margin-top:4px}
+.preview{display:grid;grid-template-columns:118px 1fr;gap:14px;align-items:center;border-radius:20px;padding:12px 14px;background:var(--paper-2)}
 .preview svg{width:96px;height:auto}
 .preview b{font-family:var(--display);font-size:1.3rem;font-weight:800;line-height:1.15}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
@@ -314,12 +320,12 @@ function exampleState(){const t=TODAY();return {v:1,example:true,name:'Sam',curr
   pays:[{id:'p1',name:'Work',amt:1850,freq:'biweekly',anchor:addDays(t,6)}],
   bills:[{id:'b1',name:'Rent',amt:950,freq:'monthly',anchor:addDays(t,8)},{id:'b2',name:'Phone',amt:45,freq:'monthly',anchor:addDays(t,2)},
     {id:'b3',name:'Music app',amt:11.99,freq:'monthly',anchor:addDays(t,4)},{id:'b4',name:'Car insurance',amt:372,freq:'months',every:6,anchor:addDays(t,40),spread:true}],
-  ledger:[{id:'l0',t:'set',amt:640,date:addDays(t,-3),ts:1},{id:'l1',t:'spend',amt:18.5,cat:'Groceries',note:'Corner shop',date:addDays(t,-1),ts:2},{id:'l2',t:'spend',amt:6.4,cat:'Food out',note:'Coffee',date:t,ts:3}],
-  paid:{},payOk:{},pauses:[{id:'w1',item:'Noise-cancelling headphones',amt:89,created:Date.now()-20*3600e3,hours:48}],kept:34,goals:[{id:'g1',name:'Emergency fund',target:1000,saved:220}],
-  caps:[],debts:[{id:'d1',name:'Credit card',bal:1450,min:45,rate:22.9}],dump:[{id:'n1',text:'Ask landlord about the boiler',ts:Date.now()-3600e3}],extra:25,method:'small',letGo:1,
-  prefs:{theme:'auto',size:'s',calm:false,motion:true,focus:false}}}
+  ledger:[{id:'l0',t:'set',amt:640,date:addDays(t,-3),ts:1},{id:'l1',t:'spend',amt:18.5,cat:'Groceries',note:'Corner store',date:addDays(t,-1),ts:2},{id:'l2',t:'spend',amt:6.4,cat:'Food out',note:'Coffee',date:t,ts:3}],
+  paid:{},payOk:{},pauses:[{id:'w1',item:'Noise-canceling headphones',amt:89,created:Date.now()-20*3600e3,hours:48}],kept:34,goals:[{id:'g1',name:'Emergency fund',target:1000,saved:220}],
+  caps:[],debts:[{id:'d1',name:'Credit card',bal:1450,min:45,rate:22.9}],dump:[{id:'n1',text:'Ask landlord about the water heater',ts:Date.now()-3600e3}],extra:25,method:'small',letGo:1,
+  prefs:{theme:'dark',size:'s',calm:false,motion:true,focus:false}}}
 function emptyState(name,currency){const t=TODAY();return {v:1,example:false,name:name||'',currency:currency||'USD',start:t,lastOpen:t,pays:[],bills:[],ledger:[],paid:{},payOk:{},pauses:[],kept:0,goals:[],caps:[],debts:[],dump:[],extra:0,method:'small',letGo:0,startDone:false,
-  prefs:{theme:'auto',size:'s',calm:false,motion:true,focus:false}}}
+  prefs:{theme:'dark',size:'s',calm:false,motion:true,focus:false}}}
 function load(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r)}catch(e){}return null}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 let S=load()||exampleState();
@@ -328,7 +334,8 @@ let tab='today',ui={how:false};
 const prevOpen=S.lastOpen;S.lastOpen=TODAY();save();
 
 // ---------- helpers ----------
-function money(n,cents=true){try{return new Intl.NumberFormat(undefined,{style:'currency',currency:S.currency,minimumFractionDigits:cents?2:0,maximumFractionDigits:cents?2:0}).format(n)}catch(e){return (n<0?'-':'')+'$'+Math.abs(n).toFixed(2)}}
+function pl(n,w){return n+' '+(n===1?w:w+'s')}
+const NFC={};function money(n,cents=true){if(S&&S.prefs&&S.prefs.hide)return '••••';try{const k=S.currency+(cents?2:0);return (NFC[k]||(NFC[k]=new Intl.NumberFormat(undefined,{style:'currency',currency:S.currency,minimumFractionDigits:cents?2:0,maximumFractionDigits:cents?2:0}))).format(n)}catch(e){return (n<0?'-':'')+'$'+Math.abs(n).toFixed(2)}}
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function nice(d){const t=TODAY(),n=diffDays(t,d);if(n===0)return 'today';if(n===1)return 'tomorrow';if(n===-1)return 'yesterday';
   const s=pd(d).toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'});return n<0?s+' (late)':s}
@@ -348,7 +355,7 @@ const I={
  smile:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1.8 2 5.2 2 7 0M9 9.5h.01M15 9.5h.01"/>',
  leaf:'<path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l8-8"/>', heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/>',
  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/>',
- eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>'};
+ focus:'<path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="2.5"/>',eyeoff:'<path d="M3 3l18 18"/><path d="M10.6 5.1A10.6 10.6 0 0 1 12 5c6 0 10 7 10 7a17 17 0 0 1-3.2 3.9M6.6 6.6C3.8 8.3 2 12 2 12s4 7 10 7a9.6 9.6 0 0 0 4.4-1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',eye:'<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>'};
 function ic(n){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+I[n]+'</svg>'}
 function applyPrefs(){const r=document.documentElement,p=S.prefs;
   if(p.theme==='auto')r.removeAttribute('data-theme');else r.setAttribute('data-theme',p.theme);
@@ -390,18 +397,21 @@ function render(){applyPrefs();const c=calc(S,TODAY());const app=document.getEle
   if(ui.prevFrac!=null){const g=app.querySelector('.today-sweet');if(g){const to=g.style.transform;g.style.transition='none';g.style.transform='scale('+ui.prevFrac+')';g.getBoundingClientRect();g.style.transition='';requestAnimationFrame(()=>g.style.transform=to)}ui.prevFrac=null}
   renderTabs();const fab=document.getElementById('fab');fab.innerHTML=ic('plus')+'Add spend';fab.hidden=(tab==='plan'||tab==='today');
   // Today: the floating Add spend shows only while the big one is off screen (short phones, or scrolled down)
-  if(fabIO){fabIO.disconnect();const big=tab==='today'&&app.querySelector('.btn.big[data-act="add"]');if(big)fabIO.observe(big)}
-  bind(c)}
-const fabIO='IntersectionObserver' in window?new IntersectionObserver(es=>{if(tab==='today')document.getElementById('fab').hidden=es[es.length-1].isIntersecting},{rootMargin:'0px 0px -96px 0px'}):null;
+  if(fabIO){fabIO.disconnect();fabSeen.clear();const big=tab==='today'&&app.querySelector('.btn.big[data-act="add"]');if(big){fabIO.observe(big);const tg=app.querySelector('.stage .tag');if(tg)fabIO.observe(tg)}}
+  bind(c);syncJar(c)}
+// one dot is a fixed slice of today's money, so a spend takes dots out and money coming in drops dots in
+function jarUnit(c){return [1,2,5,10,20,50,100,200,500,1000].find(u=>c.perDay/u<=60)||1000}
+function syncJar(c){const u=jarUnit(c);window.DJ_JAR_STATE={el:tab==='today'?document.getElementById('jar3d'):null,count:c.status==='short'?0:Math.min(160,Math.round(Math.max(0,c.leftToday)/u)),motion:!!S.prefs.motion};if(window.DJJAR)window.DJJAR.sync()}
+const fabSeen=new Map(),fabIO='IntersectionObserver' in window?new IntersectionObserver(es=>{es.forEach(e=>fabSeen.set(e.target,e.isIntersecting));if(tab==='today')document.getElementById('fab').hidden=[...fabSeen.values()].some(Boolean)},{rootMargin:'0px 0px -96px 0px'}):null;
 function renderTabs(){const t=[['today','Today','home'],['bills','Bills','bills'],['pause','Pause','pause'],['plan','Plan','more']];
   document.getElementById('tabs').innerHTML=t.map(([k,l,i])=>'<button type="button" data-tab="'+k+'"'+(tab===k?' aria-current="page"':'')+'>'+ic(i)+l+'</button>').join('');
   document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>{tab=b.dataset.tab;window.scrollTo(0,0);render()})}
 function topBar(title,gear){return '<div class="top">'+(title?'<h1 class="screen-title">'+title+'</h1>':'<div class="mark">'+markSVG()+'<span>Dot <span class="amp">&amp;</span> Jar</span></div>')+
- (gear?'<button class="iconbtn" type="button" data-act="settings" aria-label="Settings">'+ic('gear')+'</button>':'')+(title?'':'<button class="iconbtn" type="button" data-act="focus" aria-pressed="'+(S.prefs.focus?'true':'false')+'" aria-label="Focus mode: show only the jar and the number">'+ic('eye')+'</button>')+'</div>'}
+ (gear?'<button class="iconbtn" type="button" data-act="settings" aria-label="Settings">'+ic('gear')+'</button>':'')+(title?'':'<button class="iconbtn" type="button" data-act="focus" aria-pressed="'+(S.prefs.focus?'true':'false')+'" aria-label="Focus mode: show only the jar and the number">'+ic('focus')+'</button>')+'</div>'}
 function notices(c){let h='';const t=TODAY();
   // demo: the first screen shows the app, not a price; the spend counter only appears near the end
   if(DEMO){const left=Math.max(0,DEMO_MAX-demoUsed());if(left<=5)h+='<div class="note"><p><b>'+left+' demo '+(left===1?'spend':'spends')+' left.</b> <a class="link" href="'+(window.DJ_BUY||'../')+'">Get the full app</a></p></div>'}
-  if(S.example)h+=DEMO?'<div class="note"><p><b>Try it:</b> tap <b>Add spend</b> and watch the jar change. These are example numbers. <button class="link" type="button" data-act="setup">Use my own numbers</button></p></div>'
+  if(S.example)h+=DEMO?'<div class="note"><p>'+(demoUsed()<DEMO_MAX?'<b>Try it:</b> tap <b>Add spend</b> and watch the jar change. ':'')+'These are example numbers. <button class="link" type="button" data-act="setup">Use my own numbers</button></p></div>'
     :'<div class="note"><p><b>Example numbers.</b> Nothing here is real. <button class="link" type="button" data-act="setup">Start with my numbers</button></p></div>';
   const ih=installHint();if(ih)h+=ih;
   const away=prevOpen?diffDays(prevOpen,t):0;
@@ -416,6 +426,7 @@ function installHint(){if(DEMO||S.installHidden)return '';
   const standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;if(standalone)return '';
   const ua=navigator.userAgent,inApp=/FBAN|FBAV|Instagram|TikTok|musical_ly|Bytedance|Snapchat|Line\//i.test(ua),ios=/iPhone|iPad|iPod/i.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1),android=/Android/i.test(ua);
   if(!inApp&&!ios&&!android)return '';
+  if(!inApp&&S.example)return '';
   const body=inApp?'<b>Open this in '+(ios?'Safari':'Chrome')+' first.</b> You are inside another app\'s browser, where Dot &amp; Jar can\'t be saved and your numbers would stay in that app. Tap <b>⋯</b> or <b>⋮</b> at the top, then <b>Open in '+(ios?'Safari':'browser')+'</b>.'
     :ios?'<b>Keep Dot &amp; Jar one tap away.</b> Tap the <b>Share</b> button (square with an arrow), then <b>Add to Home Screen</b>. It then opens like an app, offline too.'
     :'<b>Keep Dot &amp; Jar one tap away.</b> Tap <b>⋮</b> at the top right, then <b>Install app</b> or <b>Add to Home screen</b>. It then opens like an app, offline too.';
@@ -434,10 +445,10 @@ function statusLine(c){const m={good:['smile','On track. Enjoy today.'],low:['le
   return '<div class="status '+c.status+'">'+ic(m[0])+'<span>'+m[1]+'</span></div>'}
 function viewToday(c){const short=c.status==='short',todayFrac=c.perDay>0?Math.max(0,c.leftToday)/c.perDay:0;
   const tagVal=short?money(Math.abs(c.available)):money(Math.max(0,c.leftToday));
-  const stage='<section class="stage" aria-label="Today">'+jarSVG({n:short?0:c.daysLeft,todayFrac,id:'main'})+
+  const stage='<section class="stage" aria-label="Today"><div class="jar3d" id="jar3d">'+jarSVG({n:short?0:c.daysLeft,todayFrac,id:'main'})+'</div>'+(S.prefs.hide||short?'':'<span class="unitchip num">1 dot = '+money(jarUnit(c),false)+'</span>')+'<button class="iconbtn eye" type="button" data-act="hide" aria-pressed="'+!!S.prefs.hide+'" aria-label="'+(S.prefs.hide?'Show amounts':'Hide amounts')+'">'+ic(S.prefs.hide?'eyeoff':'eye')+'</button>'+
     '<div class="tag"><div class="lbl">'+(short?'Short before payday':'Safe to spend today')+'</div><div class="val num'+(tagVal.length>8?' long':'')+'">'+tagVal+'</div>'+
     (c.status==='over'?'<div class="sub">'+money(-c.leftToday)+' over. It spreads over the next '+Math.max(1,c.daysLeft-1)+' days.</div>':'')+
-    '<button class="how-link small" type="button" data-act="how" aria-expanded="'+ui.how+'">Show the maths</button></div></section>';
+    '<button class="how-link small" type="button" data-act="how" aria-expanded="'+ui.how+'">Show the math</button></div></section>';
   const how=ui.how?'<section class="panel how num" aria-label="How the number is worked out">'+
      '<div><span>In your account</span><span>'+money(c.balance)+'</span></div>'+
      '<div><span>Bills before payday ('+c.due.length+')</span><span>− '+money(c.dueTotal)+'</span></div>'+
@@ -492,7 +503,7 @@ function monthView(c){const t=TODAY(),off=ui.monthOff||0,F=pd(t);const first=new
     '<div class="legend small"><span><b class="cd-bill"></b>bill</span><span><b class="cd-paid"></b>paid</span><span><b class="cd-pay"></b>payday</span></div>'+day+'</section>'}
 function viewPause(c){const now=Date.now();
   const items=S.pauses.map(p=>{const ready=p.created+p.hours*3600e3,left=Math.ceil((ready-now)/3600e3),days=c.perDay>0?(p.amt/c.perDay):0;
-    return '<div class="item"><div class="main"><div class="t">'+esc(p.item)+'</div><div class="s">'+(left>0?'Decide in '+left+' h':'<b>Ready. Do you still want it?</b>')+(days?' · about '+(Math.round(days*10)/10)+' days of sweets':'')+'</div>'+
+    return '<div class="item"><div class="main"><div class="t">'+esc(p.item)+'</div><div class="s">'+(left>0?'Decide in '+left+' h':'<b>Ready. Do you still want it?</b>')+(days?' · about '+pl(Math.round(days*10)/10,'day')+' of spending money':'')+'</div>'+
       (left<=0?'<div class="row" style="margin-top:8px"><button class="btn" type="button" data-buy="'+p.id+'">Buy it</button><button class="btn ink" type="button" data-letgo="'+p.id+'">Let it go</button></div>':'<button class="link" type="button" data-letgo="'+p.id+'">Let it go now</button>')+
       '</div><span class="amt num">'+money(p.amt)+'</span></div>'}).join('');
   return topBar('Pause')+'<section class="panel"><h2>Want something? Pause it first.</h2><p class="muted">Put it here instead of buying it now. When the timer ends, decide with a calm head. If you let it go, it counts as kept.</p><button class="btn ink big wide" type="button" data-act="addpause">'+ic('pause')+'Pause a purchase</button></section>'+
@@ -524,13 +535,13 @@ function viewPlan(c){const t=TODAY(),ms=monthSpends();
    '<p class="small muted">Bills paid '+money(billsOut)+' · Money in '+money(moneyIn)+'</p></section>';
   const paidCount=Object.keys(S.paid).filter(k=>(k.split('|')[1]||'').slice(0,7)===t.slice(0,7)).length,days=new Set(ms.filter(e=>e.t==='spend').map(e=>e.date)).size;
   const wins='<section class="panel"><h3>Wins this month</h3><p class="small muted">Only what went right. No streaks to break.</p><div class="facts" style="justify-content:flex-start">'+
-   '<span><b class="num">'+paidCount+'</b> bills handled</span><span><b class="num">'+(S.letGo||0)+'</b> wishes let go</span><span><b class="num">'+money(S.kept,false)+'</b> kept</span><span><b class="num">'+days+'</b> days you checked in</span></div></section>';
+   '<span><b class="num">'+paidCount+'</b> '+(paidCount===1?'bill':'bills')+' handled</span><span><b class="num">'+(S.letGo||0)+'</b> '+((S.letGo||0)===1?'wish':'wishes')+' let go</span><span><b class="num">'+money(S.kept,false)+'</b> kept</span><span><b class="num">'+days+'</b> '+(days===1?'day':'days')+' you checked in</span></div></section>';
   return topBar('Plan',true)+bal+pays+caps+debts+goals+where+wins+'<p class="about"><button class="link" type="button" data-act="oops">Something went wrong?</button> · <button class="link" type="button" data-act="settings">Settings</button></p><p class="about">Dot &amp; Jar is made by someone with ADHD, for ADHD brains.</p>'}
 function settingsSheet(){const p=S.prefs;const seg=(k,opts)=>'<div class="seg" role="group">'+opts.map(([v,l])=>'<button type="button" data-pref="'+k+'" data-val="'+v+'" aria-pressed="'+(p[k]===v)+'">'+l+'</button>').join('')+'</div>';
   sheet(sheetHead('Settings')+
    '<h3>Comfort</h3><div class="field"><span class="lab">Text size</span>'+seg('size',[['s','Normal'],['m','Bigger'],['l','Biggest']])+'</div>'+
-   '<div class="field"><span class="lab">Colours</span>'+seg('theme',[['auto','Match phone'],['light','Light'],['dark','Dark']])+'</div>'+
-   '<label class="switch"><span><b>Calm colours</b><br><span class="small muted">Softer sweets, less bright</span></span><input type="checkbox" id="calm" '+(p.calm?'checked':'')+'></label>'+
+   '<div class="field"><span class="lab">Colors</span>'+seg('theme',[['auto','Match phone'],['light','Light'],['dark','Dark']])+'</div>'+
+   '<label class="switch"><span><b>Calm colors</b><br><span class="small muted">Softer dots, less bright</span></span><input type="checkbox" id="calm" '+(p.calm?'checked':'')+'></label>'+
    '<label class="switch"><span><b>Movement</b><br><span class="small muted">Turn off to stop all animation</span></span><input type="checkbox" id="motion" '+(p.motion?'checked':'')+'></label>'+
    '<label class="switch"><span><b>Focus mode</b><br><span class="small muted">Today shows only the jar and the number</span></span><input type="checkbox" id="focusSw" '+(p.focus?'checked':'')+'></label>'+
    '<h3>You</h3><div class="field"><label for="nm">Your name</label><input type="text" id="nm" value="'+esc(S.name)+'" autocomplete="given-name"></div>'+
@@ -540,7 +551,7 @@ function settingsSheet(){const p=S.prefs;const seg=(k,opts)=>'<div class="seg" r
    '<div class="row"><button class="btn danger" type="button" data-act="wipe">Start over</button></div><div id="wipeConfirm"></div>',L=>{wireClose(L);bind(calc(S,TODAY()),L.querySelector('.sheet'))})}
 function oopsSheet(){const items=[['A late fee','Breathe. Add it as a spend under Home so the jar knows. Then call or chat with the company: first late fees are often removed if you ask once. Last, open Bills and check the due date is right.'],
   ['My account went overdrawn','Update your balance to the real number, even if it is below zero. The jar will show what is short. Move anything you can from savings, pause any wishes, and look at which bills before payday can wait a few days.'],
-  ['I forgot a bill','Add it in Bills with today as the date and tick it paid if it already went out. The jar recalculates on its own. Nothing else to fix.'],
+  ['I forgot a bill','Add it in Bills with today as the date and mark it paid if it already went out. The jar recalculates on its own. Nothing else to fix.'],
   ['I spent way too much','It happened, and it is already counted. The jar spreads it over the days left, so tomorrow is smaller but still there. If something can go back, return it and delete the spend.'],
   ['I stopped using the app for a while','Open Plan and tap Update balance. That one number makes everything right again. No need to enter what you missed.']];
   sheet(sheetHead('Something went wrong?','Pick what happened. Each answer is a few calm steps, no blame.')+'<div class="list">'+items.map(([q,a])=>'<details class="oops"><summary>'+q+'</summary><p>'+a+'</p></details>').join('')+'</div>',L=>wireClose(L))}
@@ -574,8 +585,8 @@ function sheet(html,onMount){const L=document.getElementById('layer'),again=!!L.
   document.getElementById('scrim').onclick=e=>{if(e.target.id==='scrim')close()};document.getElementById('scrim').addEventListener('click',e=>{const b=e.target.closest('button');if(!b||b.hasAttribute('data-close'))return;if(b.dataset.busy){e.stopImmediatePropagation();e.preventDefault();return}b.dataset.busy='1';setTimeout(()=>{delete b.dataset.busy},700)},true);document.addEventListener('keydown',escClose);onMount&&onMount(L);
   const f=L.querySelector('[autofocus]')||L.querySelector('input,select,button');f&&f.focus()}
 function escClose(e){if(e.key==='Escape')close()}
-function close(){document.getElementById('layer').innerHTML='';document.removeEventListener('keydown',escClose);if(lastFocus&&lastFocus.focus&&document.contains(lastFocus))lastFocus.focus()}
-function sheetHead(t,sub){return '<div class="row between"><h2>'+t+'</h2><button class="iconbtn" type="button" data-close aria-label="Close">'+ic('x')+'</button></div>'+(sub?'<p class="muted">'+sub+'</p>':'')}
+function close(){document.getElementById('layer').innerHTML='';if(tab==='today'&&window.DJJAR)syncJar(calc(S,TODAY()));document.removeEventListener('keydown',escClose);if(lastFocus&&lastFocus.focus&&document.contains(lastFocus))lastFocus.focus()}
+function sheetHead(t,sub){return '<div class="row between" style="flex-wrap:nowrap;align-items:flex-start"><h2 style="min-width:0;flex:1;padding-top:6px">'+t+'</h2><button class="iconbtn" type="button" data-close aria-label="Close">'+ic('x')+'</button></div>'+(sub?'<p class="muted">'+sub+'</p>':'')}
 function wireClose(L){L.querySelectorAll('[data-close]').forEach(b=>b.onclick=close)}
 
 function addSpend(){const c=calc(S,TODAY());let cat='Other';
@@ -588,7 +599,7 @@ function addSpend(){const c=calc(S,TODAY());let cat='Other';
    '<div class="field"><label for="note">Note <span class="muted small">(optional)</span></label><input type="text" id="note" placeholder="Coffee with Jo"></div>'+
    '<button class="btn ink big wide" type="button" id="saveSpend">Save</button>',L=>{wireClose(L);
    const a=L.querySelector('#amt'),pv=L.querySelector('#pv');
-   pv.innerHTML=jarSVG({n:c.daysLeft,todayFrac:c.perDay>0?Math.max(0,c.leftToday)/c.perDay:0,cls:'mini',id:'mini',label:'Your jar after this spend'})+'<div id="pvt"></div>';
+   pv.innerHTML='<div class="jar3d mini3d" id="jarpv">'+jarSVG({n:c.daysLeft,todayFrac:c.perDay>0?Math.max(0,c.leftToday)/c.perDay:0,cls:'mini',id:'mini',label:'Your jar after this spend'})+'</div><div id="pvt"></div>';
    const pvt=pv.querySelector('#pvt'),sw=[...pv.querySelectorAll('.sw')];
    const KW=[[/coffee|cafe|lunch|dinner|pizza|takeaway|restaurant|bar|burger/i,'Food out'],[/grocer|supermarket|food shop|aldi|lidl|tesco|walmart|costco|market/i,'Groceries'],[/bus|train|uber|taxi|gas|petrol|fuel|parking|metro/i,'Transport'],[/movie|game|cinema|concert|book|gift|clothes|shopping/i,'Fun'],[/pharm|doctor|meds|dentist|gym/i,'Health'],[/kid|school|nappies|diapers|toy/i,'Kids'],[/rent|cleaning|hardware|ikea|furniture/i,'Home']];
    const pick=k=>{cat=k;L.querySelectorAll('[data-cat]').forEach(x=>x.setAttribute('aria-pressed',x.dataset.cat===k))};
@@ -596,6 +607,7 @@ function addSpend(){const c=calc(S,TODAY());let cat='Other';
    const upd=()=>{const w=words();if(w){const n=L.querySelector('#note');if(!n.dataset.touched)n.value=w;const hit=KW.find(([r])=>r.test(w));if(hit&&cat==='Other')pick(hit[1])}
      const x=num(a.value),ok=x>0,p=ok?previewSpend(c,x,cat):null,free=ok?x-p.inCap:0;
      const used=ok&&c.perDay>0?(c.perDay-c.leftToday+free)/c.perDay:(c.perDay>0?(c.perDay-c.leftToday)/c.perDay:0),gone=Math.min(c.daysLeft,Math.floor(used)),frac=Math.max(0,1-(used-gone));
+     const after=ok?p.leftToday:c.leftToday;window.DJ_JAR_STATE={el:L.querySelector('#jarpv'),count:c.status==='short'?0:Math.min(160,Math.round(Math.max(0,after)/jarUnit(c))),motion:!!S.prefs.motion};if(window.DJJAR)window.DJJAR.sync();
      sw.forEach(g=>{const k=+g.dataset.k;g.classList.toggle('gone',k<gone);g.style.transform=k===gone?'scale('+Math.max(.2,frac).toFixed(3)+')':''});
      pvt.innerHTML=ok?(p.inCap>0?'<span class="small"><b>'+money(p.inCap)+'</b> from your '+esc(cat)+' cap</span><br>':'')+'<span class="small muted">After this</span><br><b class="num">'+(p.leftToday>=0?money(p.leftToday)+' left today':money(-p.leftToday)+' over today')+'</b>'+(p.tomorrow!==null?'<br><span class="small">Then '+money(Math.max(0,p.tomorrow))+' a day until payday</span>':'')
        :'<span class="muted">Type an amount and watch the jar.</span>'};
@@ -612,7 +624,7 @@ function addSpend(){const c=calc(S,TODAY());let cat='Other';
 function askNumber(title,sub,label,val,onSave){sheet(sheetHead(title,sub)+'<div class="field"><label for="nv">'+label+'</label><input class="amount num" type="text" inputmode="decimal" id="nv" value="'+(val??'')+'" autofocus></div><p class="small" id="nerr" role="alert"></p><button class="btn ink big wide" type="button" id="nsave">Save</button>',L=>{wireClose(L);
   const f=()=>{const x=num(L.querySelector('#nv').value);if(!isFinite(x)){L.querySelector('#nerr').textContent='Type a number, like 640 or 640.50.';return}onSave(x);close();render()};
   L.querySelector('#nsave').onclick=f;L.querySelector('#nv').onkeydown=e=>{if(e.key==='Enter')f()}})}
-function setBalance(){askNumber('What is in your account?','Look at your banking app and type the number you see. The jar refills from here.','Balance right now',balanceOf(S),x=>{S.ledger.push({id:uid(),t:'set',amt:x,date:TODAY(),ts:Date.now()});ui.awayDone=true;save();toast('Balance updated.')})}
+function setBalance(){askNumber('What is in your account?','Look at your banking app and type the number you see. The jar refills from here.','Balance right now',(Math.round(balanceOf(S)*100)/100).toFixed(2),x=>{S.ledger.push({id:uid(),t:'set',amt:x,date:TODAY(),ts:Date.now()});ui.awayDone=true;save();toast('Balance updated.')})}
 
 const FREQS=[['monthly','Every month'],['weekly','Every week'],['biweekly','Every 2 weeks'],['semimonthly','Twice a month'],['months','Every few months'],['yearly','Every year'],['once','Just once']];
 function itemForm(kind,it){const isBill=kind==='bill',x=it||{id:uid(),name:'',amt:'',freq:isBill?'monthly':'biweekly',anchor:addDays(TODAY(),isBill?3:7),every:3,day2:15,spread:false};
@@ -638,11 +650,11 @@ function itemForm(kind,it){const isBill=kind==='bill',x=it||{id:uid(),name:'',am
 
 function addPause(){const c=calc(S,TODAY());let hours=48;
   sheet(sheetHead('Pause a purchase','Write it down, walk away, decide later.')+
-   '<div class="field"><label for="pi">What is it?</label><input type="text" id="pi" placeholder="New trainers" autofocus></div>'+
+   '<div class="field"><label for="pi">What is it?</label><input type="text" id="pi" placeholder="New sneakers" autofocus></div>'+
    '<div class="field"><label for="pa">Price</label><input type="text" inputmode="decimal" id="pa" class="num"></div><p class="small muted" id="pt"></p>'+
    '<div class="field"><span class="lab">Wait for</span><div class="seg">'+[[24,'1 day'],[48,'2 days'],[168,'1 week']].map(([h,l])=>'<button type="button" data-h="'+h+'" aria-pressed="'+(h===48)+'">'+l+'</button>').join('')+'</div></div>'+
    '<p class="small" id="perr" role="alert"></p><button class="btn ink big wide" type="button" id="psave">Start the timer</button>',L=>{wireClose(L);
-   const pa=L.querySelector('#pa');pa.oninput=()=>{const x=num(pa.value);L.querySelector('#pt').textContent=x>0&&c.perDay>0?'That is about '+(Math.round(x/c.perDay*10)/10)+' days of sweets from your jar.':''};
+   const pa=L.querySelector('#pa');pa.oninput=()=>{const x=num(pa.value);L.querySelector('#pt').textContent=x>0&&c.perDay>0?'That is about '+pl(Math.round(x/c.perDay*10)/10,'day')+' of spending money from your jar.':''};
    L.querySelectorAll('[data-h]').forEach(b=>b.onclick=()=>{hours=+b.dataset.h;L.querySelectorAll('[data-h]').forEach(y=>y.setAttribute('aria-pressed',y===b))});
    L.querySelector('#psave').onclick=()=>{const item=L.querySelector('#pi').value.trim(),amt=num(pa.value);if(!item||!(amt>0)){L.querySelector('#perr').textContent='Add what it is and the price.';return}
      S.pauses.push({id:uid(),item,amt,created:Date.now(),hours});save();close();render();toast('Paused. Future you says thanks.')}})}
@@ -672,7 +684,7 @@ function setupWizard(){let step=1;const d={name:'',currency:S.example?'USD':S.cu
         for(const b of d.bills)if(num(b.amt)>0)S.bills.push({id:uid(),name:b.name,amt:num(b.amt),freq:'monthly',anchor:b.date||addDays(TODAY(),3)});
         save();close();tab='today';render();window.scrollTo(0,0);track('demo_setup_done');toast('Your jar is filled. This is your real number now.')}})};draw()}
 
-function goalForm(){sheet(sheetHead('Add a savings goal')+'<div class="field"><label for="gn">What for?</label><input type="text" id="gn" placeholder="Holiday, emergency fund" autofocus></div><div class="field"><label for="gt">Target</label><input type="text" inputmode="decimal" id="gt" class="num"></div><p class="small" id="gerr" role="alert"></p><button class="btn ink big wide" type="button" id="gs">Save</button>',L=>{wireClose(L);
+function goalForm(){sheet(sheetHead('Add a savings goal')+'<div class="field"><label for="gn">What for?</label><input type="text" id="gn" placeholder="Vacation, emergency fund" autofocus></div><div class="field"><label for="gt">Target</label><input type="text" inputmode="decimal" id="gt" class="num"></div><p class="small" id="gerr" role="alert"></p><button class="btn ink big wide" type="button" id="gs">Save</button>',L=>{wireClose(L);
   L.querySelector('#gs').onclick=()=>{const name=L.querySelector('#gn').value.trim(),t=num(L.querySelector('#gt').value);if(!name||!(t>0)){L.querySelector('#gerr').textContent='Add a name and a target amount.';return}S.goals.push({id:uid(),name,target:t,saved:0});save();close();render()}})}
 
 // ---------- events ----------
@@ -683,6 +695,7 @@ function bind(c,root){const A=root||document.getElementById('app');
     if(a==='how'){ui.how=!ui.how;render()}
     if(a==='focus'){S.prefs.focus=!S.prefs.focus;save();render()}
     if(a==='setup')setupWizard(); if(a==='balance')setBalance(); if(a==='awayok'){ui.awayDone=true;render()}
+    if(a==='hide'){S.prefs.hide=!S.prefs.hide;save();render();announce(S.prefs.hide?'Amounts hidden':'Amounts shown');return}
     if(a==='settings')settingsSheet(); if(a==='oops')oopsSheet(); if(a==='addcap')capForm(); if(a==='adddebt')debtForm(); if(a==='csv')exportCSV();
     if(a==='startdone'){S.startDone=true;save();render()}
     if(a==='installhide'){S.installHidden=true;save();render()}
@@ -727,3 +740,4 @@ const hashTab=location.hash.slice(1).split('-');if(['today','bills','pause','pla
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
 render();if("serviceWorker" in navigator&&location.protocol!=="file:")navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
+<script type="module" src="jar3d.js"></script>

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-type="software" data-radius="round" data-ground="sage" data-buttons="arrow" data-motion>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -9,785 +9,1049 @@
 <meta property="og:title" content="Dot &amp; Jar: a budget app for adults with ADHD">
 <meta property="og:description" content="One number a day: what is safe to spend today, so money lasts until payday.">
 <meta property="og:image" content="https://wisbeaniekha-byte.github.io/dotandjar/share.jpg">
+<meta property="og:url" content="https://wisbeaniekha-byte.github.io/dotandjar/">
+<link rel="canonical" href="https://wisbeaniekha-byte.github.io/dotandjar/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#06070D">
 <link rel="icon" href="favicon-48.png" type="image/png" sizes="48x48"><link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32"><link rel="apple-touch-icon" href="app/icons/apple-touch-icon.png">
-<meta name="theme-color" content="#f1faf7">
-<!-- OWNER: canonical and og:url wait for the final address (GitHub Pages project path, e.g. https://USER.github.io/dotandjar/):
-     <link rel="canonical" href="https://wisbeaniekha-byte.github.io/dotandjar/"> <meta property="og:url" content="https://wisbeaniekha-byte.github.io/dotandjar/">. All paths on this page are relative. -->
-<meta name="site-kind" content="software">
-<meta name="page-type" content="software">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/system.css">
-<link rel="stylesheet" href="assets/ui/cards.css">
-<link rel="stylesheet" href="assets/motion/motion.css">
-<link rel="stylesheet" href="assets/backgrounds/backgrounds.css">
-<link rel="stylesheet" href="assets/layout/layout.css">
-<link rel="stylesheet" href="assets/icons/icon.css">
-<style>
-:root {
-  --p-bg: #f1faf7; --p-surface: #ffffff; --p-ink: #1b1f2a; --p-muted: #4a5162;
-  --p-accent: #c2365b; --p-accent-ink: #f1faf7; --p-action: #c2365b; --p-action-ink: #f1faf7;
-  --p-inv-bg: #1b1f2a; --p-inv-surface: #272c36; --p-inv-ink: #f1faf7; --p-inv-muted: #989fa3;
-  --p-inv-accent: #c2365b; --p-inv-accent-ink: #f1faf7; --p-inv-action: #c2365b; --p-inv-action-ink: #f1faf7;
-  --font-display: "Instrument Sans", system-ui, sans-serif;
-  --font-text: "Instrument Sans", system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --display-weight: 500;
-  --display-tracking: -0.028em;
-  --display-tracking-xl: -0.036em;
-  --display-stretch: 96%;
-  --ly-scale: 1.04;
-}
-</style>
-<link rel="stylesheet" href="assets/ui/base.css">
-<link rel="stylesheet" href="assets/diagrams/diagram.css">
-<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
-<script src="assets/backgrounds/backgrounds.js"></script>
-<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
-<link rel="modulepreload" href="assets/moments/moments.js">
-<link rel="modulepreload" href="assets/moments/lib.js">
-<link rel="modulepreload" href="assets/moments/counter-rolls/moment.js">
-<link rel="modulepreload" href="assets/moments/line-carries-colour/moment.js">
-<style>
-/* page CSS: the app's own UI inside the visuals (Dot & Jar's look: Baloo 2 numbers, Atkinson Hyperlegible words,
-   the sweets, the paper tag), the per-group panel heights and the calculator's result panel. The app's ink is
-   deepened from #1F1A3D to the neutral #1B1F2A on the website only (the house bans violet). */
-@font-face { font-family: "Baloo 2"; font-weight: 800; font-display: swap; src: url("app/fonts/Baloo2-800.woff2") format("woff2"); }
-@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 400; font-display: swap; src: url("app/fonts/AtkinsonHyperlegible-400.woff2") format("woff2"); }
-@font-face { font-family: "Atkinson Hyperlegible"; font-weight: 700; font-display: swap; src: url("app/fonts/AtkinsonHyperlegible-700.woff2") format("woff2"); }
-.dj {
-  --dj-ground: #f1faf7; --dj-grid: #d3eae2; --dj-paper: #ffffff; --dj-paper2: #f6fbf9; --dj-line: #d5e5df;
-  --dj-ink: #1b1f2a; --dj-ink2: #4a5162; --dj-on-ink: #ffffff;
-  --dj-rasp: #e8436f; --dj-lemon: #f2be2e; --dj-mint: #24b38e; --dj-blue: #5a6cff;
-  --dj-good: #16775b; --dj-good-bg: #ddf3ea; --dj-warm: #8a5300; --dj-warm-bg: #fcebc8;
-  --dj-glass: rgba(255,255,255,.3); --dj-glass-hi: rgba(255,255,255,.95); --dj-rim: rgba(27,31,42,.18);
-  --dj-lift: 0 2px 4px rgba(27,31,42,.06), 0 10px 24px rgba(27,31,42,.08);
-  font: 400 15px/1.45 "Atkinson Hyperlegible", system-ui, sans-serif; color: var(--dj-ink); text-align: left; letter-spacing: 0;
-}
-.dj--night { --dj-ground: #161a22; --dj-grid: #232836; --dj-paper: #20252f; --dj-paper2: #282e3a; --dj-line: #343b49;
-  --dj-ink: #eef1f5; --dj-ink2: #b9bfca; --dj-on-ink: #161a22; --dj-glass: rgba(255,255,255,.06); --dj-glass-hi: rgba(255,255,255,.18); --dj-rim: rgba(255,255,255,.25);
-  --dj-rasp: #ff6a90; --dj-lemon: #ffd25c; --dj-mint: #4fd3ac; --dj-blue: #8b98ff; --dj-good: #7fe0be; --dj-good-bg: #14352b; }
-.dj b, .dj strong { font-weight: 700; }
-.dj .n { font-family: "Baloo 2", "Atkinson Hyperlegible", sans-serif; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
-.dj-dotted { background-color: var(--dj-ground); background-image: radial-gradient(var(--dj-grid) 1.2px, transparent 1.3px); background-size: 16px 16px; }
-.dj-mark { display: inline-flex; align-items: center; gap: 6px; font: 800 17px/1 "Baloo 2", sans-serif; color: var(--dj-ink); }
-.dj-mark svg { width: 20px; height: 20px; }
-.dj-mark .amp { color: var(--dj-rasp); }
-.dj-jar { display: block; width: var(--jar-w, 176px); height: auto; overflow: visible; }
-.dj-jar .sw { transition: transform .45s cubic-bezier(.16,1,.3,1), opacity .45s cubic-bezier(.16,1,.3,1); }
-.dj-jar .sw.gone { opacity: .14; transform: scale(.55); }
-.dj-stage { position: relative; width: var(--stage-w, 352px); }
-.dj-tag { position: absolute; right: 0; top: var(--tag-y, 40px); width: var(--tag-w, 176px); background: #fff; color: #1b1f2a; border: 2px solid #1b1f2a;
-  border-radius: 8px 18px 18px 18px; padding: 24px 14px 10px 16px; box-shadow: var(--dj-lift); }
-.dj-tag::before { content: ""; position: absolute; left: 10px; top: 9px; width: 9px; height: 9px; border-radius: 50%; border: 2px solid #1b1f2a; background: var(--dj-ground); }
-.dj-tag::after { content: ""; position: absolute; left: 12px; top: -34px; width: 2px; height: 44px; background: var(--dj-ink); transform: rotate(-38deg); transform-origin: bottom; }
-.dj-tag .lbl { font-weight: 700; font-size: 13px; color: #4a5162; }
-.dj-tag .val { font: 800 var(--val, 34px)/1 "Baloo 2", sans-serif; letter-spacing: -.02em; margin-top: 2px; white-space: nowrap; font-variant-numeric: tabular-nums; }
-.dj-tag .how { display: inline-block; margin-top: 6px; font-weight: 700; font-size: 13px; text-decoration: underline; text-decoration-color: #e8436f; text-decoration-thickness: 2px; text-underline-offset: 4px; }
-.dj-status { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; padding: 7px 14px; border-radius: 99px; background: var(--dj-good-bg); color: var(--dj-good); }
-.dj-status svg { width: 18px; height: 18px; flex: none; }
-.dj-panel { background: var(--dj-paper); border: 1px solid var(--dj-line); border-radius: 18px; padding: 12px 14px; }
-.dj-rows > div { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-top: 1px solid var(--dj-line); font-size: 14px; }
-.dj-rows > div:first-child { border-top: 0; }
-.dj-rows > div > span:last-child { font: 800 15px/1.3 "Baloo 2", sans-serif; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.dj-rows > div.total { font-weight: 700; }
-.dj-btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 0 18px; border-radius: 16px; border: 1.5px solid var(--dj-line);
-  background: var(--dj-paper); color: var(--dj-ink); font: 700 15px/1 "Atkinson Hyperlegible", sans-serif; }
-.dj-btn.ink { background: var(--dj-ink); border-color: var(--dj-ink); color: var(--dj-on-ink); font: 800 18px/1 "Baloo 2", sans-serif; }
-.dj-btn svg { width: 18px; height: 18px; }
-.dj-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px; border-radius: 99px; border: 2px solid var(--dj-line); background: var(--dj-paper); font: 700 14px/1 "Atkinson Hyperlegible", sans-serif; color: var(--dj-ink); }
-.dj-chip i { width: 11px; height: 11px; border-radius: 50%; box-shadow: inset -1.5px -1.5px 0 rgba(0,0,0,.14); }
-.dj-chip[aria-pressed="true"] { border-color: var(--dj-ink); background: var(--dj-paper2); }
-.dj-h { font: 800 19px/1.2 "Baloo 2", sans-serif; margin: 0; }
-.dj-small { font-size: 13px; color: var(--dj-ink2); }
-.dj-item { display: grid; grid-template-columns: 12px minmax(0,1fr) auto; align-items: center; gap: 10px; padding: 9px 0; border-top: 1px solid var(--dj-line); }
-.dj-item:first-child { border-top: 0; }
-.dj-item > i { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset -1.5px -1.5px 0 rgba(0,0,0,.14); }
-.dj-item b { display: block; font-size: 14px; }
-.dj-item .dj-small { display: block; font-size: 12.5px; }
-.dj-item .n { font-size: 15px; }
-.dj-bar { height: 8px; border-radius: 99px; background: var(--dj-grid); overflow: hidden; margin-top: 6px; }
-.dj-bar > i { display: block; height: 100%; border-radius: 99px; }
-.dj-card { background: var(--dj-paper); border: 1px solid var(--dj-line); border-radius: 18px; box-shadow: 0 1px 2px rgba(27,31,42,.06), 0 16px 32px -16px rgba(27,31,42,.22); padding: 16px; display: grid; gap: 12px; }
-
-/* the hero window: the app's Today screen at a computer's width */
-.dj-win { border-radius: 16px; overflow: hidden; background: var(--dj-paper); border: 1px solid rgb(27 31 42 / .14); box-shadow: 0 30px 60px -30px rgb(27 31 42 / .45); }
-.dj-win__bar { display: flex; align-items: center; gap: 14px; height: 44px; padding: 0 16px; border-bottom: 1px solid var(--dj-line); background: var(--dj-paper); font-size: 13px; color: var(--dj-ink2); }
-.dj-win__bar .sp { flex: 1; }
-.dj-win__dots { display: flex; gap: 6px; } .dj-win__dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--dj-line); }
-.dj-win__body { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 22px 28px 40px; }
-.dj-win__body > .dj-stage { flex: none; }
-.dj-win__body > .dj-win__side { flex: 1 1 0; min-width: 0; }
-.dj-win__side { display: grid; gap: 10px; justify-items: center; }
-.dj-win__side .dj-panel { width: 100%; }
-.dj-win__side .dj-btn { width: 100%; }
-/* hero loop: a spend pops in, the number drops, today's sweet shrinks, then it resets (no loop with reduced motion) */
-.dj-spend { position: absolute; left: 0; top: 0; z-index: 2; padding: 6px 12px; border-radius: 99px; background: var(--dj-ink); color: #fff; font: 700 13px/1.2 "Atkinson Hyperlegible", sans-serif; opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; pointer-events: none; }
-.dj-stage.is-spent .dj-spend { opacity: 1; transform: none; }
-.dj-stage .val { transition: color .35s; }
-.dj-stage.is-spent .val { color: #b02a47; }
-.hero__how { margin-top: 10px; }
-.hero__window .dj-stage { --stage-w: 372px; --jar-w: 178px; --tag-w: 186px; --tag-y: 36px; }
-
-@media (max-width: 639px) { .dj-win__body { padding: 16px 12px 32px; } .hero__window .dj-stage { --stage-w: 286px; --jar-w: 140px; --tag-w: 150px; --tag-y: 28px; --val: 28px; } .dj-win__bar .dj-hide-s { display: none; } }
-
-/* calculator */
-.calc { display: grid; gap: var(--s-6); }
-.calc__field { display: grid; gap: var(--s-2); }
-.calc__field label { display: flex; justify-content: space-between; gap: var(--s-4); font: 500 18px/1.4 var(--font-text); }
-.calc__field output { font: var(--display-weight) 22px/1.2 var(--font-display); font-variant-numeric: tabular-nums; }
-.calc input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; margin: 0; cursor: pointer; }
-.calc input[type=range]::-webkit-slider-runnable-track { height: 8px; border-radius: 99px; background: linear-gradient(to right, var(--action) var(--fill, 30%), rgb(27 31 42 / .14) var(--fill, 30%)); }
-.calc input[type=range]::-moz-range-track { height: 8px; border-radius: 99px; background: rgb(27 31 42 / .14); }
-.calc input[type=range]::-moz-range-progress { height: 8px; border-radius: 99px; background: var(--action); }
-.calc input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; margin-top: -10px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); box-shadow: 0 2px 6px rgb(27 31 42 / .2); }
-.calc input[type=range]::-moz-range-thumb { width: 26px; height: 26px; border-radius: 50%; background: #fff; border: 2px solid var(--ink); }
-.calc input[type=range]:focus-visible { outline: 2px solid var(--action); outline-offset: 4px; border-radius: 8px; }
-.result__head { display: flex; align-items: center; gap: var(--s-5); }
-.leak .dj-jar { --jar-w: 120px; }
-#tax .frame { align-items: stretch; justify-content: flex-start; padding: 0; }
-.result.ui { font: 400 16px/1.5 var(--font-text); color: var(--ink); letter-spacing: 0; }
-.result { display: grid; align-content: start; gap: var(--s-5); padding: var(--s-7); width: 100%; }
-.result__total { font: var(--display-weight) var(--t-h2)/1 var(--font-display); letter-spacing: var(--display-tracking); font-variant-numeric: tabular-nums; }
-.result__vs { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: var(--s-2) var(--s-4); padding-top: var(--s-5); border-top: 1px solid rgb(27 31 42 / .14); align-items: baseline; }
-.result__vs span:nth-child(even) { font: var(--display-weight) 24px/1.2 var(--font-display); font-variant-numeric: tabular-nums; text-align: right; }
-/* a narrow card: label over price, so the label never squeezes to one word a line */
-@media (max-width: 1100px) { .result__vs { grid-template-columns: minmax(0,1fr); } .result__vs span:nth-child(even) { text-align: left; } }
-@media (max-width: 1023px) { .result { padding: var(--s-6); gap: var(--s-4); } .calc { gap: var(--s-5); } }
-@media (max-width: 639px) { .result { padding: var(--s-5); } }
-
-.step-h { display: flex; align-items: center; gap: var(--s-3); }
-/* panels: one height per card group */
-#how .panel { --p-h: 300px; }
-#features .panel { --p-h: 340px; }
-#help .panel { --p-h: 300px; }
-#install .panel { --p-h: 260px; }
-@media (min-width: 1024px) and (max-width: 1279px) {
-  :is(#how, #features, #help) .grid > .card.span-4 { grid-column: auto / span 4; }
-  :is(#how, #features, #help) .grid > .card.span-6 { grid-column: auto / span 6; }
-  #how .panel, #features .panel, #help .panel { --p-h: 240px; }
-}
-@media (min-width: 640px) and (max-width: 1023px) {
-  #how .grid > .card, #features .grid > .card, #help .grid > .card { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-auto-rows: min-content; column-gap: var(--s-6); align-content: start; }
-  .hcards-sec .grid > .card > :not(.panel) { grid-column: 1; }
-  .hcards-sec .grid > .card > .panel { grid-column: 2; grid-row: 1 / span 4; margin: 0; }
-  #how .panel, #features .panel, #help .panel { --p-h: 216px; }
-  #install .panel { --p-h: 360px; }
-  #calm .frame--split { --ratio: 50%; }
-  #buy .frame--split { --ratio: 50%; }
-}
-@media (max-width: 639px) {
-  .hero--centred .pill { width: 100%; justify-content: center; }
-  #how .panel { --p-h: 310px; } #features .panel { --p-h: 480px; } #help .panel { --p-h: 300px; } #install .panel { --p-h: 260px; }
-  .cal-wrap > .dj-hide-m { display: block; }
-  #calm .frame--split { --ratio: 40%; }
-}
-
-/* the app-frame: Today beside the Add spend sheet */
-.app.ui { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); margin-top: var(--s-7); background: var(--u-bg); border: 1px solid var(--u-border); border-radius: var(--u-r); box-shadow: var(--u-shadow); }
-.app > .app__pane { position: relative; min-width: 0; min-height: 0; overflow: hidden; }
-.app > .app__pane + .app__pane { border-left: 1px solid var(--u-line); }
-@media (min-width: 1024px) and (max-width: 1279px) { .app.ui { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); } }
-@media (max-width: 1023px) {
-  .app.ui { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); }
-  .app > .app__pane--list { max-height: 236px; }
-  .app > .app__pane--list .today { padding-top: 10px; }
-  .app > .app__pane--list .today > :not(.dj-stage) { display: none; }
-  .app > .app__pane + .app__pane { border-left: 0; border-top: 1px solid var(--u-line); }
-}
-@media (max-width: 639px) { .app.ui { grid-template-rows: minmax(0, 1fr); } .app > .app__pane--list { display: none; } .app > .app__pane + .app__pane { border-top: 0; } }
-.today { display: grid; justify-items: center; gap: 14px; padding: 18px 20px 24px; height: 100%; align-content: start; }
-.today { padding-top: 40px; gap: 20px; }
-.today .dj-stage { --stage-w: min(100%, 400px); --jar-w: 50%; --tag-w: 46%; --val: 32px; }
-@media (max-width: 1279px) { .today .dj-stage { --val: 24px; } .today .dj-tag { padding: 22px 10px 8px 12px; } }
-.today .dj-btn.ink { width: min(100%, 380px); }
-.today .dj-panel { width: min(100%, 380px); padding: 4px 14px; }
-.today__facts { display: flex; gap: 6px 16px; flex-wrap: wrap; justify-content: center; font-size: 14px; color: var(--dj-ink2); }
-.today__facts b { color: var(--dj-ink); font: 800 15px/1 "Baloo 2", sans-serif; }
-.sheet { display: grid; gap: 14px; padding: 20px 24px 24px; align-content: start; height: 100%; }
-.sheet__amount { width: min(100%, 300px); display: flex; align-items: center; justify-content: center; min-height: 64px; border-radius: 16px; border: 2px solid var(--dj-ink); background: var(--dj-paper2); font: 800 36px/1 "Baloo 2", sans-serif; font-variant-numeric: tabular-nums; }
-.sheet__row { display: flex; gap: 8px; flex-wrap: wrap; }
-.sheet .dj-chip { cursor: pointer; }
-.sheet .dj-chip:focus-visible { outline: 3px solid var(--dj-blue); outline-offset: 2px; }
-.sheet button.dj-chip { min-height: 44px; min-width: 44px; justify-content: center; }
-.preview { display: grid; grid-template-columns: 96px minmax(0,1fr); gap: 16px; align-items: center; padding: 12px 16px; border-radius: 18px; background: var(--dj-paper2); border: 1px solid var(--dj-line); }
-.preview .dj-jar { --jar-w: 96px; }
-.preview__lines { display: grid; gap: 4px; }
-.preview__big { font: 800 26px/1.1 "Baloo 2", sans-serif; font-variant-numeric: tabular-nums; }
-@media (max-width: 639px) { .sheet { padding: 16px; } .sheet__amount { font-size: 30px; min-height: 56px; } .preview { grid-template-columns: 72px minmax(0,1fr); } .preview .dj-jar { --jar-w: 72px; } }
-
-/* features: the month, caps, debts, pause, help */
-.cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; text-align: center; font-size: 13px; }
-.cal > span { display: grid; place-items: center; gap: 2px; min-height: 40px; border-radius: 10px; color: var(--dj-ink); position: relative; }
-.cal > .h { min-height: 20px; color: var(--dj-ink2); font-weight: 700; font-size: 12px; }
-.cal > .pay { background: var(--dj-good-bg); color: var(--dj-good); font-weight: 700; }
-.cal > .t { box-shadow: inset 0 0 0 2px var(--dj-ink); font-weight: 700; }
-.cal i { display: block; width: 8px; height: 8px; border-radius: 50%; }
-.cal-wrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; }
-@media (max-width: 1279px) { .cal-wrap > .dj-hide-m { display: none; } .cal-wrap { grid-template-columns: 1fr; } }
-
-/* calm: focus mode and comfort settings in the dark */
-.comfort { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 0; }
-.comfort__focus { display: grid; place-items: center; padding: 28px 16px; }
-.comfort__focus { padding: 28px 20px; }
-.comfort__focus .dj-stage { --stage-w: 100%; --jar-w: 47%; --tag-w: 50%; --val: 28px; }
-@media (max-width: 1279px) { .comfort__focus .dj-stage { --val: 22px; } .comfort__focus .dj-tag { padding: 22px 10px 8px 12px; } }
-.comfort__set { background: var(--dj-paper); border-left: 1px solid var(--dj-line); padding: 22px 20px; display: grid; gap: 14px; align-content: start; }
-.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.seg > span { display: grid; place-items: center; min-height: 42px; border-radius: 12px; border: 2px solid var(--dj-line); font-weight: 700; }
-.seg > span.on { border-color: var(--dj-ink); background: var(--dj-paper2); }
-.sw-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 40px; border-top: 1px solid var(--dj-line); font-size: 14px; font-weight: 700; }
-.sw-tog { width: 40px; height: 24px; border-radius: 99px; background: var(--dj-line); position: relative; flex: none; }
-.sw-tog::after { content: ""; position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; border-radius: 50%; background: var(--dj-ink2); }
-.sw-tog.on { background: var(--dj-ink); } .sw-tog.on::after { left: 19px; background: var(--dj-on-ink); }
-#calm .frame { background: #161a22; padding: 0; align-items: stretch; border-color: #343b49; }
-#calm .frame > .comfort { width: 100%; }
-@media (max-width: 639px) { .comfort { grid-template-columns: 1fr; } .comfort__set { display: none; } }
-.calm-text { display: grid; gap: var(--s-7); align-content: start; }
-.calm-list { display: grid; gap: var(--s-4); margin: 0; padding: 0; list-style: none; }
-.calm-list li { display: grid; gap: var(--s-1); }
-.calm-list b { font-weight: 500; font-size: var(--t-card); }
-
-/* install: the share sheet and the Chrome menu */
-.share { display: grid; gap: 0; padding: 6px 0; }
-.share > div { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 14px; border-top: 1px solid var(--dj-line); font-weight: 700; font-size: 14px; }
-.share > div:first-child { border-top: 0; }
-.share > div.on { background: var(--dj-good-bg); color: var(--dj-good); border-radius: 12px; border-top-color: transparent; }
-.share > div.on + div { border-top-color: transparent; }
-.share svg { width: 20px; height: 20px; flex: none; }
-.share .sp { flex: 1; }
-.steps-ol { margin: 0; padding-left: 0; list-style-position: inside; display: grid; gap: var(--s-1); color: var(--c-text, var(--ink)); }
-.ic-head { display: flex; align-items: center; gap: var(--s-3); }
-.ic-head img { width: 32px; height: 32px; }
-
-.welcome { margin-top: var(--s-5); max-width: 380px; font-size: 16px; background: #f6fbf9; border: 1.5px dashed #4a5162; box-shadow: none; }
-.faq-mail { display: flex; align-items: center; gap: var(--s-3); }
-@media (max-width: 639px) { #faq .welcome, #faq .faq-sub { display: none; } }
-/* price: the plan card and the facts row */
-#buy .checks { margin: 0; padding: 0; list-style: none; }
-#buy .frame .dg { height: 100%; }
-.facts-row { margin-top: var(--s-8); }
-.facts-row .t-stat { margin: 0; }
-.facts-row p + p { margin-top: var(--s-1); }
-</style>
 <script>/* ?internal=1 marks this browser as ours: no GA, pixel or Clarity from it; ?internal=0 undoes it */window.DJ_LIVE=location.hostname.endsWith("github.io")&&(function(){try{var s=location.search;if(/[?&]internal=1/.test(s))localStorage.setItem("dj_internal","1");if(/[?&]internal=0/.test(s))localStorage.removeItem("dj_internal");return !localStorage.getItem("dj_internal")}catch(e){return true}})();/* GA loads only on the live site, so local tests do not count as visits. Clicks to Gumroad count as begin_checkout. */window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}if(window.DJ_LIVE){var g=document.createElement("script");g.async=true;g.src="https://www.googletagmanager.com/gtag/js?id=G-QJ1VYS1XVV";document.head.appendChild(g)}gtag("js",new Date());gtag("config","G-QJ1VYS1XVV");document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a[href*=\"gumroad.com\"]");if(a){gtag("event","begin_checkout",{link_url:a.href});if(window.fbq)fbq("track","InitiateCheckout")}});if(window.DJ_LIVE){!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1207028208319370");fbq("track","PageView")}</script>
 <script>/* Microsoft Clarity session recordings (project zgiphipfft), live site only */if(window.DJ_LIVE){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","zgiphipfft")}</script></head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&display=swap">
+<style>
+/* Layout: a night stage with a live glass jar, a curved wall of app screens, then the page turns to daylight for the demo, and back to night to buy. */
+:root {
+  --night: #06070D;
+  --night-2: #0E1120;
+  --amber: #FFB23F;
+  --amber-hot: #FF8A1F;
+  --fog: #ECEEF3;
+  --ink: #0A0C14;
+  --ink-2: #5B6072;
+  --white: #FFFFFF;
+  --mist: rgba(255,255,255,.62);
+  --hair: rgba(255,255,255,.1);
+  --hair-ink: rgba(10,12,20,.1);
+  --font: "Geist", "Inter", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { overflow-x: clip; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body {
+  margin: 0; background: var(--night); color: var(--white);
+  font-family: var(--font); font-size: 17px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased; overflow-x: clip;
+}
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.045em; line-height: .98; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; }
+.wrap {
+  width: 100%; max-width: 1280px; margin-inline: auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+:focus-visible { outline: 2px solid var(--amber); outline-offset: 4px; border-radius: 10px; }
+.skip { position: fixed; left: -999px; top: 10px; z-index: 99; background: var(--amber); color: var(--ink); padding: 10px 16px; border-radius: 999px; }
+.skip:focus { left: 16px; }
+
+/* Buttons: amber light with a moving sheen; magnetic on desktop */
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 54px; padding: 0 26px; border-radius: 999px; border: 0; overflow: hidden;
+  font: 600 17px/1 var(--font); letter-spacing: -0.01em; text-decoration: none; cursor: pointer;
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s, background .25s;
+}
+.btn-buy {
+  background: linear-gradient(180deg, #FFC766, var(--amber) 55%, var(--amber-hot));
+  color: #1A1003;
+  box-shadow: 0 0 0 1px rgba(255,200,120,.5) inset, 0 10px 40px -8px rgba(255,150,40,.7);
+}
+.btn-buy::after {
+  content: ""; position: absolute; inset: 0; transform: translateX(-120%);
+  background: linear-gradient(100deg, transparent 30%, rgba(255,255,255,.65) 50%, transparent 70%);
+  transition: transform .7s ease;
+}
+.btn-buy:hover::after { transform: translateX(120%); }
+.btn-buy:hover { box-shadow: 0 0 0 1px rgba(255,220,160,.7) inset, 0 14px 50px -6px rgba(255,150,40,.85); }
+.btn:active { transform: scale(.96) !important; }
+.btn-glass { background: rgba(255,255,255,.06); color: var(--white); box-shadow: inset 0 0 0 1px var(--hair); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.btn-glass:hover { background: rgba(255,255,255,.11); }
+
+/* Nav */
+.nav { position: fixed; z-index: 30; top: calc(10px + env(safe-area-inset-top, 0px)); left: 0; right: 0; pointer-events: none; }
+.nav .shell { padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px)); }
+.nav .bar {
+  pointer-events: auto; margin-inline: auto; max-width: 1240px;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 7px 7px 7px 18px; border-radius: 999px;
+  background: rgba(10,12,22,.55); box-shadow: inset 0 0 0 1px var(--hair);
+  backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
+}
+.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; text-decoration: none; color: var(--white); min-height: 44px; }
+.logo svg { width: 24px; height: 24px; }
+.nav .btn { min-height: 44px; padding: 0 18px; font-size: 15px; }
+.nav .bar { transition: background .4s, box-shadow .4s; }
+.nav.on-light .bar { background: rgba(255,255,255,.72); box-shadow: inset 0 0 0 1px var(--hair-ink), 0 10px 30px -12px rgba(10,12,20,.2); }
+.nav.on-light .logo { color: var(--ink); }
+.nav.on-light .logo path { stroke: var(--ink); }
+
+/* Hero: a tall track with a sticky stage */
+.hero { position: relative; height: 420svh; }
+.stage { position: sticky; top: 0; height: 100svh; overflow: hidden; background: radial-gradient(120% 80% at 70% 70%, #1B1408 0%, var(--night-2) 45%, var(--night) 100%); }
+.stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; touch-action: pan-y; }
+.stage .fallback { position: absolute; right: 8%; bottom: 10%; width: min(36vw, 340px); }
+.stage.gl .fallback { display: none; }
+.layer { position: absolute; inset: 0; pointer-events: none; }
+.layer > .wrap { height: 100%; position: relative; }
+.intro {
+  position: absolute; left: 0; top: 0; bottom: 0; width: min(640px, 54%);
+  display: grid; align-content: center; gap: clamp(14px, 2.6svh, 24px); pointer-events: auto;
+  padding-left: inherit; padding-right: inherit; padding-top: 76px; padding-bottom: 20px;
+}
+.pill {
+  justify-self: start; display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px 6px 8px; border-radius: 999px; font-size: 14px; font-weight: 500; color: var(--mist);
+  background: rgba(255,255,255,.05); box-shadow: inset 0 0 0 1px var(--hair);
+}
+.pill i { width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #FFE2A8, var(--amber) 50%, var(--amber-hot)); box-shadow: 0 0 12px rgba(255,170,60,.8); }
+.hero h1 {
+  font-size: clamp(2.4rem, min(5.4vw, 9.4svh), 5.6rem); font-weight: 600;
+  background: linear-gradient(180deg, #FFFFFF 30%, #B9BDD0 110%); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero .sub { font-size: clamp(1.05rem, 1.4vw, 1.25rem); color: var(--mist); max-width: 36ch; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.fine { font-size: 14px; color: rgba(255,255,255,.5); }
+.fine s { color: rgba(255,255,255,.4); }
+.touch-hint {
+  position: absolute; right: max(20px, env(safe-area-inset-right, 0px)); bottom: 28px; display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: rgba(255,255,255,.5); margin: 0;
+}
+.touch-hint i { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 0 rgba(255,178,63,.6); animation: ping 2s infinite; }
+@keyframes ping { 70% { box-shadow: 0 0 0 12px rgba(255,178,63,0); } 100% { box-shadow: 0 0 0 0 rgba(255,178,63,0); } }
+.scroll-cue { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); width: 1px; height: 44px; background: linear-gradient(var(--hair), rgba(255,255,255,.5)); overflow: hidden; }
+.scroll-cue::after { content: ""; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--amber); animation: drip 1.8s infinite; }
+@keyframes drip { to { top: 110%; } }
+
+.beats { position: absolute; left: 0; top: 0; bottom: 0; width: min(560px, 46%); padding-left: inherit; }
+.beat { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); opacity: 0; display: grid; gap: 14px; padding-left: inherit; padding-right: inherit; }
+.beat .k { font-size: 14px; color: var(--amber); font-weight: 500; font-variant-numeric: tabular-nums; }
+.beat h2 { font-size: clamp(2.2rem, 4.6vw, 4.4rem); }
+.beat p { color: var(--mist); font-size: 18px; max-width: 34ch; }
+.beat .big { font-size: clamp(3.4rem, 7vw, 6.4rem); font-weight: 600; letter-spacing: -0.06em; line-height: .9; color: var(--amber); text-shadow: 0 0 40px rgba(255,150,40,.45); font-variant-numeric: tabular-nums; }
+.progress { position: absolute; left: max(20px, env(safe-area-inset-left, 0px)); bottom: 28px; display: flex; gap: 6px; opacity: 0; }
+.progress i { width: 26px; height: 3px; border-radius: 3px; background: rgba(255,255,255,.15); overflow: hidden; position: relative; }
+.progress i b { position: absolute; inset: 0; background: var(--amber); transform-origin: left; transform: scaleX(0); }
+
+/* Screen wall: curved, browsed like a room */
+.screens { position: relative; height: 380svh; }
+.screens .sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; grid-template-rows: auto 1fr; }
+.screens .head { padding-top: clamp(90px, 13vh, 130px); display: flex; flex-wrap: wrap; gap: 16px 40px; align-items: end; justify-content: space-between; }
+.screens h2 { font-size: clamp(2rem, 4.4vw, 4rem); max-width: 14ch; }
+.screens .head p { color: var(--mist); max-width: 40ch; }
+.room { position: relative; perspective: 1000px; perspective-origin: 50% 45%; cursor: grab; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.room:active { cursor: grabbing; }
+.cyl { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; }
+.screen {
+  --w: 330px; --h: 430px;
+  position: absolute; left: calc(var(--w) / -2); top: calc(var(--h) / -2); width: var(--w); height: var(--h);
+  border-radius: 26px; overflow: hidden; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  background: linear-gradient(160deg, #171B2E, #0B0D18 70%);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.09), 0 30px 80px -30px rgba(0,0,0,.9);
+  padding: 22px; display: grid; grid-template-rows: auto 1fr auto; gap: 12px;
+}
+.screen::before { content: ""; position: absolute; inset: 0; background: radial-gradient(80% 50% at 50% 0%, rgba(255,255,255,.07), transparent 70%); pointer-events: none; }
+.screen .top { display: flex; justify-content: space-between; font-size: 12px; color: rgba(255,255,255,.45); }
+.screen h3 { font-size: 22px; letter-spacing: -0.03em; line-height: 1.05; }
+.screen .mid { display: grid; align-content: center; gap: 10px; min-height: 0; }
+.screen .num { font-size: 56px; font-weight: 600; letter-spacing: -0.06em; line-height: .9; color: var(--amber); text-shadow: 0 0 30px rgba(255,150,40,.4); font-variant-numeric: tabular-nums; }
+.screen .muted { color: rgba(255,255,255,.55); font-size: 14px; line-height: 1.4; }
+.screen .row { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.05); font-variant-numeric: tabular-nums; }
+.screen .row b { font-weight: 600; }
+.screen .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.screen .keys span { display: grid; place-items: center; height: 38px; border-radius: 10px; background: rgba(255,255,255,.06); font-size: 16px; }
+.screen .cta { text-align: center; padding: 12px; border-radius: 14px; background: var(--amber); color: #1A1003; font-weight: 600; font-size: 15px; }
+.screen .ghost { background: rgba(255,255,255,.08); color: var(--white); }
+.screen .mini-jar { width: 86px; height: 104px; justify-self: center; }
+.screen .bar2 { height: 8px; border-radius: 8px; background: rgba(255,255,255,.08); overflow: hidden; }
+.screen .bar2 i { display: block; height: 100%; background: linear-gradient(90deg, var(--amber-hot), var(--amber)); border-radius: 8px; }
+.screen .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; font-size: 11px; text-align: center; color: rgba(255,255,255,.5); }
+.screen .cal span { padding: 6px 0; border-radius: 7px; }
+.screen .cal .t { background: var(--amber); color: #1A1003; font-weight: 600; }
+.screen .cal .b { box-shadow: inset 0 0 0 1px rgba(255,178,63,.6); color: var(--white); }
+.screen .cal .p { background: rgba(255,255,255,.16); color: var(--white); font-weight: 600; }
+.wall-hint { position: absolute; left: 50%; bottom: 26px; transform: translateX(-50%); font-size: 13px; color: rgba(255,255,255,.45); display: flex; gap: 10px; align-items: center; white-space: nowrap; margin: 0; }
+.wall-hint .count { font-variant-numeric: tabular-nums; color: var(--white); }
+
+/* Daylight: demo + maker */
+.day { color: var(--ink); position: relative; }
+.day .band { padding-block: clamp(90px, 12vw, 150px); }
+.day h2 { font-size: clamp(2.2rem, 4.8vw, 4.4rem); }
+.day .lede { color: var(--ink-2); font-size: 19px; max-width: 48ch; }
+.demo-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); }
+.demo-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 20px; align-items: stretch; }
+.glass-ink {
+  background: rgba(255,255,255,.72); border-radius: 30px; padding: clamp(22px, 3vw, 34px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 1px 0 var(--hair-ink), 0 40px 80px -40px rgba(20,30,60,.25);
+  display: grid; gap: 22px; align-content: start; min-width: 0;
+}
+.field { display: grid; gap: 8px; }
+.field label { font-weight: 500; font-size: 15px; color: var(--ink-2); display: flex; justify-content: space-between; gap: 12px; }
+.field output { color: var(--ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.money { display: flex; align-items: center; border-radius: 16px; padding: 0 16px; background: var(--white); box-shadow: inset 0 0 0 1px var(--hair-ink); transition: box-shadow .2s; }
+.money:focus-within { box-shadow: inset 0 0 0 2px var(--amber-hot), 0 0 0 6px rgba(255,150,40,.15); }
+.money span { font-size: 22px; color: var(--ink-2); }
+.money input { flex: 1; min-width: 0; border: 0; background: transparent; font: 600 26px/1 var(--font); letter-spacing: -0.03em; color: var(--ink); padding: 15px 8px; font-variant-numeric: tabular-nums; }
+.money input:focus { outline: none; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; cursor: pointer; }
+input[type=range]::-webkit-slider-runnable-track { height: 6px; border-radius: 6px; background: linear-gradient(90deg, var(--amber-hot), var(--amber) var(--fill, 40%), rgba(10,12,20,.1) var(--fill, 40%)); }
+input[type=range]::-moz-range-track { height: 6px; border-radius: 6px; background: rgba(10,12,20,.1); }
+input[type=range]::-moz-range-progress { height: 6px; border-radius: 6px; background: var(--amber); }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; margin-top: -10px; border-radius: 50%; background: var(--white); box-shadow: 0 0 0 1px var(--hair-ink), 0 4px 14px rgba(10,12,20,.25); }
+input[type=range]::-moz-range-thumb { width: 24px; height: 24px; border: 0; border-radius: 50%; background: var(--white); box-shadow: 0 0 0 1px var(--hair-ink), 0 4px 14px rgba(10,12,20,.25); }
+.formula { font-size: 15px; color: var(--ink-2); font-variant-numeric: tabular-nums; padding-top: 18px; border-top: 1px solid var(--hair-ink); }
+.rule { display: grid; gap: 10px; font-size: 15px; color: var(--ink-2); }
+.rule div { display: flex; gap: 12px; align-items: baseline; }
+.rule div::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--amber-hot); transform: translateY(-1px); }
+
+.jar-card { position: relative; border-radius: 30px; overflow: hidden; min-height: 600px; background: #E6E9EF; box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 40px 80px -40px rgba(20,30,60,.3); display: grid; grid-template-rows: 1fr auto; min-width: 0; }
+.jar3d { position: relative; min-height: 380px; }
+.jar3d canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; touch-action: pan-y; }
+.jar3d .fallback { position: absolute; inset: 12% 30%; }
+.jar3d.gl .fallback { display: none; }
+.readout { position: absolute; left: 26px; top: 22px; z-index: 2; display: grid; gap: 2px; pointer-events: none; }
+.readout b { font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 600; letter-spacing: -0.06em; line-height: .95; font-variant-numeric: tabular-nums; }
+.readout span { color: var(--ink-2); font-size: 15px; }
+.unit { position: absolute; right: 22px; top: 26px; z-index: 2; font-size: 13px; color: var(--ink-2); padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,.7); }
+.spend { padding: 0 22px 22px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; position: relative; z-index: 2; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  min-height: 46px; padding: 0 18px; border-radius: 999px; border: 0; cursor: pointer;
+  background: var(--white); color: var(--ink); font: 500 15px/1 var(--font);
+  box-shadow: inset 0 0 0 1px var(--hair-ink), 0 4px 12px -6px rgba(10,12,20,.2);
+  transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s;
+}
+.chip:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px var(--hair-ink), 0 10px 20px -8px rgba(10,12,20,.3); }
+.chip:active { transform: scale(.95); }
+.chip b { font-weight: 600; }
+.other { display: flex; gap: 8px; }
+.other .money { flex: 1; min-width: 0; }
+.other .money input { font-size: 18px; padding: 11px 6px; }
+.chip.dark { background: var(--ink); color: var(--white); box-shadow: none; }
+.chip.in { background: #FFF3DF; color: #7A3E00; box-shadow: inset 0 0 0 1px rgba(255,138,31,.35); }
+.status { font-size: 16px; min-height: 50px; }
+.status em { font-style: normal; font-weight: 600; color: #B35600; }
+.reset { justify-self: start; background: none; border: 0; padding: 10px 0; min-height: 44px; color: var(--ink-2); font: 500 14px var(--font); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+
+.maker-grid { display: grid; grid-template-columns: minmax(0, 860px); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.maker .eyebrow { font-size: 16px; letter-spacing: 0; font-weight: 500; color: var(--ink-2); margin-bottom: 20px; line-height: 1.3; }
+.maker blockquote { margin: 0; font-size: clamp(2rem, 3.8vw, 3.4rem); font-weight: 600; letter-spacing: -0.045em; line-height: 1.02; text-wrap: balance; }
+.maker .by { margin-top: 22px; color: var(--ink-2); max-width: 46ch; }
+.slots { display: grid; gap: 12px; }
+.slot { border-radius: 22px; padding: 22px; display: grid; gap: 6px; border: 1.5px dashed rgba(10,12,20,.28); background: rgba(255,255,255,.5); }
+.slot b { font-size: 14px; font-weight: 600; color: #B35600; }
+.slot p { font-size: 15px; color: var(--ink-2); }
+
+/* Night again: buy */
+.buy { padding-block: clamp(100px, 13vw, 160px); position: relative; }
+.buy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.touch { perspective: 1000px; }
+.price-card {
+  --rx: 0deg; --ry: 0deg; --gx: 50%; --gy: 30%;
+  position: relative; border-radius: 34px; padding: clamp(26px, 4vw, 44px);
+  background: linear-gradient(150deg, rgba(255,255,255,.1), rgba(255,255,255,.02) 60%), #0D1020;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12), 0 60px 120px -40px rgba(255,140,30,.35);
+  transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d;
+  transition: transform .5s cubic-bezier(.2,.8,.2,1);
+  display: grid; gap: 22px;
+}
+.price-card.live { transition: transform .08s linear; }
+.price-card::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: radial-gradient(420px circle at var(--gx) var(--gy), rgba(255,200,120,.2), transparent 45%);
+}
+.price-card h2 { font-size: 20px; letter-spacing: -0.02em; font-weight: 500; color: var(--mist); }
+.price-card .big { font-size: clamp(5rem, 10vw, 8.6rem); font-weight: 600; letter-spacing: -0.07em; line-height: .82; font-variant-numeric: tabular-nums; transform: translateZ(40px); }
+.price-card .big small { display: block; font-size: 15px; letter-spacing: 0; font-weight: 500; color: var(--amber); margin-top: 14px; line-height: 1.4; }
+.price-card ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; color: var(--mist); }
+.price-card li { display: flex; gap: 12px; align-items: baseline; }
+.price-card li::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 10px var(--amber); transform: translateY(-1px); }
+.price-card .btn { justify-self: start; }
+.faq { display: grid; gap: 8px; }
+.faq h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: 16px; }
+details { border-radius: 18px; background: rgba(255,255,255,.04); box-shadow: inset 0 0 0 1px var(--hair); transition: background .2s; }
+details[open] { background: rgba(255,255,255,.07); }
+summary { cursor: pointer; list-style: none; padding: 18px 22px; font-weight: 500; font-size: 17px; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 44px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font-size: 22px; font-weight: 300; color: var(--amber); transition: transform .3s; }
+details[open] summary::after { transform: rotate(45deg); }
+details p { padding: 0 22px 20px; color: var(--mist); }
+.demo-link { margin-top: 14px; display: inline-flex; justify-self: start; color: var(--mist); text-decoration: underline; text-underline-offset: 5px; text-decoration-color: rgba(255,255,255,.3); min-height: 44px; align-items: center; }
+.demo-link:hover { color: var(--white); text-decoration-color: var(--amber); }
+footer { color: rgba(255,255,255,.45); font-size: 14px; }
+.foot-links { display: flex; gap: 6px 18px; flex-wrap: wrap; }
+.foot-links a, .link-in { color: var(--mist); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(255,178,63,.6); }
+.foot-links a { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px calc(28px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--hair); }
+
+/* Phone */
+@media (max-width: 860px) {
+  .intro { width: 100%; align-content: start; padding-top: 88px; gap: 16px; }
+  .beats { width: 100%; }
+  .beat { top: 92px; transform: none; }
+  .hero .sub { max-width: 32ch; }
+  .demo-grid, .maker-grid, .buy-grid { grid-template-columns: 1fr; }
+  .jar-card { min-height: 560px; }
+  .screen { --w: 240px; --h: 330px; padding: 18px; }
+  .screen .num { font-size: 44px; }
+  .screen h3 { font-size: 19px; }
+  .touch-hint { display: none; }
+}
+@media (max-width: 520px) {
+  body { font-size: 16px; }
+  .hero h1 { font-size: 2.4rem; }
+  .ctas .btn { flex: 1 1 100%; }
+  .scroll-cue { display: none; }
+  .other { flex-wrap: wrap; }
+  .other .chip { flex: 1 1 40%; }
+  .other .money { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .hero, .screens { height: auto; }
+  .stage, .screens .sticky { position: relative; height: auto; min-height: 100svh; }
+  .room { overflow-x: auto; perspective: none; min-height: 470px; }
+  .cyl { position: static; display: flex; gap: 14px; width: max-content; height: auto; padding: 20px; transform: none !important; }
+  .screen { position: relative; left: auto; top: auto; transform: none !important; opacity: 1 !important; visibility: visible !important; flex: none; }
+  .day { background: var(--fog); }
+}
+</style>
+</head>
 <body>
-<!-- type: software (an ADHD-friendly budget web app, sold once)
-     deal: hero centred, nav nav-mega, close close-type, footer footer-columns, rhythm dark-band, buttons arrow,
-           mark: the client's own jar mark (the dealt "arc" is replaced by the app's mark), radius round (consumer app),
-           palette: the client's own colours through start.mjs brand (mint ground #F1FAF7, ink deepened to #1B1F2A,
-           accent raspberry #E8436F darkened to #C2365B so its label passes 4.5:1), pairing instrument (Instrument Sans),
-           lit ground sage, grounds bg-dots (features) and bg-band (faq), effect painterly-landscape in the hero frame,
-           card ground gradient-mesh (the 3 steps), diagram hub in the price section.
-     moments: line-carries-colour on #calm (the dark band: the colour arrives as you reach the calm part),
-              counter-rolls on the facts row in #buy (four plain counts from the brief roll once).
-     beats: hero effect (1), #calm moment (6), #buy counter (8); calm sections between them. -->
-<header class="nav">
-  <div class="wrap nav__bar">
-    <a class="skip-link" href="#top">Skip to content</a>
-    <a class="nav__logo" href="#top"><svg class="logo-mark" viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="7" y="2" width="12" height="4" rx="1.5" fill="#1b1f2a"/><path d="M8 7c-3 1-4 3-4 6v7a3 3 0 003 3h12a3 3 0 003-3v-7c0-3-1-5-4-6z" fill="none" stroke="#1b1f2a" stroke-width="2"/><circle cx="10" cy="17" r="2.6" fill="#e8436f"/><circle cx="16" cy="16" r="2.6" fill="#f2be2e"/></svg>Dot &amp; Jar</a>
-    <nav class="nav__links" aria-label="Main">
-      <div class="nav__item">
-        <a class="nav__link" href="#features">Features <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <div class="nav__menu">
-          <div class="wrap grid">
-            <div class="menu-col span-3">
-              <p class="t-label">Money</p>
-              <a href="#how">Safe to spend<span>One number for today</span></a>
-              <a href="#features">Bills and paydays<span>Any schedule, one calendar</span></a>
-              <a href="#help">Debts<span>A plan and a debt-free date</span></a>
+<a class="skip" href="#demo">Skip to the demo</a>
+
+<div class="nav"><div class="shell"><div class="bar">
+  <a class="logo" href="#top" aria-label="Dot and Jar, top of page">
+    <img src="favicon-48.png" width="26" height="26" alt="" style="border-radius:7px">
+    Dot &amp; Jar
+  </a>
+  <a class="btn btn-buy magnet" href="https://wisbeanie.gumroad.com/l/dotandjar/FOUNDER?wanted=true" target="_blank" rel="noopener">Get it, $6.99</a>
+</div></div></div>
+
+<main>
+  <section class="hero" id="top" aria-labelledby="hero-h">
+    <div class="stage" id="stage">
+      <svg class="fallback" viewBox="0 0 220 300" aria-hidden="true"><rect x="60" y="10" width="100" height="24" rx="8" fill="#2A2D3A"/><path d="M40 44h140a14 14 0 0 1 14 14v206a22 22 0 0 1-22 22H48a22 22 0 0 1-22-22V58a14 14 0 0 1 14-14z" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.5)" stroke-width="2"/><g fill="#FFB23F"><circle cx="60" cy="262" r="12"/><circle cx="86" cy="264" r="12"/><circle cx="112" cy="262" r="12"/><circle cx="138" cy="264" r="12"/><circle cx="164" cy="262" r="12"/><circle cx="74" cy="240" r="12"/><circle cx="100" cy="241" r="12"/><circle cx="126" cy="240" r="12"/><circle cx="152" cy="241" r="12"/><circle cx="112" cy="218" r="12"/></g></svg>
+      <div class="layer">
+        <div class="wrap">
+          <div class="intro" id="intro">
+            <span class="pill"><i></i>Made by someone with ADHD</span>
+            <h1 id="hero-h">I quit every budget app by day 3. So I built this one.</h1>
+            <p class="sub">Dot &amp; Jar shows one number a day: what's safe to spend until payday. No bank login. No subscription.</p>
+            <div class="ctas">
+              <a class="btn btn-buy magnet" href="https://wisbeanie.gumroad.com/l/dotandjar/FOUNDER?wanted=true" target="_blank" rel="noopener">Get it for $6.99</a>
+              <a class="btn btn-glass magnet" href="#demo">Try your own number</a>
             </div>
-            <div class="menu-col span-3">
-              <p class="t-label">Comfort</p>
-              <a href="#help">Pause list<span>Park an impulse buy</span></a>
-              <a href="#calm">Focus mode<span>Only the jar on screen</span></a>
-              <a href="#calm">Privacy<span>Data stays on your phone</span></a>
+            <p class="fine">Founder price for the first 25 people, then <s>$10.99</s>. Pay once. 14-day refund.</p>
+          </div>
+          <div class="beats">
+            <div class="beat">
+              <span class="k">Step 1 of 3</span>
+              <h2>Your balance pours in.</h2>
+              <p>$1,180 in your account today. Every dot is money you have.</p>
             </div>
-            <a class="menu-card span-3 start-10" href="#jar">
-              <div class="panel frame--lit"><div class="stage stage--fade-br"><div class="at-corner" style="--ax:24px;--ay:24px">
-                <div class="ui dj dj-card" style="width:220px"><div class="dj-small">Safe to spend today</div><div class="n" style="font-size:30px;line-height:1">$85.65</div></div>
-              </div></div></div>
-              <span class="t-card">The jar</span>
-              <span class="t-small muted">One sweet for each day to payday</span>
-            </a>
+            <div class="beat">
+              <span class="k">Step 2 of 3</span>
+              <h2>Bills leave first.</h2>
+              <p>Rent, phone and car insurance due before payday: $676. Gone from the jar before you see a number.</p>
+            </div>
+            <div class="beat">
+              <span class="k">Step 3 of 3</span>
+              <h2>What's left, split by the days to payday.</h2>
+              <p>$504 ÷ 12 days. Spend less today and tomorrow gets more.</p>
+              <span class="big">$42.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress" id="progress" aria-hidden="true"><i><b></b></i><i><b></b></i><i><b></b></i></div>
+        <p class="touch-hint" aria-hidden="true"><i></i>Drag to spin. Move to tilt. Tap the jar to drop a dot.</p>
+        <span class="scroll-cue" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="screens" id="screens" aria-labelledby="screens-h">
+    <div class="sticky">
+      <div class="wrap head">
+        <h2 id="screens-h">Twelve screens. You'll open one.</h2>
+        <p>Scroll or drag through the whole app. The jar is the screen you check every day. Everything else waits until you need it.</p>
+      </div>
+      <div class="room" id="room">
+        <div class="cyl" id="cyl"></div>
+        <p class="wall-hint" aria-hidden="true">Drag sideways <span class="count" id="wallCount">01 / 12</span></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="day" id="day">
+    <section class="band" id="demo" aria-labelledby="demo-h">
+      <div class="wrap">
+        <div class="demo-head">
+          <h2 id="demo-h">Try your own number.</h2>
+          <p class="lede">Three answers and the jar does the math. Add a spend and watch the dots leave. Nothing you type leaves this page.</p>
+        </div>
+        <div class="demo-grid">
+          <form class="glass-ink" id="setup" autocomplete="off">
+            <div class="field">
+              <label for="bal">Money in your account now</label>
+              <div class="money"><span>$</span><input id="bal" inputmode="decimal" value="1180"></div>
+            </div>
+            <div class="field">
+              <label for="bills">Bills due before payday</label>
+              <div class="money"><span>$</span><input id="bills" inputmode="decimal" value="676"></div>
+            </div>
+            <div class="field">
+              <label for="days">Days until payday <output id="daysOut" for="days">12 days</output></label>
+              <input type="range" id="days" min="1" max="31" value="12">
+            </div>
+            <p class="formula" id="formula">($1,180.00 − $676.00) ÷ 12 days = $42.00 a day</p>
+            <div class="rule">
+              <div>Spend less today and tomorrow gets more.</div>
+              <div>Spend more and it spreads quietly over the days left.</div>
+            </div>
+          </form>
+          <div class="jar-card">
+            <div class="readout" aria-live="polite"><b id="num">$42.00</b><span id="numLabel">safe to spend today</span></div>
+            <span class="unit" id="unit">1 dot = $1</span>
+            <div class="jar3d" id="demoJar">
+              <svg class="fallback" viewBox="0 0 220 300" aria-hidden="true"><path d="M40 44h140a14 14 0 0 1 14 14v206a22 22 0 0 1-22 22H48a22 22 0 0 1-22-22V58a14 14 0 0 1 14-14z" fill="rgba(255,255,255,.6)" stroke="rgba(10,12,20,.3)" stroke-width="2"/><g fill="#FFB23F"><circle cx="60" cy="262" r="12"/><circle cx="86" cy="264" r="12"/><circle cx="112" cy="262" r="12"/><circle cx="138" cy="264" r="12"/><circle cx="164" cy="262" r="12"/></g></svg>
+            </div>
+            <div class="spend">
+              <div class="chips" role="group" aria-label="Add a spend">
+                <button class="chip" type="button" data-amt="6">Coffee <b>$6</b></button>
+                <button class="chip" type="button" data-amt="14">Lunch <b>$14</b></button>
+                <button class="chip" type="button" data-amt="38">Groceries <b>$38</b></button>
+              </div>
+              <div class="chips" role="group" aria-label="Add money that came in">
+                <button class="chip in" type="button" data-in="60">Refund <b>+$60</b></button>
+                <button class="chip in" type="button" data-in="120">Side gig <b>+$120</b></button>
+              </div>
+              <form class="other" id="otherForm">
+                <div class="money"><span>$</span><input id="other" inputmode="decimal" placeholder="Other amount" aria-label="Other amount"></div>
+                <button class="chip dark" type="submit">Add spend</button>
+                <button class="chip in" type="button" id="addIn">Add money</button>
+              </form>
+              <p class="status" id="status">Nothing spent yet today.</p>
+              <button class="reset" type="button" id="reset">Start the day over</button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="nav__item"><a class="nav__link" href="#how">Setup</a></div>
-      <div class="nav__item"><a class="nav__link" href="#install">Install</a></div>
-      <div class="nav__item"><a class="nav__link" href="#buy">Price</a></div>
-      <div class="nav__item"><a class="nav__link" href="#faq">Questions</a></div>
-    </nav>
-    <div class="nav__actions">
-      <a class="btn btn--primary" href="demo/">Try the free demo</a>
-    </div>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
-      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-    </button>
+    </section>
+
+    <section class="band maker" aria-labelledby="maker-h">
+      <div class="wrap maker-grid">
+        <div>
+          <h2 id="maker-h" class="eyebrow">Made by one person with ADHD</h2>
+          <blockquote>One glance, one number, no guilt. That's the whole app.</blockquote>
+          <p class="by">Dot &amp; Jar is built by someone who quit every budget app by day 3. It does the payday math for you and shows the answer as a jar you can read in a second.</p>
+        </div>
+      </div>
+    </section>
   </div>
-</header>
 
-<main id="top">
-  <style>.hero__offer{margin-top:14px;font-size:1.05rem}.hero__offer b{color:var(--accent,inherit)}.hero__maker{margin-top:12px}.hero__refund{margin-top:10px}
-/* phone: sections were forced to 2 screens each (18 screens total); 1 screen minimum, taller only when content needs it. Show the app picture before the maker quote */
-@media (max-width:639px){main > :is(section,.section):not(.hero,.section--hero){--hm:1!important}.hero h1{margin-block:12px 8px}.hero .hero-text{display:flex;flex-direction:column}.hero .hero__c{display:contents}.hero .hero__window{order:1;margin-top:20px}.hero .hero__maker{order:2}}@media (max-width:399px){.hero .pill .muted{display:none}}</style>
-  <section class="hero hero--centred" data-enter="off" aria-labelledby="hero-h">
-    <div class="wrap"><div class="hero-text">
-      <div class="hero__c">
-        <a class="pill" href="#install"><span>Made by someone with ADHD</span><span class="muted">iPhone + Android</span></a>
-        <h1 id="hero-h">The budget app for ADHD brains</h1>
-        <p class="hero__lead">One number a day: what is safe to spend today, so your money lasts until payday. No bank login, no subscription.</p>
-        <!-- Matches the Meta ad (maker story + founder price), so ad visitors see the same offer they tapped. -->
-        <p class="hero__offer"><b>Founder price $6.99</b> for the first 25 people <span class="muted">(then <s>$10.99</s>). Pay once, keep it. <span style="white-space:nowrap">14-day refund.</span></span></p>
-        <div class="btn-row"><a class="btn btn--primary" href="https://wisbeanie.gumroad.com/l/dotandjar/FOUNDER">Get it for $6.99<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="demo/">Or try the 30-second demo first</a></div>
-        <p class="hero__how t-small muted">Works in your phone's browser. No App Store, no account: you get a link, tap once to keep it.</p>
-        <p class="hero__maker t-small muted">"I have ADHD and quit every budget app by day 3, so I made this one." Works offline, no account needed.</p>
-      </div>
-      <div class="hero__window" data-fx="painterly-landscape" data-fx-seed="7" data-fx-palette='{"bg":"#b9d4c7","accent":"#d8bd84"}' data-fx-params='{"blur":1,"brush":0.35,"slope":0,"hillY":0.3,"horizon":0.62}' role="img" aria-label="Dot &amp; Jar's Today screen: a jar holding 9 sweets, one for each day until payday, and a tag reading Safe to spend today $85.65">
-        <div class="ly-piece dj dj-win" aria-hidden="true">
-          <div class="dj-win__bar"><span class="dj-win__dots"><i></i><i></i><i></i></span><span class="dj-mark"><svg viewBox="0 0 26 26"><rect x="7" y="2" width="12" height="4" rx="1.5" fill="var(--dj-ink)"/><path d="M8 7c-3 1-4 3-4 6v7a3 3 0 003 3h12a3 3 0 003-3v-7c0-3-1-5-4-6z" fill="none" stroke="var(--dj-ink)" stroke-width="2"/><circle cx="10" cy="17" r="2.6" fill="var(--dj-rasp)"/><circle cx="16" cy="16" r="2.6" fill="var(--dj-lemon)"/></svg>Dot <span class="amp">&amp;</span> Jar</span><span class="sp"></span><span class="dj-hide-s">Today</span></div>
-          <div class="dj-win__body dj-dotted">
-            <div class="dj-stage"><svg class="dj-jar" viewBox="0 0 240 272" role="img" aria-label="Money jar: 9 days of money until payday"><defs><clipPath id="jc-hero"><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z"/></clipPath></defs><rect x="50" y="18" width="140" height="30" rx="10" fill="var(--dj-ink)"/><rect x="58" y="44" width="124" height="16" rx="4" fill="var(--dj-ink)" opacity=".85"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="var(--dj-glass)" stroke="var(--dj-ink)" stroke-width="3"/><rect x="44" y="60" width="152" height="10" rx="5" fill="none" stroke="var(--dj-rim)" stroke-width="3"/><g clip-path="url(#jc-hero)"><g class="sw" data-k="8" style="transform-origin:55.5px 238px"><circle cx="55.5" cy="238" r="20" fill="var(--dj-rasp)"/><circle cx="48.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="7" style="transform-origin:98.5px 238px"><circle cx="98.5" cy="238" r="20" fill="var(--dj-lemon)"/><circle cx="91.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="6" style="transform-origin:141.5px 238px"><circle cx="141.5" cy="238" r="20" fill="var(--dj-mint)"/><circle cx="134.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="5" style="transform-origin:184.5px 238px"><circle cx="184.5" cy="238" r="20" fill="var(--dj-blue)"/><circle cx="177.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="4" style="transform-origin:77px 200.59px"><circle cx="77" cy="200.59" r="20" fill="var(--dj-rasp)"/><circle cx="70" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="3" style="transform-origin:120px 200.59px"><circle cx="120" cy="200.59" r="20" fill="var(--dj-lemon)"/><circle cx="113" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="2" style="transform-origin:163px 200.59px"><circle cx="163" cy="200.59" r="20" fill="var(--dj-mint)"/><circle cx="156" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="1" style="transform-origin:98.5px 163.18px"><circle cx="98.5" cy="163.18" r="20" fill="var(--dj-blue)"/><circle cx="91.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw today" data-k="0" style="transform-origin:141.5px 163.18px;transform:scale(1.000)"><circle cx="141.5" cy="163.18" r="20" fill="var(--dj-rasp)"/><circle cx="134.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><circle cx="141.5" cy="163.18" r="24" fill="none" stroke="var(--dj-ink)" stroke-width="2.5"/></g><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-glass-hi)" stroke-width="9" stroke-linecap="round"/><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-rim)" stroke-width="1.5" stroke-linecap="round" transform="translate(7 0)"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="none" stroke="var(--dj-ink)" stroke-width="3"/></svg><div class="dj-tag"><div class="lbl">Safe to spend today</div><div class="val">$85.65</div><span class="how">Show the maths</span></div><span class="dj-spend">− $40 groceries</span></div>
-          </div>
-        </div>
-      </div>
-    </div></div>
-  </section>
-
-  <section class="section" id="tax" style="--hm: 2" aria-labelledby="tax-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="tax-h">The ADHD tax calculator. <span class="muted">Late fees and forgotten buys add up.</span></h2>
-      </div>
-      <div class="grid grid--top fill">
-        <div class="calc span-5" role="group" aria-label="ADHD tax calculator">
-          <div class="calc__field">
-            <label for="c-late"><span>Late fees a month</span><output for="c-late" id="o-late">$25</output></label>
-            <input id="c-late" type="range" min="0" max="100" step="5" value="25">
-          </div>
-          <div class="calc__field">
-            <label for="c-subs"><span>Forgotten subscriptions a month</span><output for="c-subs" id="o-subs">$15</output></label>
-            <input id="c-subs" type="range" min="0" max="80" step="5" value="15">
-          </div>
-          <div class="calc__field">
-            <label for="c-imp"><span>Impulse buys a week</span><output for="c-imp" id="o-imp">$30</output></label>
-            <input id="c-imp" type="range" min="0" max="150" step="5" value="30">
-          </div>
-          <p class="t-small muted">Nothing you set here is saved or sent.</p>
-        </div>
-        <div class="frame frame--lit span-6 start-7">
-          <div class="result ui ui-calc" aria-live="polite">
-            <div class="result__head">
-              <div class="dj leak"><svg class="dj-jar" viewBox="0 0 240 272" role="img" aria-label="A jar with five of its sweets gone"><defs><clipPath id="jc-leak"><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z"/></clipPath></defs><rect x="50" y="18" width="140" height="30" rx="10" fill="var(--dj-ink)"/><rect x="58" y="44" width="124" height="16" rx="4" fill="var(--dj-ink)" opacity=".85"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="var(--dj-glass)" stroke="var(--dj-ink)" stroke-width="3"/><rect x="44" y="60" width="152" height="10" rx="5" fill="none" stroke="var(--dj-rim)" stroke-width="3"/><g clip-path="url(#jc-leak)"><g class="sw" data-k="11" style="transform-origin:55.5px 238px"><circle cx="55.5" cy="238" r="20" fill="var(--dj-rasp)"/><circle cx="48.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="10" style="transform-origin:98.5px 238px"><circle cx="98.5" cy="238" r="20" fill="var(--dj-lemon)"/><circle cx="91.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="9" style="transform-origin:141.5px 238px"><circle cx="141.5" cy="238" r="20" fill="var(--dj-mint)"/><circle cx="134.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="8" style="transform-origin:184.5px 238px"><circle cx="184.5" cy="238" r="20" fill="var(--dj-blue)"/><circle cx="177.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="7" style="transform-origin:77px 200.59px"><circle cx="77" cy="200.59" r="20" fill="var(--dj-rasp)"/><circle cx="70" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="6" style="transform-origin:120px 200.59px"><circle cx="120" cy="200.59" r="20" fill="var(--dj-lemon)"/><circle cx="113" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="5" style="transform-origin:163px 200.59px"><circle cx="163" cy="200.59" r="20" fill="var(--dj-mint)"/><circle cx="156" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw gone" data-k="4" style="transform-origin:55.5px 163.18px"><circle cx="55.5" cy="163.18" r="20" fill="var(--dj-blue)"/><circle cx="48.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw gone" data-k="3" style="transform-origin:98.5px 163.18px"><circle cx="98.5" cy="163.18" r="20" fill="var(--dj-rasp)"/><circle cx="91.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw gone" data-k="2" style="transform-origin:141.5px 163.18px"><circle cx="141.5" cy="163.18" r="20" fill="var(--dj-lemon)"/><circle cx="134.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw gone" data-k="1" style="transform-origin:184.5px 163.18px"><circle cx="184.5" cy="163.18" r="20" fill="var(--dj-mint)"/><circle cx="177.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw gone today" data-k="0" style="transform-origin:120px 125.77px;transform:scale(1.000)"><circle cx="120" cy="125.77" r="20" fill="var(--dj-blue)"/><circle cx="113" cy="118.77" r="5.6" fill="#fff" opacity=".55"/></g><circle cx="120" cy="125.77" r="24" fill="none" stroke="var(--dj-ink)" stroke-width="2.5"/></g><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-glass-hi)" stroke-width="9" stroke-linecap="round"/><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-rim)" stroke-width="1.5" stroke-linecap="round" transform="translate(7 0)"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="none" stroke="var(--dj-ink)" stroke-width="3"/></svg></div>
-              <div><p class="t-label">Your ADHD tax, over a year</p><p class="result__total" id="c-total">$2,040</p></div>
-            </div>
-            <p>That money leaks out when bills and buys are hard to see. It says nothing about you.</p>
-            <p>Dot &amp; Jar shows each bill before it is due and gives impulse buys a waiting list.</p>
-            <div class="result__vs">
-              <span>Dot &amp; Jar, the full app, no subscription</span><span>$6.99 once (founder price)</span>
-            </div>
-            <p><a class="link" href="https://wisbeanie.gumroad.com/l/dotandjar/FOUNDER">Get Dot &amp; Jar</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="how" style="--hm: 2" aria-labelledby="how-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="how-h">Set up Dot &amp; Jar in 3 steps</h2>
-      </div>
-      <div class="grid">
-        <article class="card card--row card--open span-4 m-nolift">
-          <h3 class="step-h"><span class="step-num">1</span>Type your balance</h3>
-          <p>Copy the number from your banking app. Dot &amp; Jar never logs in to your bank.</p>
-          <div class="panel" data-fx="gradient-mesh" data-fx-seed="31" data-fx-params='{"drift":0}'>
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:300px;--ax:max(24px, 50% - 150px);--ay:40px">
-              <div class="ui dj dj-card">
-                <p class="dj-h">What is in your account?</p>
-                <span class="dj-small">Balance right now</span>
-                <div class="sheet__amount" style="font-size:30px;min-height:56px">$1,412.35</div>
-                <span class="dj-btn ink">Save balance</span>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--row card--open span-4 m-nolift">
-          <h3 class="step-h"><span class="step-num">2</span>Add payday and bills</h3>
-          <p>Weekly, monthly, yearly or once. Two paychecks are fine too.</p>
-          <div class="panel" data-fx="gradient-mesh" data-fx-seed="32" data-fx-params='{"drift":0}'>
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:300px;--ax:max(24px, 50% - 150px);--ay:40px">
-              <div class="ui dj dj-card" style="gap:0">
-                <div class="dj-item"><i style="background:var(--dj-mint)"></i><span><b>Payday</b><span class="dj-small">Monthly, on the 21st</span></span><span class="n">$1,850.00</span></div>
-                <div class="dj-item"><i style="background:var(--dj-rasp)"></i><span><b>Rent</b><span class="dj-small">Monthly, on the 15th</span></span><span class="n">$520.00</span></div>
-                <div class="dj-item"><i style="background:var(--dj-lemon)"></i><span><b>Electric</b><span class="dj-small">Monthly, on the 17th</span></span><span class="n">$83.00</span></div>
-                <div class="dj-item"><i style="background:var(--dj-blue)"></i><span><b>Phone</b><span class="dj-small">Monthly, on the 19th</span></span><span class="n">$38.50</span></div>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--row card--open span-4 m-nolift">
-          <h3 class="step-h"><span class="step-num">3</span>Read one number</h3>
-          <p>Each morning the tag shows what is safe to spend. Show the maths explains it.</p>
-          <div class="panel" data-fx="gradient-mesh" data-fx-seed="33" data-fx-params='{"drift":0}'>
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:300px;--ax:max(24px, 50% - 150px);--ay:40px">
-              <div class="ui dj dj-card" style="gap:0">
-                <div class="dj-rows">
-                  <div><span>In your account</span><span>$1,412.35</span></div>
-                  <div><span>Bills before payday (3)</span><span>− $641.50</span></div>
-                  <div><span>In the jar until payday</span><span>$770.85</span></div>
-                  <div class="total"><span>Safe to spend today</span><span>$85.65</span></div>
-                </div>
-              </div>
-            </div></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="jar" aria-labelledby="jar-h">
-    <div class="wrap">
-      <div class="grid grid--top">
-        <h2 class="span-5" id="jar-h">The budget jar and its “after this” preview</h2>
-        <p class="span-6 start-7 muted">One sweet for every day until payday. Type an amount and the jar shows what is left today and what tomorrow gets, before you pay. Tap an amount to try it.</p>
-      </div>
-      <div class="ui app app-frame fill" aria-label="Dot &amp; Jar: the Today screen beside the Add spend sheet" data-ui-pause-host>
-        <div class="app__pane app__pane--list dj dj-dotted" aria-hidden="true">
-          <div class="today">
-            <div class="dj-stage"><svg class="dj-jar" viewBox="0 0 240 272" role="img" aria-label="Money jar: 9 days of money until payday"><defs><clipPath id="jc-today"><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z"/></clipPath></defs><rect x="50" y="18" width="140" height="30" rx="10" fill="var(--dj-ink)"/><rect x="58" y="44" width="124" height="16" rx="4" fill="var(--dj-ink)" opacity=".85"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="var(--dj-glass)" stroke="var(--dj-ink)" stroke-width="3"/><rect x="44" y="60" width="152" height="10" rx="5" fill="none" stroke="var(--dj-rim)" stroke-width="3"/><g clip-path="url(#jc-today)"><g class="sw" data-k="8" style="transform-origin:55.5px 238px"><circle cx="55.5" cy="238" r="20" fill="var(--dj-rasp)"/><circle cx="48.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="7" style="transform-origin:98.5px 238px"><circle cx="98.5" cy="238" r="20" fill="var(--dj-lemon)"/><circle cx="91.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="6" style="transform-origin:141.5px 238px"><circle cx="141.5" cy="238" r="20" fill="var(--dj-mint)"/><circle cx="134.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="5" style="transform-origin:184.5px 238px"><circle cx="184.5" cy="238" r="20" fill="var(--dj-blue)"/><circle cx="177.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="4" style="transform-origin:77px 200.59px"><circle cx="77" cy="200.59" r="20" fill="var(--dj-rasp)"/><circle cx="70" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="3" style="transform-origin:120px 200.59px"><circle cx="120" cy="200.59" r="20" fill="var(--dj-lemon)"/><circle cx="113" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="2" style="transform-origin:163px 200.59px"><circle cx="163" cy="200.59" r="20" fill="var(--dj-mint)"/><circle cx="156" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="1" style="transform-origin:98.5px 163.18px"><circle cx="98.5" cy="163.18" r="20" fill="var(--dj-blue)"/><circle cx="91.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw today" data-k="0" style="transform-origin:141.5px 163.18px;transform:scale(1.000)"><circle cx="141.5" cy="163.18" r="20" fill="var(--dj-rasp)"/><circle cx="134.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><circle cx="141.5" cy="163.18" r="24" fill="none" stroke="var(--dj-ink)" stroke-width="2.5"/></g><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-glass-hi)" stroke-width="9" stroke-linecap="round"/><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-rim)" stroke-width="1.5" stroke-linecap="round" transform="translate(7 0)"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="none" stroke="var(--dj-ink)" stroke-width="3"/></svg><div class="dj-tag"><div class="lbl">Safe to spend today</div><div class="val">$85.65</div><span class="how">Show the maths</span></div></div>
-            <span class="dj-status"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8M9 9.5h.01M15 9.5h.01"/></svg>On track. Enjoy today.</span>
-            <div class="today__facts"><span><b>9</b> days to payday</span><span><b>3</b> bills before then</span></div>
-            <span class="dj-btn ink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add spend</span>
-          </div>
-        </div>
-        <div class="app__pane app__pane--open dj">
-          <div class="sheet">
-            <p class="dj-h">Add spend</p>
-            <div class="sheet__amount" id="sp-amount" aria-live="polite">$12.40</div>
-            <div class="sheet__row" role="group" aria-label="Try an amount">
-              <button class="dj-chip" type="button" data-amt="5" aria-pressed="false">$5</button>
-              <button class="dj-chip" type="button" data-amt="12.40" aria-pressed="true">$12.40</button>
-              <button class="dj-chip" type="button" data-amt="25" aria-pressed="false">$25</button>
-              <button class="dj-chip" type="button" data-amt="40" aria-pressed="false">$40</button>
-            </div>
-            <div class="sheet__row" aria-hidden="true">
-              <span class="dj-chip"><i style="background:var(--dj-rasp)"></i>Groceries</span>
-              <span class="dj-chip" aria-pressed="true"><i style="background:var(--dj-lemon)"></i>Coffee</span>
-              <span class="dj-chip"><i style="background:var(--dj-mint)"></i>Fun</span>
-              <span class="dj-chip"><i style="background:var(--dj-blue)"></i>Transport</span>
-            </div>
-            <div class="preview">
-              <svg class="dj-jar" viewBox="0 0 240 272" role="img" aria-label="The jar after this spend"><defs><clipPath id="jc-prev"><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z"/></clipPath></defs><rect x="50" y="18" width="140" height="30" rx="10" fill="var(--dj-ink)"/><rect x="58" y="44" width="124" height="16" rx="4" fill="var(--dj-ink)" opacity=".85"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="var(--dj-glass)" stroke="var(--dj-ink)" stroke-width="3"/><rect x="44" y="60" width="152" height="10" rx="5" fill="none" stroke="var(--dj-rim)" stroke-width="3"/><g clip-path="url(#jc-prev)"><g class="sw" data-k="8" style="transform-origin:55.5px 238px"><circle cx="55.5" cy="238" r="20" fill="var(--dj-rasp)"/><circle cx="48.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="7" style="transform-origin:98.5px 238px"><circle cx="98.5" cy="238" r="20" fill="var(--dj-lemon)"/><circle cx="91.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="6" style="transform-origin:141.5px 238px"><circle cx="141.5" cy="238" r="20" fill="var(--dj-mint)"/><circle cx="134.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="5" style="transform-origin:184.5px 238px"><circle cx="184.5" cy="238" r="20" fill="var(--dj-blue)"/><circle cx="177.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="4" style="transform-origin:77px 200.59px"><circle cx="77" cy="200.59" r="20" fill="var(--dj-rasp)"/><circle cx="70" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="3" style="transform-origin:120px 200.59px"><circle cx="120" cy="200.59" r="20" fill="var(--dj-lemon)"/><circle cx="113" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="2" style="transform-origin:163px 200.59px"><circle cx="163" cy="200.59" r="20" fill="var(--dj-mint)"/><circle cx="156" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="1" style="transform-origin:98.5px 163.18px"><circle cx="98.5" cy="163.18" r="20" fill="var(--dj-blue)"/><circle cx="91.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw today" data-k="0" style="transform-origin:141.5px 163.18px;transform:scale(0.855)"><circle cx="141.5" cy="163.18" r="20" fill="var(--dj-rasp)"/><circle cx="134.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><circle cx="141.5" cy="163.18" r="24" fill="none" stroke="var(--dj-ink)" stroke-width="2.5"/></g><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-glass-hi)" stroke-width="9" stroke-linecap="round"/><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-rim)" stroke-width="1.5" stroke-linecap="round" transform="translate(7 0)"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="none" stroke="var(--dj-ink)" stroke-width="3"/></svg>
-              <div class="preview__lines" aria-live="polite">
-                <span class="dj-small"><b>After this</b></span>
-                <span class="preview__big" id="sp-today">$73.25 left today</span>
-                <span class="dj-small" id="sp-tomorrow">Tomorrow: $94.81 a day</span>
-              </div>
-            </div>
-            <span class="dj-btn ink" aria-hidden="true">Save spend</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="features" style="--hm: 2" aria-labelledby="features-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="features-h">Features for bills and caps. <span class="muted">Paydays and spending, on one calendar.</span></h2>
-      </div>
-      <div class="grid">
-        <article class="card card--row card--open span-6 m-nolift">
-          <h3>Puts bills on 7 kinds of schedule</h3>
-          <p>Any schedule, more than one paycheck. A payday on a weekend comes early. Big rare bills fill a little each day.</p>
-          <div class="panel frame--lit">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:560px;--ax:max(24px, 50% - 280px);--ay:28px">
-              <div class="ui dj dj-card cal-wrap">
-                <div>
-                  <p class="dj-h" style="font-size:16px;margin-bottom:8px">November</p>
-                  <div class="cal">
-                    <span class="h">M</span><span class="h">T</span><span class="h">W</span><span class="h">T</span><span class="h">F</span><span class="h">S</span><span class="h">S</span>
-                    <span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span>
-                    <span>9</span><span>10</span><span>11</span><span class="t">12</span><span>13</span><span>14</span><span>15<i style="background:var(--dj-rasp)"></i></span>
-                    <span>16</span><span>17<i style="background:var(--dj-lemon)"></i></span><span>18</span><span>19<i style="background:var(--dj-blue)"></i></span><span class="pay">20</span><span>21</span><span>22</span>
-                  </div>
-                </div>
-                <div class="dj-hide-m" style="gap:0">
-                  <div class="dj-item"><i style="background:var(--dj-mint)"></i><span><b>Payday</b><span class="dj-small">Fri 20, early: the 21st is a Saturday</span></span><span class="n">$1,850.00</span></div>
-                  <div class="dj-item"><i style="background:var(--dj-rasp)"></i><span><b>Rent</b><span class="dj-small">Sun 15</span></span><span class="n">$520.00</span></div>
-                  <div class="dj-item"><i style="background:var(--dj-lemon)"></i><span><b>Electric</b><span class="dj-small">Tue 17</span></span><span class="n">$83.00</span></div>
-                  <div class="dj-item"><i style="background:var(--dj-blue)"></i><span><b>Phone</b><span class="dj-small">Thu 19</span></span><span class="n">$38.50</span></div>
-                  <div class="dj-item"><i style="background:var(--dj-mint)"></i><span><b>Car insurance</b><span class="dj-small">$2.26 a day put aside</span></span><span class="n">$412.00</span></div>
-                </div>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--row card--open span-6 m-nolift">
-          <h3>Keeps budget caps for groceries and fun</h3>
-          <p>Each cap is held back every pay period. Spending inside it never lowers today's number.</p>
-          <div class="panel frame--lit">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:300px;--ax:max(24px, 50% - 150px);--ay:32px">
-              <div class="ui dj dj-card">
-                <div><div style="display:flex;justify-content:space-between"><b>Groceries</b><span class="n">$38.20 of $120</span></div><div class="dj-bar"><i style="width:32%;background:var(--dj-rasp)"></i></div></div>
-                <div><div style="display:flex;justify-content:space-between"><b>Fun</b><span class="n">$12.00 of $40</span></div><div class="dj-bar"><i style="width:30%;background:var(--dj-lemon)"></i></div></div>
-              <div><div style="display:flex;justify-content:space-between"><b>Takeaway</b><span class="n">$21.50 of $50</span></div><div class="dj-bar"><i style="width:43%;background:var(--dj-mint)"></i></div></div>
-                <span class="dj-small">Held back until payday</span>
-              </div>
-            </div></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="help" style="--hm: 2" aria-labelledby="help-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="help-h">Help for debts, impulse buys and bad days</h2>
-      </div>
-      <div class="grid">
-        <article class="card card--row card--open span-4 m-nolift">
-          <h3>Plans a debt-free date</h3>
-          <p>Minimums and interest, then smallest first or highest interest first.</p>
-          <div class="panel frame--lit">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:300px;--ax:max(24px, 50% - 150px);--ay:32px">
-              <div class="ui dj dj-card" style="gap:0">
-                <div class="dj-item"><i style="background:var(--dj-rasp)"></i><span><b>Store card</b><span class="dj-small">22.9% · min $25</span></span><span class="n">$412</span></div>
-                <div class="dj-item"><i style="background:var(--dj-lemon)"></i><span><b>Credit card</b><span class="dj-small">19.4% · min $40</span></span><span class="n">$1,380</span></div>
-                <div class="dj-item"><i style="background:var(--dj-blue)"></i><span><b>Debt-free</b><span class="dj-small">Smallest first</span></span><span class="n">Aug 2028</span></div>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--row card--open span-4 m-nolift">
-          <h3>Parks impulse buys for 1 day to a week</h3>
-          <p>Pause it, then decide. Letting it go counts as kept. A brain dump holds the rest.</p>
-          <div class="panel frame--lit">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:300px;--ax:max(24px, 50% - 150px);--ay:32px">
-              <div class="ui dj dj-card" style="gap:0">
-                <div class="dj-item"><i style="background:var(--dj-blue)"></i><span><b>Headphones</b><span class="dj-small">2 days left to wait</span></span><span class="n">$79.00</span></div>
-                <div class="dj-item"><i style="background:var(--dj-rasp)"></i><span><b>Boots</b><span class="dj-small">Let go. Kept.</span></span><span class="n">$64.00</span></div>
-                <div class="dj-item"><i style="background:var(--dj-lemon)"></i><span><b>Brain dump</b><span class="dj-small">Ask about the gym fee</span></span><span class="n"></span></div>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--row card--open span-4 m-nolift">
-          <h3>Help when something goes wrong</h3>
-          <p>A late fee, a missed payday, a week away. Pick what happened and take the next step.</p>
-          <div class="panel frame--lit">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:300px;--ax:max(24px, 50% - 150px);--ay:32px">
-              <div class="ui dj dj-card" style="gap:6px">
-                <p class="dj-h" style="font-size:16px">Something went wrong?</p>
-                <span class="dj-btn" style="justify-content:flex-start">A late fee</span>
-                <span class="dj-btn" style="justify-content:flex-start">Payday came late</span>
-                <span class="dj-btn" style="justify-content:flex-start">I was away for a while</span>
-              </div>
-            </div></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section ground-inverse" id="calm" data-moment="line-carries-colour" data-moment-opts='{"from": "base"}' aria-labelledby="calm-h">
-    <div class="wrap">
-      <div class="grid grid--top">
-        <div class="span-5 calm-text">
-          <h2 id="calm-h">Made by someone with ADHD, for ADHD brains</h2>
-          <ul class="calm-list">
-            <li><b>No streaks, no red alarms</b><span>Spend too much and it spreads over the days left. After time away, one balance update and you are back.</span></li>
-            <li><b>Comfort settings</b><span>Three text sizes, softer colours, motion off, light and dark. Focus mode shows only the jar.</span></li>
-            <li><b>Private on your device</b><span>No bank login and no account. Save a backup file or export a spreadsheet.</span></li>
+  <section class="buy" id="buy" aria-labelledby="buy-h">
+    <div class="wrap buy-grid">
+      <div class="touch">
+        <div class="price-card" id="priceCard">
+          <h2 id="buy-h">Dot &amp; Jar, pay once</h2>
+          <p class="big">$6.99<small>Founder price for the first 25 people, then $10.99</small></p>
+          <ul>
+            <li>iPhone and Android. Installs from Safari or Chrome</li>
+            <li>Works offline. No account, no bank login</li>
+            <li>Updates included. 14-day refund</li>
           </ul>
-        </div>
-        <div class="frame frame--split span-6 start-7">
-          <div class="comfort dj dj--night" role="img" aria-label="Focus mode in dark colours: only the jar and today's number, beside the comfort settings">
-            <div class="comfort__focus dj-dotted">
-              <div class="dj-stage"><svg class="dj-jar" viewBox="0 0 240 272" role="img" aria-label="The jar in focus mode"><defs><clipPath id="jc-night"><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z"/></clipPath></defs><rect x="50" y="18" width="140" height="30" rx="10" fill="var(--dj-ink)"/><rect x="58" y="44" width="124" height="16" rx="4" fill="var(--dj-ink)" opacity=".85"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="var(--dj-glass)" stroke="var(--dj-ink)" stroke-width="3"/><rect x="44" y="60" width="152" height="10" rx="5" fill="none" stroke="var(--dj-rim)" stroke-width="3"/><g clip-path="url(#jc-night)"><g class="sw" data-k="8" style="transform-origin:55.5px 238px"><circle cx="55.5" cy="238" r="20" fill="var(--dj-rasp)"/><circle cx="48.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="7" style="transform-origin:98.5px 238px"><circle cx="98.5" cy="238" r="20" fill="var(--dj-lemon)"/><circle cx="91.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="6" style="transform-origin:141.5px 238px"><circle cx="141.5" cy="238" r="20" fill="var(--dj-mint)"/><circle cx="134.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="5" style="transform-origin:184.5px 238px"><circle cx="184.5" cy="238" r="20" fill="var(--dj-blue)"/><circle cx="177.5" cy="231" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="4" style="transform-origin:77px 200.59px"><circle cx="77" cy="200.59" r="20" fill="var(--dj-rasp)"/><circle cx="70" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="3" style="transform-origin:120px 200.59px"><circle cx="120" cy="200.59" r="20" fill="var(--dj-lemon)"/><circle cx="113" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="2" style="transform-origin:163px 200.59px"><circle cx="163" cy="200.59" r="20" fill="var(--dj-mint)"/><circle cx="156" cy="193.59" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw" data-k="1" style="transform-origin:98.5px 163.18px"><circle cx="98.5" cy="163.18" r="20" fill="var(--dj-blue)"/><circle cx="91.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><g class="sw today" data-k="0" style="transform-origin:141.5px 163.18px;transform:scale(1.000)"><circle cx="141.5" cy="163.18" r="20" fill="var(--dj-rasp)"/><circle cx="134.5" cy="156.18" r="5.6" fill="#fff" opacity=".55"/></g><circle cx="141.5" cy="163.18" r="24" fill="none" stroke="var(--dj-ink)" stroke-width="2.5"/></g><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-glass-hi)" stroke-width="9" stroke-linecap="round"/><path d="M38 104 C36 140 36 190 40 226" fill="none" stroke="var(--dj-rim)" stroke-width="1.5" stroke-linecap="round" transform="translate(7 0)"/><path d="M44 58 C30 64 22 76 22 96 L22 238 C22 252 32 262 46 262 L194 262 C208 262 218 252 218 238 L218 96 C218 76 210 64 196 58 Z" fill="none" stroke="var(--dj-ink)" stroke-width="3"/></svg><div class="dj-tag"><div class="lbl">Safe to spend today</div><div class="val">$85.65</div></div></div>
-            </div>
-            <div class="comfort__set">
-              <p class="dj-h" style="font-size:17px">Comfort</p>
-              <span class="dj-small">Text size</span>
-              <div class="seg"><span>A</span><span class="on" style="font-size:17px">A</span><span style="font-size:20px">A</span></div>
-              <div class="sw-row">Calm colours<span class="sw-tog on"></span></div>
-              <div class="sw-row">Motion off<span class="sw-tog on"></span></div>
-              <div class="sw-row">Dark<span class="sw-tog on"></span></div>
-              <div class="sw-row">Focus mode<span class="sw-tog on"></span></div>
-            </div>
-          </div>
+          <a class="btn btn-buy magnet" href="https://wisbeanie.gumroad.com/l/dotandjar/FOUNDER?wanted=true" target="_blank" rel="noopener">Get Dot &amp; Jar for $6.99</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="section" id="install" style="--hm: 2" aria-labelledby="install-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="install-h">Install Dot &amp; Jar on your phone. <span class="muted">It opens like an app and works offline.</span></h2>
-        <p>On a computer, any browser works. A video guide is coming.</p>
-      </div>
-      <div class="grid">
-        <article class="card card--open span-6 m-nolift">
-          <h3 class="ic-head"><img src="assets/icons/safari.svg" alt="" width="32" height="32">The app on iPhone and iPad</h3>
-          <ol class="steps-ol"><li>Open Dot &amp; Jar in Safari.</li><li>Tap Share, then Add to Home Screen.</li></ol>
-          <div class="panel frame--lit">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:340px;--ax:max(24px, 50% - 170px);--ay:32px">
-              <div class="ui dj dj-card share" style="padding:6px">
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/></svg>Share<span class="sp"></span></div>
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 4h12v16l-6-4-6 4z"/></svg>Add Bookmark</div>
-                <div class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg>Add to Home Screen</div>
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Find on Page</div>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--open span-6 m-nolift">
-          <h3 class="ic-head"><img src="assets/icons/chrome.svg" alt="" width="32" height="32">The app on Android</h3>
-          <ol class="steps-ol"><li>Open Dot &amp; Jar in Chrome.</li><li>Tap the menu, then Add to Home screen.</li></ol>
-          <div class="panel frame--lit">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:340px;--ax:max(24px, 50% - 170px);--ay:32px">
-              <div class="ui dj dj-card share" style="padding:6px">
-                <div><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>Menu</div>
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>New tab</div>
-                <div class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>Add to Home screen</div>
-                <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Settings</div>
-              </div>
-            </div></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="buy" style="--hm: 2" aria-labelledby="buy-h">
-    <div class="wrap">
-      <div class="grid grid--top">
-        <div class="span-5 stack-5">
-          <h2 id="buy-h">Dot &amp; Jar for $6.99, once. <span class="muted">No subscription.</span></h2>
-          <p><b>Founder price</b> for the first 25 people, then <s>$10.99</s>. The code FOUNDER is already applied when you tap the button.</p>
-          <p class="t-small muted">Works in your phone's browser. No App Store, no account: you get a link, tap once to keep it.</p>
-          <p class="hero__refund"><b>14-day refund.</b> Not for you? Email me within 14 days and you get your money back, no questions.</p>
-          <ul class="checks">
-            <li>The full app on your phone, tablet and computer</li>
-            <li>Bills, caps, debts, the calendar and the pause list</li>
-            <li>Backup file and spreadsheet export</li>
-          </ul>
-          <div class="btn-row">
-            <a class="btn btn--primary" href="https://wisbeanie.gumroad.com/l/dotandjar/FOUNDER">Get Dot &amp; Jar<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
-            <a class="btn btn--secondary" href="demo/">Try the free demo</a>
-          </div>
-        </div>
-        <div class="frame frame--split frame--lit span-6 start-7">
-          <div class="dg" data-diagram='{"layout":"hub","alt":"One copy of Dot & Jar runs on iPhone and iPad, Android and computers, in Safari or Chrome, and saves a backup file and a spreadsheet.","center":{"label":"Dot & Jar","icon":"ui:wallet"},"spokes":[{"label":"iPhone and iPad","icon":"apple"},{"label":"Android","icon":"android"},{"label":"Safari","icon":"safari"},{"label":"Chrome","icon":"chrome"},{"label":"Backup file","icon":"ui:hard-drive-download"},{"label":"Spreadsheet","icon":"ui:sheet"}]}'></div>
-        </div>
-      </div>
-      <div class="grid facts-row" data-moment="counter-rolls">
-        <div class="span-3"><p class="t-stat">25</p><p class="t-small muted">free spends in the demo</p></div>
-        <div class="span-3"><p class="t-stat">7</p><p class="t-small muted">kinds of bill schedule</p></div>
-        <div class="span-3"><p class="t-stat">3</p><p class="t-small muted">text sizes</p></div>
-        <div class="span-3"><p class="t-stat">0</p><p class="t-small muted">bank logins</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="faq" aria-labelledby="faq-h">
-    <div class="wrap">
-      <div class="grid grid--top">
-        <div class="span-5 stack-4">
-          <h2 id="faq-h">Questions</h2>
-          <p class="muted faq-sub">The ones people ask before they buy.</p>
-          <p class="faq-mail"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a class="link" href="https://www.instagram.com/dotandjar/">Message us on Instagram</a></p>
-          <div class="dj dj-card welcome" role="img" aria-label="The welcome-back card: You were away 12 days. Nothing to catch up on except one number: what is in your account right now?">
-            <p><b>Welcome back.</b> You were away 12 days. Nothing to catch up on except one number: what is in your account right now?</p>
-            <span class="dj-btn ink">Update my balance</span>
-          </div>
-        </div>
-        <div class="faq span-6 start-7">
-          <div class="faq__item"><h3>Does the app connect to my bank?</h3><p>No. You type your balance from your banking app. Dot &amp; Jar never asks for a bank login.</p></div>
-          <div class="faq__item"><h3>Is there a subscription plan?</h3><p>No. You pay once and keep it.</p></div>
-          <div class="faq__item"><h3>Does the app work on iPad?</h3><p>Yes, in Safari. Add it to your Home Screen and it opens like an app.</p></div>
-          <div class="faq__item"><h3>What if I stop using the app for weeks?</h3><p>Nothing breaks. A welcome-back card asks for one balance update, and the jar is right again.</p></div>
-          <div class="faq__item"><h3>Does the app keep my data private?</h3><p>Yes. It stays on your device. There is no account and nothing is sent to us.</p></div>
-        </div>
+      <div class="faq" id="faq">
+        <h3>Quick answers</h3>
+        <details><summary>Does it work on iPhone?</summary><p>Yes. It installs from Safari to your Home Screen in about 10 seconds and works offline.</p></details>
+        <details><summary>Where is my data?</summary><p>Only on your phone. No account, no bank link.</p></details>
+        <details><summary>What do I get after paying?</summary><p>A link by email to install the app, right away. Updates included.</p></details>
+        <details><summary>What if it's not for me?</summary><p>Reply to your receipt email within 14 days for a full refund, no questions.</p></details>
+        <details><summary>Can I ask you something first?</summary><p>Yes. <a class="link-in" href="https://www.instagram.com/dotandjar/">Message me on Instagram</a>.</p></details>
+        <a class="demo-link" href="demo/">Or try the free demo first</a>
       </div>
     </div>
   </section>
 </main>
 
-<footer class="footer closing g2m" id="contact" aria-labelledby="close-h">
-  <div class="wrap">
-    <div class="closing__cta close--type">
-      <div class="section-head">
-        <h2 id="close-h">Try Dot &amp; Jar before you buy it</h2>
-        <p class="t-small muted">The demo gives you 25 spends. No account, nothing to install.</p>
-      </div>
-      <a class="btn btn--primary btn--xl btn--wide" href="demo/">Try the free demo<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
-    </div>
-    <div class="closing__links">
-      <div class="grid">
-        <div class="span-4 stack-4">
-          <a class="nav__logo" href="#top"><svg class="logo-mark" viewBox="0 0 26 26" width="26" height="26" aria-hidden="true"><rect x="7" y="2" width="12" height="4" rx="1.5" fill="#1b1f2a"/><path d="M8 7c-3 1-4 3-4 6v7a3 3 0 003 3h12a3 3 0 003-3v-7c0-3-1-5-4-6z" fill="none" stroke="#1b1f2a" stroke-width="2"/><circle cx="10" cy="17" r="2.6" fill="#e8436f"/><circle cx="16" cy="16" r="2.6" fill="#f2be2e"/></svg>Dot &amp; Jar</a>
-          <p class="footer__lede">Made by someone with ADHD, for ADHD brains.</p>
-        </div>
-        <div class="span-2 footer__col"><h3>Features</h3><ul><li><a href="#jar">The jar</a></li><li><a href="#features">Bills and caps</a></li><li><a href="#help">Debts and pause</a></li><li><a href="#calm">Privacy</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Setup</h3><ul><li><a href="#how">3 steps</a></li><li><a href="#install">Install</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Price</h3><ul><li><a href="#tax">ADHD tax</a></li><li><a href="#faq">Questions</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Contact</h3><ul><li><a href="https://www.instagram.com/dotandjar/">Instagram</a></li><li><a href="https://www.tiktok.com/@dotandjar">TikTok</a></li></ul></div>
-      </div>
-      <div class="footer__legal">
-        <span>&copy; 2026 Dot &amp; Jar</span>
-        <div class="socials"><a href="https://www.instagram.com/dotandjar/" aria-label="Dot &amp; Jar on Instagram"><svg class="ic ic-svg ic-24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></a><a href="https://www.tiktok.com/@dotandjar" aria-label="Dot &amp; Jar on TikTok"><svg class="ic ic-svg ic-24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a></div>
-        <span class="t-small">Product names and logos are trademarks of their owners</span>
-      </div>
-    </div>
-  </div>
-</footer>
+<footer><div class="wrap"><span>© 2026 Dot &amp; Jar. Made by someone with ADHD, for ADHD brains.</span><span class="foot-links"><a href="https://www.instagram.com/dotandjar/">Instagram</a><a href="https://www.tiktok.com/@dotandjar">TikTok</a><a href="demo/">Free demo</a></span></div></footer>
 
-<nav class="actionbar" aria-label="Quick actions">
-  <a class="btn btn--primary" href="demo/">Try the free demo</a>
-</nav>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
 <script>
-/* the calculator and the "after this" preview: plain arithmetic, nothing stored or sent */
-(() => {
+// Page script: smooth scroll, hero story text, the screen wall, the demo math, touch surfaces. Works without WebGL.
+(function () {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(pointer: fine)').matches;
+  const hasGsap = !!(window.gsap && window.ScrollTrigger);
+  if (hasGsap) gsap.registerPlugin(ScrollTrigger);
   const $ = id => document.getElementById(id);
-  const money = v => '$' + v.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-  const money2 = v => '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  const ins = ['c-late', 'c-subs', 'c-imp'].map($);
-  const calc = () => {
-    const [l, s, i] = ins.map(x => +x.value);
-    ins.forEach(x => x.style.setProperty('--fill', (100 * x.value / x.max) + '%'));
-    $('o-late').textContent = money(l); $('o-subs').textContent = money(s); $('o-imp').textContent = money(i);
-    $('c-total').textContent = money(l * 12 + s * 12 + i * 52);
+  const DJ = window.DJ = { reduce, hasGsap, jars: {}, story: { p: 0 } };
+
+  if (!reduce && window.Lenis) {
+    const lenis = new Lenis({ lerp: 0.09 });
+    if (hasGsap) { lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0); }
+    else { const raf = t => { lenis.raf(t); requestAnimationFrame(raf); }; requestAnimationFrame(raf); }
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); lenis.scrollTo(t); }
+    }));
+  }
+
+  // ---------- Hero story: scroll drives the jar and three beats ----------
+  const beats = [...document.querySelectorAll('.beat')];
+  const bars = [...document.querySelectorAll('#progress b')];
+  const intro = $('intro'), prog = $('progress');
+  const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
+  const seg = (p, a, b) => clamp((p - a) / (b - a));
+  function story(p) {
+    DJ.story.p = p;
+    const out = seg(p, 0.02, 0.13);
+    intro.style.opacity = 1 - out;
+    intro.style.transform = `translateY(${-out * 60}px)`;
+    intro.style.pointerEvents = out > 0.5 ? 'none' : 'auto';
+    prog.style.opacity = seg(p, 0.1, 0.16);
+    const win = [[0.15, 0.42], [0.42, 0.68], [0.68, 1.01]];
+    const wide = innerWidth > 860;
+    beats.forEach((b, i) => {
+      const [a, z] = win[i];
+      const vin = seg(p, a, a + 0.06), vout = i === 2 ? 0 : seg(p, z - 0.05, z);
+      b.style.opacity = vin * (1 - vout);
+      const dy = (1 - vin) * 40 - vout * 40;
+      b.style.transform = wide ? `translateY(calc(-50% + ${dy}px))` : `translateY(${dy}px)`;
+      bars[i].style.transform = `scaleX(${seg(p, a, z)})`;
+    });
+    if (DJ.onStory) DJ.onStory(p);
+  }
+  if (hasGsap && !reduce) ScrollTrigger.create({ trigger: '.hero', start: 'top top', end: 'bottom bottom', scrub: true, onUpdate: s => story(s.progress) });
+  story(0);
+
+  // ---------- Day and night: the page turns light for the demo, dark again to buy ----------
+  if (hasGsap && !reduce) {
+    gsap.timeline({ scrollTrigger: { trigger: '#day', start: 'top 85%', end: 'top 25%', scrub: true } })
+      .fromTo(document.body, { backgroundColor: '#06070D' }, { backgroundColor: '#ECEEF3', ease: 'none' });
+    gsap.timeline({ scrollTrigger: { trigger: '#buy', start: 'top 85%', end: 'top 30%', scrub: true } })
+      .fromTo(document.body, { backgroundColor: '#ECEEF3' }, { backgroundColor: '#06070D', ease: 'none', immediateRender: false });
+    ScrollTrigger.create({ trigger: '#day', start: 'top 40px', end: 'bottom 40px', toggleClass: { targets: '.nav', className: 'on-light' } });
+    document.querySelectorAll('.day h2:not(.eyebrow), .maker blockquote, .faq h3').forEach(h => {
+      gsap.from(h, { y: 50, opacity: 0.15, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: h, start: 'top 88%' } });
+    });
+  }
+
+  // ---------- The screen wall ----------
+  const jarSvg = n => {
+    let d = '';
+    for (let i = 0; i < n; i++) { const r = Math.floor(i / 5), c = i % 5; d += `<circle cx="${22 + c * 11 + (r % 2) * 5}" cy="${92 - r * 10}" r="5" fill="#FFB23F"/>`; }
+    return `<svg class="mini-jar" viewBox="0 0 86 104" aria-hidden="true"><rect x="22" y="2" width="42" height="9" rx="3" fill="#2A2E44"/><path d="M14 16h58a6 6 0 0 1 6 6v70a10 10 0 0 1-10 10H18a10 10 0 0 1-10-10V22a6 6 0 0 1 6-6z" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.4)" stroke-width="1.5"/>${d}</svg>`;
   };
-  ins.forEach(x => x.addEventListener('input', calc)); calc();
-  const PER = 85.65, DAYS = 9, POT = PER * DAYS;
-  const sweets = [...document.querySelectorAll('.preview .sw')];
-  document.querySelectorAll('[data-amt]').forEach(b => b.addEventListener('click', () => {
-    const x = +b.dataset.amt;
-    document.querySelectorAll('[data-amt]').forEach(o => o.setAttribute('aria-pressed', String(o === b)));
-    $('sp-amount').textContent = money2(x);
-    $('sp-today').textContent = money2(Math.max(0, PER - x)) + ' left today';
-    $('sp-tomorrow').textContent = 'Tomorrow: ' + money2((POT - x) / (DAYS - 1)) + ' a day';
-    const top = sweets.find(s => s.dataset.k === '0');
-    if (top) top.style.transform = 'scale(' + Math.max(.2, (PER - x) / PER).toFixed(3) + ')';
-  }));
+  // three weeks from today: three bills, payday in 12 days
+  const dayOf = k => { const d = new Date(); d.setDate(d.getDate() + k); return d; };
+  const md = k => dayOf(k).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  const cal = Array.from({ length: 21 }, (_, i) => {
+    const cls = i === 0 ? 't' : (i === 7 || i === 10 || i === 11) ? 'b' : i === 12 ? 'p' : '';
+    return `<span class="${cls}">${dayOf(i).getDate()}</span>`;
+  }).join('');
+  const S = (top, h3, mid, foot = '') => `<div class="top"><span>${top}</span><span>9:41</span></div><div class="mid"><h3>${h3}</h3>${mid}</div>${foot}`;
+  const screens = [
+    S('Today', 'Safe to spend today', `${jarSvg(21)}<span class="num">$42.00</span><span class="muted">12 days to payday</span>`, '<span class="cta">Add spend</span>'),
+    S('Add spend', 'Lunch', `<span class="num">$14</span><div class="keys"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>`, '<span class="cta">Take $14 from the jar</span>'),
+    S('Tomorrow', 'You spent less today', `<span class="num">+$2.55</span><span class="muted">$28 left over, shared across the next 11 days. Tomorrow is $44.55.</span>`),
+    S('Over today', 'No alarms. It spreads out.', `<span class="num">$8</span><span class="muted">over today. Shared across 11 days, that's $0.73 less a day.</span><div class="bar2"><i style="width:7%"></i></div>`),
+    S('Pause list', 'The 2 am cart', `<div class="row"><span>Air fryer</span><b>$89</b></div><div class="row"><span>Waits</span><b>47:12</b></div><span class="muted">Still want it in 48 hours? Buy it then.</span>`, '<span class="cta ghost">Let it go</span>'),
+    S('Bills', 'Before payday', `<div class="row"><span>Phone, ${md(7)}</span><b>$45.00</b></div><div class="row"><span>Rent, ${md(10)}</span><b>$520.00</b></div><div class="row"><span>Car insurance, ${md(11)}</span><b>$111.00</b></div>`, '<div class="row"><span>Set aside</span><b>$676.00</b></div>'),
+    S('Calendar', '12 days to payday', `<div class="cal">${cal}</div><span class="muted">Ringed days are bills. Payday is ${md(12)}.</span>`),
+    S('Setup, 1 of 3', "What's in your account?", `<span class="num">$1,180</span><span class="muted">Type it in. No bank login.</span>`, '<span class="cta">Next</span>'),
+    S('Install', 'Add to Home Screen', `<div class="row"><span>1. Tap Share in Safari</span></div><div class="row"><span>2. Add to Home Screen</span></div><div class="row"><span>3. Open Dot &amp; Jar</span></div>`, '<span class="muted">About 10 seconds. No App Store.</span>'),
+    S('Offline', 'Works with no signal', `<span class="num">0</span><span class="muted">bars needed. Your numbers live on this phone, never on a server.</span>`),
+    S('Your data', 'No account. No bank link.', `<div class="row"><span>Stored on</span><b>This phone</b></div><div class="row"><span>Shared with</span><b>No one</b></div>`),
+    S('Price', 'Pay once', `<span class="num">$6.99</span><span class="muted">Founder price for the first 25. Then $10.99. 14-day refund.</span>`, '<span class="cta">Get it</span>')
+  ];
+  const cyl = $('cyl'), room = $('room');
+  cyl.innerHTML = screens.map((h, i) => `<article class="screen" aria-label="App screen ${i + 1} of ${screens.length}">${h}</article>`).join('');
+  const panels = [...cyl.children];
+  const N = panels.length, TH = 2 * Math.PI / N;
+  let R = 700, scrollA = 0, dragA = 0, dragV = 0, shown = -1;
+  function layoutWall() {
+    const w = panels[0].offsetWidth;
+    R = (w + (innerWidth < 860 ? 22 : 34)) / (2 * Math.sin(TH / 2));
+    panels.forEach((p, i) => { p.style.transform = `rotateY(${(-i * TH).toFixed(4)}rad) translateZ(${(-R).toFixed(1)}px)`; });
+    room.style.perspective = (innerWidth < 860 ? 640 : 1000) + 'px';
+  }
+  function drawWall() {
+    const a = scrollA + dragA;
+    cyl.style.transform = `translateZ(${(R * 0.58).toFixed(1)}px) rotateX(-3deg) rotateY(${a.toFixed(4)}rad)`;
+    let best = 9, idx = 0;
+    panels.forEach((p, i) => {
+      let rel = a - i * TH; rel = Math.atan2(Math.sin(rel), Math.cos(rel));
+      const ar = Math.abs(rel);
+      p.style.opacity = ar > 1.2 ? 0 : (1 - Math.max(0, ar - 0.75) / 0.45).toFixed(3);
+      p.style.visibility = ar > 1.2 ? 'hidden' : 'visible';
+      if (ar < best) { best = ar; idx = i; }
+    });
+    if (idx !== shown) { shown = idx; $('wallCount').textContent = String(idx + 1).padStart(2, '0') + ' / ' + N; }
+  }
+  if (!reduce) {
+    layoutWall(); drawWall();
+    addEventListener('resize', () => { layoutWall(); drawWall(); });
+    if (hasGsap) ScrollTrigger.create({ trigger: '#screens', start: 'top top', end: 'bottom bottom', scrub: 0.8, onUpdate: s => { scrollA = s.progress * TH * (N - 1); drawWall(); } });
+    let x0 = null, raf = 0;
+    room.addEventListener('pointerdown', e => { x0 = e.clientX; dragV = 0; cancelAnimationFrame(raf); room.setPointerCapture(e.pointerId); });
+    room.addEventListener('pointermove', e => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0; x0 = e.clientX;
+      dragV = -dx * 0.0022; dragA += dragV; drawWall();
+    });
+    const release = () => {
+      if (x0 === null) return; x0 = null;
+      const glide = () => { dragV *= 0.94; dragA += dragV; drawWall(); if (Math.abs(dragV) > 0.0002) raf = requestAnimationFrame(glide); };
+      raf = requestAnimationFrame(glide);
+    };
+    room.addEventListener('pointerup', release); room.addEventListener('pointercancel', release);
+  }
+
+  // ---------- Demo math ----------
+  const fmt = n => '$' + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const num = v => { const n = parseFloat(String(v).replace(/[^0-9.]/g, '')); return isFinite(n) ? n : 0; };
+  const D = { spent: 0, income: 0, shown: 42, last: null, unit: 0, keepUnit: false };
+  const JAR_MAX = 180;
+  // shortcut: inline self-check of the formula; move to a test file if this becomes the real app
+  console.assert(Math.abs((1180 - 676) / 12 - 42) < 1e-9, 'safe-to-spend math');
+  function calc() {
+    const balance = num($('bal').value), bills = num($('bills').value), days = +$('days').value;
+    const pool = balance - bills, safe = Math.max(0, pool / days), left = safe - D.spent + D.income; // money that comes in lands in today's jar, in full
+    const tomorrow = days > 1 ? (pool + D.income - D.spent) / (days - 1) : null;
+    // dot value is picked when the setup changes (so the whole amount fits the jar);
+    // spend and income buttons keep it, so they only ever take dots out or drop them in
+    if (!D.unit || !D.keepUnit) D.unit = [1, 2, 5, 10, 20, 50, 100].find(u => Math.max(0, left) / u <= 120) || 100;
+    return { balance, bills, days, pool, safe, left, tomorrow, unit: D.unit };
+  }
+  function render(fromSpend) {
+    D.keepUnit = !!fromSpend;
+    const c = calc(), d = c.days;
+    $('daysOut').textContent = d + (d === 1 ? ' day' : ' days');
+    $('days').style.setProperty('--fill', ((d - 1) / 30 * 100) + '%');
+    $('formula').textContent = `(${fmt(c.balance)} − ${fmt(c.bills)}) ÷ ${d} ${d === 1 ? 'day' : 'days'} = ${fmt(c.safe)} a day`;
+    $('unit').textContent = `1 dot = $${c.unit}`;
+    const target = Math.max(0, c.left);
+    $('numLabel').textContent = D.spent > 0 ? 'left to spend today' : 'safe to spend today';
+    if (hasGsap && !reduce) gsap.to(D, { shown: target, duration: .8, ease: 'expo.out', onUpdate: () => { $('num').textContent = fmt(D.shown); } });
+    else { D.shown = target; $('num').textContent = fmt(target); }
+    let msg;
+    if (c.pool <= 0) msg = 'Bills take everything until payday. The jar waits at $0 with you, no alarms.';
+    else if (D.last && D.last.type === 'in') msg = `+${fmt(D.last.amt)} came in. It's all in today's jar${c.left / c.unit > JAR_MAX ? ' (the jar is full, the number keeps counting)' : ''}.`;
+    else if (D.spent === 0) msg = 'Nothing spent yet today.';
+    else if (c.left >= 0) msg = c.tomorrow === null ? `Spent ${fmt(D.spent)}. Payday is tomorrow.` : `Spent ${fmt(D.spent)}. Stop here and tomorrow is <em>${fmt(c.tomorrow)}</em>.`;
+    else msg = c.tomorrow === null ? `That's ${fmt(-c.left)} over. Payday is tomorrow, so it's covered.`
+      : `That's ${fmt(-c.left)} over. It spreads over the next ${d - 1} ${d - 1 === 1 ? 'day' : 'days'}, so tomorrow is <em>${fmt(Math.max(0, c.tomorrow))}</em>. No red alerts.`;
+    $('status').innerHTML = msg;
+    const jar = DJ.jars.demo;
+    if (jar) jar.setCount(Math.round(target / c.unit), { instant: !fromSpend && !jar.ready });
+  }
+  DJ.renderDemo = render;
+  ['bal', 'bills', 'days'].forEach(id => $(id).addEventListener('input', () => render(false)));
+  $('setup').addEventListener('submit', e => e.preventDefault());
+  const spend = v => { D.spent += v; D.last = { type: 'out', amt: v }; render(true); };
+  const income = v => { D.income += v; D.last = { type: 'in', amt: v }; render(true); };
+  document.querySelectorAll('.chip[data-amt]').forEach(b => b.addEventListener('click', () => spend(+b.dataset.amt)));
+  document.querySelectorAll('.chip[data-in]').forEach(b => b.addEventListener('click', () => income(+b.dataset.in)));
+  $('otherForm').addEventListener('submit', e => { e.preventDefault(); const v = num($('other').value); if (v > 0) { $('other').value = ''; spend(v); } });
+  $('addIn').addEventListener('click', () => { const v = num($('other').value); if (v > 0) { $('other').value = ''; income(v); } });
+  $('reset').addEventListener('click', () => { D.spent = 0; D.income = 0; D.last = null; render(false); });
+  render(false);
+
+  // ---------- Touch surfaces: magnetic buttons, tilting price card ----------
+  if (!reduce && fine) {
+    document.querySelectorAll('.magnet').forEach(b => {
+      b.addEventListener('pointermove', e => {
+        const r = b.getBoundingClientRect();
+        b.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * 0.18}px, ${(e.clientY - r.top - r.height / 2) * 0.28}px)`;
+      });
+      b.addEventListener('pointerleave', () => { b.style.transform = ''; });
+    });
+  }
+  const card = $('priceCard');
+  if (!reduce) {
+    card.addEventListener('pointermove', e => {
+      const r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      card.classList.add('live');
+      card.style.setProperty('--ry', ((x - 0.5) * 14).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', ((0.5 - y) * 12).toFixed(2) + 'deg');
+      card.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+      card.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+    });
+    card.addEventListener('pointerleave', () => { card.classList.remove('live'); card.style.setProperty('--rx', '0deg'); card.style.setProperty('--ry', '0deg'); });
+  }
 })();
 </script>
-<script type="module" src="assets/system.js"></script>
-<script type="module" src="assets/motion/motion.js"></script>
-<script type="module" src="assets/layout/layout.js"></script>
-<script type="module" src="assets/diagrams/mount.js"></script>
-<script>/* hero jar loop: shows what one spend does, every few seconds; still with reduced motion */
-(function(){var s=document.querySelector('.hero__window .dj-stage');if(!s||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-var v=s.querySelector('.val'),top=s.querySelector('.sw.today'),on=false;
-setInterval(function(){if(document.hidden)return;on=!on;s.classList.toggle('is-spent',on);v.textContent=on?'$45.65':'$85.65';if(top)top.style.transform=on?'scale(.55)':'scale(1)'},2600)})();</script>
+<script type="module">
+import * as THREE from 'three';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const { reduce } = window.DJ;
+const AMBER = [0xFFB23F, 0xFF9A1F, 0xFFC766];
+const mobile = innerWidth < 860;
+
+function bgTexture(kind) {
+  const c = document.createElement('canvas'); c.width = 8; c.height = 512;
+  const g = c.getContext('2d'), gr = g.createLinearGradient(0, 0, 0, 512);
+  if (kind === 'night') { gr.addColorStop(0, '#06070D'); gr.addColorStop(.55, '#0E1120'); gr.addColorStop(1, '#1A130A'); }
+  else { gr.addColorStop(0, '#F8F9FB'); gr.addColorStop(1, '#E6E9EF'); }
+  g.fillStyle = gr; g.fillRect(0, 0, 8, 512);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+function glowTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const g = c.getContext('2d'), gr = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  gr.addColorStop(0, 'rgba(255,160,50,.55)'); gr.addColorStop(.4, 'rgba(255,120,20,.16)'); gr.addColorStop(1, 'rgba(255,120,20,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
+  return new THREE.CanvasTexture(c);
+}
+
+// A glass jar with physics dots. Spin it, tilt it, tap it to drop a dot in.
+class Jar {
+  constructor(el, { max = 160, r = 0.13, kind = 'night', tap = false } = {}) {
+    this.el = el; this.max = max; this.r = r; this.kind = kind; this.tap = tap;
+    this.loop = this.loop.bind(this); this.raf = 0; this.last = performance.now();
+    this.pose = { x: 0, y: 0, s: 1, lid: 1 };
+    const night = kind === 'night';
+    const R = this.renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+    R.setPixelRatio(Math.min(devicePixelRatio, mobile ? 1.5 : 2));
+    R.toneMapping = THREE.ACESFilmicToneMapping;
+    el.prepend(R.domElement); el.classList.add('gl');
+    const scene = this.scene = new THREE.Scene();
+    scene.background = bgTexture(kind);
+    scene.environment = new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(), 0.04).texture;
+    this.camera = new THREE.PerspectiveCamera(30, 1, 0.1, 80);
+    scene.add(new THREE.HemisphereLight(0xffffff, night ? 0x1a1410 : 0xdde3ee, night ? 0.35 : 1));
+    const key = new THREE.DirectionalLight(0xffffff, night ? 1.6 : 2.4); key.position.set(-4, 6, 5); scene.add(key);
+    const rimL = new THREE.DirectionalLight(0xffc27a, night ? 2.5 : 0.6); rimL.position.set(5, 3, -4); scene.add(rimL);
+
+    const root = this.root = new THREE.Group(); scene.add(root);
+    const g = this.group = new THREE.Group(); root.add(g);
+    if (night) {
+      this.glow = new THREE.Sprite(new THREE.SpriteMaterial({ map: glowTexture(), blending: THREE.AdditiveBlending, depthWrite: false, transparent: true }));
+      this.glow.position.set(0, 0.9, -1.2); this.glow.scale.set(7, 7, 1); root.add(this.glow);
+    }
+    // glass with thickness: outer wall up and inner wall back down, with real transmission
+    const prof = [[0.001, 0.0], [0.86, 0.0], [1.0, 0.08], [1.07, 0.3], [1.08, 1.95], [1.02, 2.22], [0.84, 2.38], [0.78, 2.46], [0.78, 2.62], [0.83, 2.66], [0.8, 2.7], [0.72, 2.66], [0.72, 2.46], [0.78, 2.38], [0.97, 2.22], [1.02, 1.95], [1.01, 0.32], [0.95, 0.12], [0.82, 0.06], [0.001, 0.06]];
+    const glassMat = new THREE.MeshPhysicalMaterial({
+      color: night ? 0x9fb0d8 : 0xffffff, metalness: 0, roughness: 0.04, transparent: true, opacity: night ? 0.09 : 0.2,
+      clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: night ? 2.2 : 1.6, specularIntensity: 1,
+      side: THREE.DoubleSide, depthWrite: false
+    });
+    const glass = new THREE.Mesh(new THREE.LatheGeometry(prof.map(([x, y]) => new THREE.Vector2(x, y)), 96), glassMat);
+    glass.renderOrder = 3; g.add(glass);
+    // label printed on the glass: the number lives on the jar
+    this.labelCanvas = document.createElement('canvas'); this.labelCanvas.width = 1024; this.labelCanvas.height = 512;
+    this.labelTex = new THREE.CanvasTexture(this.labelCanvas); this.labelTex.colorSpace = THREE.SRGBColorSpace; this.labelTex.anisotropy = 8;
+    const label = new THREE.Mesh(new THREE.CylinderGeometry(1.095, 1.095, 0.95, 64, 1, true, -0.8, 1.6),
+      new THREE.MeshBasicMaterial({ map: this.labelTex, transparent: true, depthWrite: false, toneMapped: false }));
+    label.position.y = 1.32; label.renderOrder = 5; g.add(label);
+    this.labelText = ['', ''];
+    // lid: dark brushed metal with an amber knob; it hovers open while dots go in
+    const lid = this.lid = new THREE.Group();
+    const lidMat = new THREE.MeshStandardMaterial({ color: night ? 0x2A2D3A : 0x1B1E2A, metalness: 0.85, roughness: 0.32 });
+    const ridge = new THREE.Mesh(new THREE.TorusGeometry(0.91, 0.035, 12, 96), lidMat); ridge.rotation.x = Math.PI / 2; ridge.position.y = -0.1;
+    const knob = new THREE.Mesh(new THREE.SphereGeometry(0.17, 32, 16), new THREE.MeshStandardMaterial({ color: 0xFFB23F, emissive: 0xFF8A1F, emissiveIntensity: 0.4, roughness: 0.25 }));
+    knob.position.y = 0.22;
+    lid.add(new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.92, 0.34, 96), lidMat), ridge, knob); g.add(lid);
+    const sh = new THREE.Mesh(new THREE.CircleGeometry(1.6, 64), new THREE.MeshBasicMaterial({ color: night ? 0x000000 : 0x5a6275, transparent: true, opacity: night ? 0.55 : 0.18, depthWrite: false }));
+    sh.rotation.x = -Math.PI / 2; sh.position.y = -0.02; sh.scale.set(1, 0.85, 1); root.add(sh);
+    this.inner = new THREE.PointLight(0xffa040, 0, 7, 1.2); this.inner.position.set(0, 0.7, 0); g.add(this.inner);
+
+    const mesh = this.mesh = new THREE.InstancedMesh(new THREE.SphereGeometry(r, 24, 18),
+      new THREE.MeshPhysicalMaterial({ roughness: 0.18, metalness: 0.05, clearcoat: 1, clearcoatRoughness: 0.1, emissive: 0xff7a00, emissiveIntensity: night ? 0.28 : 0.06 }), max);
+    mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    const col = new THREE.Color();
+    for (let i = 0; i < max; i++) mesh.setColorAt(i, col.setHex(AMBER[i % 3]));
+    g.add(mesh);
+    this.p = new Float32Array(max * 3); this.v = new Float32Array(max * 3);
+    this.st = new Uint8Array(max); this.wait = new Float32Array(max); this.s = new Float32Array(max); // st: 0 empty, 1 in jar, 2 leaving, 3 queued
+    this.m = new THREE.Matrix4(); this.q = new THREE.Quaternion(); this.gv = new THREE.Vector3();
+    this.spin = 0; this.spinV = 0; this.tilt = { x: 0, z: 0, tx: 0, tz: 0 }; this.ready = false; this.visible = true;
+
+    new ResizeObserver(() => this.resize()).observe(el);
+    new IntersectionObserver(es => { this.visible = es[0].isIntersecting; if (this.visible) this.kick(); }, { rootMargin: '100px' }).observe(el);
+    this.input();
+    this.resize();
+    if (document.fonts) document.fonts.ready.then(() => this.drawLabel());
+  }
+  setLabel(big, small) { if (big !== this.labelText[0] || small !== this.labelText[1]) { this.labelText = [big, small]; this.drawLabel(); } }
+  drawLabel() {
+    const c = this.labelCanvas.getContext('2d'); const [big, small] = this.labelText;
+    c.clearRect(0, 0, 1024, 512);
+    if (big) {
+      const night = this.kind === 'night';
+      c.textAlign = 'center';
+      c.fillStyle = night ? 'rgba(255,255,255,.95)' : 'rgba(10,12,20,.9)';
+      c.font = '600 220px Geist, Inter, system-ui, sans-serif';
+      if ('letterSpacing' in c) c.letterSpacing = '-12px';
+      c.fillText(big, 512, 300);
+      if ('letterSpacing' in c) c.letterSpacing = '0px';
+      c.font = '500 62px Geist, Inter, system-ui, sans-serif';
+      c.fillStyle = night ? 'rgba(255,190,110,.95)' : 'rgba(180,90,0,.95)';
+      c.fillText(small, 512, 405);
+    }
+    this.labelTex.needsUpdate = true; this.kick();
+  }
+  resize() {
+    const w = this.el.clientWidth, h = this.el.clientHeight;
+    if (!w || !h) return;
+    this.renderer.setSize(w, h, false);
+    const a = w / h; this.camera.aspect = a;
+    const dist = 11.5 * Math.max(1, 0.8 / a);
+    this.camera.position.set(0, 2.4, dist); this.camera.lookAt(0, 1.45, 0);
+    this.camera.updateProjectionMatrix(); this.kick();
+  }
+  input() {
+    const c = this.renderer.domElement;
+    let x0 = null, moved = 0;
+    c.addEventListener('pointerdown', e => { x0 = e.clientX; moved = 0; });
+    addEventListener('pointerup', e => { if (x0 !== null && moved < 8 && this.tap && this.hit(e)) this.drop(); x0 = null; });
+    addEventListener('pointermove', e => {
+      const r = this.el.getBoundingClientRect();
+      const inside = e.clientY >= r.top && e.clientY <= r.bottom && e.clientX >= r.left && e.clientX <= r.right;
+      if (!inside) { if (x0 === null) { this.tilt.tx = this.tilt.tz = 0; } return; }
+      // the jar leans toward the pointer, a little, and the dots slosh with it
+      const nx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
+      const ny = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
+      if (!reduce) { this.tilt.tz = -nx * 0.16; this.tilt.tx = ny * 0.08; }
+      this.awakeUntil = performance.now() + 6000;
+      if (x0 !== null) { const dx = e.clientX - x0; x0 = e.clientX; moved += Math.abs(dx); this.spinV = dx * 0.5; this.spin += dx * 0.01; }
+      this.kick();
+    }, { passive: true });
+    c.addEventListener('pointerleave', () => { this.tilt.tx = this.tilt.tz = 0; });
+  }
+  hit(e) {
+    const v = new THREE.Vector3(); this.group.getWorldPosition(v); v.y += 1.3 * this.pose.s; v.project(this.camera);
+    const r = this.el.getBoundingClientRect();
+    const px = r.left + (v.x + 1) / 2 * r.width, py = r.top + (1 - v.y) / 2 * r.height;
+    return Math.abs(e.clientX - px) < r.height * 0.16 * this.pose.s && Math.abs(e.clientY - py) < r.height * 0.26 * this.pose.s;
+  }
+  drop() { for (let i = 0; i < this.max; i++) if (this.st[i] === 0) { this.st[i] = 3; this.wait[i] = 0; break; } this.kick(); }
+  alive() { let n = 0; for (let i = 0; i < this.max; i++) if (this.st[i] === 1 || this.st[i] === 3) n++; return n; }
+  setCount(n, { instant = false } = {}) {
+    n = Math.max(0, Math.min(this.max, n));
+    this.want = n;
+    let have = this.alive();
+    const { p, v, st, wait } = this;
+    if (n > have) {
+      let k = 0;
+      for (let i = 0; i < this.max && have < n; i++) {
+        if (st[i] !== 0) continue;
+        if (instant) {
+          st[i] = 1; this.s[i] = 1;
+          const a = Math.random() * 6.283, d = Math.sqrt(Math.random()) * 0.8;
+          p[i * 3] = Math.cos(a) * d; p[i * 3 + 1] = 0.25 + Math.random() * 1.6; p[i * 3 + 2] = Math.sin(a) * d;
+          v[i * 3] = v[i * 3 + 1] = v[i * 3 + 2] = 0;
+        } else { st[i] = 3; wait[i] = k++ * 0.03; }
+        have++;
+      }
+      if (instant) for (let s = 0; s < 240; s++) this.step(1 / 60);
+    } else if (n < have) {
+      for (let i = 0; i < this.max && have > n; i++) if (st[i] === 3) { st[i] = 0; have--; }
+      const order = [];
+      for (let i = 0; i < this.max; i++) if (st[i] === 1) order.push(i);
+      order.sort((a, b) => p[b * 3 + 1] - p[a * 3 + 1]);
+      for (let j = 0; j < order.length && have > n; j++, have--) {
+        const i = order[j];
+        if (instant) { st[i] = 0; continue; }
+        st[i] = 2; wait[i] = j * 0.025; v[i * 3] = v[i * 3 + 1] = v[i * 3 + 2] = 0;
+      }
+    }
+    this.ready = true; this.awakeUntil = performance.now() + 6000; this.kick();
+  }
+  step(dt) {
+    const { p, v, st, wait, r, max } = this;
+    // gravity in the jar's own frame, so tilting the jar makes the dots slide
+    this.q.copy(this.group.quaternion).invert();
+    this.gv.set(0, -16, 0).applyQuaternion(this.q);
+    const gx = this.gv.x, gy = this.gv.y, gz = this.gv.z;
+    const W = 1.0 - r, F = 0.07 + r, M = 0.72 - r;
+    for (let i = 0; i < max; i++) {
+      const o = i * 3;
+      if (st[i] === 3) {
+        wait[i] -= dt;
+        if (wait[i] <= 0) {
+          st[i] = 1; this.s[i] = 1;
+          const a = Math.random() * 6.283, d = Math.random() * 0.35;
+          p[o] = Math.cos(a) * d; p[o + 1] = 3.5 + Math.random() * 0.5; p[o + 2] = Math.sin(a) * d;
+          v[o] = 0; v[o + 1] = -3; v[o + 2] = 0;
+        }
+        continue;
+      }
+      if (st[i] === 1) {
+        v[o] += gx * dt; v[o + 1] += gy * dt; v[o + 2] += gz * dt;
+        v[o] *= 0.99; v[o + 2] *= 0.99;
+        p[o] += v[o] * dt; p[o + 1] += v[o + 1] * dt; p[o + 2] += v[o + 2] * dt;
+        if (p[o + 1] < F) { p[o + 1] = F; v[o + 1] *= -0.28; v[o] *= 0.86; v[o + 2] *= 0.86; }
+        const lim = p[o + 1] > 2.3 ? M : W;
+        const d = Math.hypot(p[o], p[o + 2]);
+        if (d > lim) {
+          const nx = p[o] / d, nz = p[o + 2] / d;
+          p[o] = nx * lim; p[o + 2] = nz * lim;
+          const vn = v[o] * nx + v[o + 2] * nz;
+          if (vn > 0) { v[o] -= 1.35 * vn * nx; v[o + 2] -= 1.35 * vn * nz; }
+        }
+      } else if (st[i] === 2) {
+        if (wait[i] > 0) { wait[i] -= dt; continue; }
+        if (p[o + 1] < 2.95 && v[o + 1] >= 0) {
+          // rise straight up through the mouth, then arc away
+          v[o + 1] = 10; p[o] *= 0.82; p[o + 2] *= 0.82;
+          p[o + 1] += v[o + 1] * dt;
+          if (p[o + 1] >= 2.95) { const a = Math.random() * 6.283; v[o] = Math.cos(a) * 2.8; v[o + 2] = Math.sin(a) * 2.8 + 1.4; v[o + 1] = 4.5; }
+        } else {
+          v[o + 1] -= 16 * dt;
+          p[o] += v[o] * dt; p[o + 1] += v[o + 1] * dt; p[o + 2] += v[o + 2] * dt;
+          this.s[i] = Math.max(0, this.s[i] - dt * 1.2);
+          if (this.s[i] <= 0) { st[i] = 0; if (this.want > this.alive()) { st[i] = 3; wait[i] = 0.02; } }
+        }
+      }
+    }
+    const D = 2 * r, D2 = D * D;
+    for (let it = 0; it < 2; it++) {
+      for (let i = 0; i < max; i++) {
+        if (st[i] !== 1) continue;
+        const a = i * 3;
+        for (let j = i + 1; j < max; j++) {
+          if (st[j] !== 1) continue;
+          const b = j * 3;
+          const dx = p[b] - p[a], dy = p[b + 1] - p[a + 1], dz = p[b + 2] - p[a + 2];
+          const q = dx * dx + dy * dy + dz * dz;
+          if (q >= D2 || q === 0) continue;
+          const d = Math.sqrt(q), push = (D - d) / d * 0.5;
+          p[a] -= dx * push; p[a + 1] -= dy * push; p[a + 2] -= dz * push;
+          p[b] += dx * push; p[b + 1] += dy * push; p[b + 2] += dz * push;
+          const rv = ((v[b] - v[a]) * dx + (v[b + 1] - v[a + 1]) * dy + (v[b + 2] - v[a + 2]) * dz) / d;
+          if (rv < 0) { const k = rv * 0.6 / d; v[a] += dx * k; v[a + 1] += dy * k; v[a + 2] += dz * k; v[b] -= dx * k; v[b + 1] -= dy * k; v[b + 2] -= dz * k; }
+        }
+      }
+    }
+  }
+  draw(t) {
+    const { p, st, m, mesh } = this;
+    let n = 0;
+    for (let i = 0; i < this.max; i++) {
+      const sc = st[i] === 1 || st[i] === 2 ? this.s[i] : 0;
+      if (st[i] === 1) n++;
+      m.makeScale(sc, sc, sc); m.setPosition(p[i * 3], p[i * 3 + 1], p[i * 3 + 2]);
+      mesh.setMatrixAt(i, m);
+    }
+    mesh.instanceMatrix.needsUpdate = true;
+    const night = this.kind === 'night';
+    this.inner.intensity = (night ? 3 : 1) + n * (night ? 0.09 : 0.02);
+    if (this.glow) this.glow.material.opacity = 0.45 + Math.min(1, n / 120) * 0.55;
+    const P = this.pose;
+    this.root.position.set(P.x, P.y, 0); this.root.scale.setScalar(P.s);
+    this.group.rotation.set(this.tilt.x, this.spin, this.tilt.z);
+    const lo = P.lid; // 1 open, 0 closed
+    this.lid.position.set(0.8 * lo, 2.83 + 0.75 * lo + (reduce ? 0 : Math.sin(t / 900) * 0.05 * lo), 0);
+    this.lid.rotation.set(0, 0, -0.55 * lo);
+    this.renderer.render(this.scene, this.camera);
+  }
+  kick() { if (!this.raf && this.visible && !this.dead) { this.last = performance.now(); this.raf = requestAnimationFrame(this.loop); } }
+  resting() { for (let i = 0; i < this.max; i++) { const s = this.st[i]; if (s === 2 || s === 3) return false; if (s === 1) { const o = i * 3; if (Math.abs(this.v[o]) + Math.abs(this.v[o + 1]) + Math.abs(this.v[o + 2]) > 0.08) return false; } } return true; }
+  off() { this.dead = true; cancelAnimationFrame(this.raf); this.raf = 0; this.el.classList.remove('gl'); this.renderer.domElement.remove(); try { this.renderer.dispose(); this.renderer.forceContextLoss(); } catch (_) {} }
+  loop(t) {
+    this.raf = 0;
+    const raw = t - this.last;
+    if ((this.frames = (this.frames || 0) + 1) < 75) { if (this.frames > 4 && raw > 50) this.slow = (this.slow || 0) + 1; if (this.slow > 18) return this.off(); }
+    const dt = Math.min(raw / 1000, 1 / 30); this.last = t;
+    this.tilt.x += (this.tilt.tx - this.tilt.x) * Math.min(1, dt * 5);
+    this.tilt.z += (this.tilt.tz - this.tilt.z) * Math.min(1, dt * 5);
+    const tilting = Math.abs(this.tilt.x - this.tilt.tx) + Math.abs(this.tilt.z - this.tilt.tz) > 0.003;
+    if (tilting || !this.resting()) { this.step(dt / 2); this.step(dt / 2); }
+    // drag spins it; afterwards it springs back so the label faces you, with a slow sway
+    this.spinV *= 0.9;
+    const rest = reduce || t > (this.awakeUntil || 0) ? 0 : Math.sin(t / 2600) * 0.32;
+    this.spin += this.spinV * dt + (rest - this.spin) * Math.min(1, dt * 1.6);
+    this.draw(t);
+    // keep drawing while dots move, the jar tilts or it was touched in the last few seconds; then rest
+    if (tilting || !this.resting() || Math.abs(this.spinV) > 0.01 || Math.abs(rest - this.spin) > 0.003 || (!reduce && t < (this.awakeUntil || 0))) this.kick();
+  }
+}
+
+function mount(el, opts) {
+  try { return new Jar(el, opts); } catch (e) { console.warn('WebGL jar off:', e); return null; }
+}
+
+// Hero jar, driven by the scroll story. It starts once the page is idle, so the headline and Buy button answer taps at once.
+const idle = f => (window.requestIdleCallback || (g => setTimeout(g, 300)))(f, { timeout: 1500 });
+idle(() => {
+const hero = mount(document.getElementById('stage'), { max: 160, r: 0.13, kind: 'night', tap: true });
+window.DJ.jars.hero = hero;
+if (hero) {
+  const money = n => '$' + Math.round(n).toLocaleString('en-US');
+  const startPose = () => mobile ? { x: 0, y: -2.95, s: 0.7 } : { x: 2.3, y: -0.05, s: 0.9 };
+  const storyPose = () => mobile ? { x: 0, y: -1.7, s: 0.9 } : { x: 1.8, y: -0.05, s: 1 };
+  Object.assign(hero.pose, startPose());
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  const seg = (p, a, b) => Math.min(1, Math.max(0, (p - a) / (b - a)));
+  // each step starts its own animation and plays to the end, even if the scrolling stops
+  const COUNT = [46, 130, 56, 56];
+  const lab = { v: 42 };
+  let phase = -1, tw = null;
+  const tweenLabel = (from, to, small, cents) => {
+    if (tw) tw.kill();
+    lab.v = from;
+    const show = () => hero.setLabel(cents ? '$' + lab.v.toFixed(2) : money(lab.v), small);
+    if (reduce || !window.gsap) { lab.v = to; show(); return; }
+    tw = gsap.to(lab, { v: to, duration: 2, ease: 'power2.inOut', onUpdate: show });
+    show();
+  };
+  window.DJ.onStory = p => {
+    const A = startPose(), B = storyPose(), k = ease(seg(p, 0.02, 0.18));
+    hero.pose.x = lerp(A.x, B.x, k); hero.pose.y = lerp(A.y, B.y, k); hero.pose.s = lerp(A.s, B.s, k);
+    hero.pose.lid = 1 - ease(seg(p, 0.86, 0.98)); // the lid closes when the story ends
+    const ph = p < 0.17 ? 0 : p < 0.44 ? 1 : p < 0.7 ? 2 : 3;
+    if (ph !== phase) {
+      const prev = phase; phase = ph;
+      hero.setCount(COUNT[ph], { instant: reduce });
+      if (ph === 0) tweenLabel(42, 42, 'safe today', true);
+      else if (ph === 1) tweenLabel(prev === 2 ? 504 : 0, 1180, 'in your account');
+      else if (ph === 2) tweenLabel(1180, 504, 'after bills');
+      else tweenLabel(42, 42, 'safe today', true);
+    }
+    hero.kick();
+  };
+  window.DJ.onStory(window.DJ.story.p);
+}
+});
+
+// Demo jar, daylight version: made only when the demo comes near the screen
+const demoEl = document.getElementById('demoJar');
+const near = new IntersectionObserver(es => {
+  if (!es.some(e => e.isIntersecting)) return;
+  near.disconnect();
+  const demo = mount(demoEl, { max: 180, r: 0.12, kind: 'fog' });
+  if (demo) { demo.pose.y = mobile ? -0.75 : -0.95; demo.pose.s = mobile ? 0.95 : 1.15; demo.pose.lid = 0.55; }
+  window.DJ.jars.demo = demo;
+  if (demo) window.DJ.renderDemo(false);
+}, { rootMargin: '800px 0px' });
+near.observe(demoEl);
+</script>
 </body>
 </html>
